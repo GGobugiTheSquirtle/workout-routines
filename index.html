@@ -57,7 +57,22 @@
     </a>
   </nav>
 
-  <!-- Scripts: App code MUST load before Alpine.js (Alpine auto-inits on load) -->
+  <!-- Scripts: Utils (no deps) -->
+  <script src="js/utils/wakelock.js"></script>
+  <script src="js/utils/haptic.js"></script>
+  <!-- Data (no deps) -->
+  <script src="js/data/exercises.js"></script>
+  <script src="js/data/routines.js"></script>
+  <script src="js/data/progressions.js"></script>
+  <script src="js/data/motivation.js"></script>
+  <!-- Modules (may depend on data) -->
+  <script src="js/modules/storage.js"></script>
+  <script src="js/modules/timer.js"></script>
+  <script src="js/modules/safety.js"></script>
+  <script src="js/modules/charts.js"></script>
+  <script src="js/modules/sheets-api.js"></script>
+  <script src="js/modules/gamification.js"></script>
+  <!-- App (depends on everything above) MUST load before Alpine -->
   <script src="js/app.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
 </body>
