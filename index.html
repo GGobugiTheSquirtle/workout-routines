@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>맨몸운동 트레이너</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icons/icon-192.svg">
+</head>
+<body x-data="app" x-init="init()">
+
+  <!-- Main Content Area -->
+  <main class="container app-main">
+    <!-- Home -->
+    <div x-show="page === 'home'" x-cloak>
+      <div id="page-home"></div>
+    </div>
+    <!-- Workout -->
+    <div x-show="page === 'workout'" x-cloak>
+      <div id="page-workout"></div>
+    </div>
+    <!-- History -->
+    <div x-show="page === 'history'" x-cloak>
+      <div id="page-history"></div>
+    </div>
+    <!-- Progress -->
+    <div x-show="page === 'progress'" x-cloak>
+      <div id="page-progress"></div>
+    </div>
+    <!-- Settings -->
+    <div x-show="page === 'settings'" x-cloak>
+      <div id="page-settings"></div>
+    </div>
+  </main>
+
+  <!-- Bottom Tab Navigation -->
+  <nav class="bottom-nav" role="tablist">
+    <a role="tab" :class="{ active: page === 'home' }" @click.prevent="navigate('home')" href="#/home">
+      <span class="tab-icon">🏠</span><span class="tab-label">Home</span>
+    </a>
+    <a role="tab" :class="{ active: page === 'workout' }" @click.prevent="navigate('workout')" href="#/workout">
+      <span class="tab-icon">💪</span><span class="tab-label">Workout</span>
+    </a>
+    <a role="tab" :class="{ active: page === 'history' }" @click.prevent="navigate('history')" href="#/history">
+      <span class="tab-icon">📋</span><span class="tab-label">History</span>
+    </a>
+    <a role="tab" :class="{ active: page === 'progress' }" @click.prevent="navigate('progress')" href="#/progress">
+      <span class="tab-icon">📈</span><span class="tab-label">Progress</span>
+    </a>
+    <a role="tab" :class="{ active: page === 'settings' }" @click.prevent="navigate('settings')" href="#/settings">
+      <span class="tab-icon">⚙️</span><span class="tab-label">Settings</span>
+    </a>
+  </nav>
+
+  <!-- Scripts: App code MUST load before Alpine.js (Alpine auto-inits on load) -->
+  <script src="js/app.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
+</body>
+</html>

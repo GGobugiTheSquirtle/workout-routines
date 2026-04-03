@@ -1,0 +1,215 @@
+/* === Layout === */
+/* 2026-04-03 15:00 */
+[x-cloak] { display: none !important; }
+
+:root {
+  --bottom-nav-height: 60px;
+  --touch-min: 48px;
+  --touch-lg: 64px;
+}
+
+.app-main {
+  padding-bottom: calc(var(--bottom-nav-height) + 16px);
+  min-height: 100vh;
+}
+
+/* === Bottom Navigation === */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--bottom-nav-height);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: var(--pico-background-color);
+  border-top: 1px solid var(--pico-muted-border-color);
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.bottom-nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-decoration: none;
+  color: var(--pico-muted-color);
+  font-size: 0.7rem;
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bottom-nav a.active {
+  color: var(--pico-primary);
+}
+
+.tab-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.tab-label {
+  font-size: 0.65rem;
+  font-weight: 500;
+}
+
+/* === Touch Targets === */
+.btn-lg {
+  min-height: var(--touch-lg);
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+}
+
+.btn-round {
+  width: var(--touch-min);
+  height: var(--touch-min);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* === Typography for workout mode === */
+.text-workout-lg {
+  font-size: 3rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.text-workout-md {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.text-workout-sm {
+  font-size: 0.85rem;
+  color: var(--pico-muted-color);
+}
+
+/* === Cards === */
+.card {
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-highlight {
+  border-color: var(--pico-primary);
+  border-width: 2px;
+}
+
+/* === Progress bar === */
+.progress-bar {
+  background: var(--pico-muted-border-color);
+  border-radius: 20px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  background: var(--pico-primary);
+  height: 100%;
+  border-radius: 20px;
+  transition: width 0.3s ease;
+}
+
+/* === Set indicators === */
+.set-indicator {
+  width: var(--touch-lg);
+  height: var(--touch-lg);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.set-done {
+  background: var(--pico-ins-color);
+  color: #fff;
+}
+
+.set-current {
+  background: var(--pico-primary);
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+}
+
+.set-pending {
+  background: var(--pico-muted-border-color);
+  color: var(--pico-muted-color);
+}
+
+/* === Heatmap === */
+.heatmap {
+  display: flex;
+  gap: 6px;
+}
+
+.heatmap-cell {
+  flex: 1;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.heatmap-active {
+  background: var(--pico-ins-color);
+}
+
+.heatmap-rest {
+  background: var(--pico-muted-border-color);
+  opacity: 0.3;
+}
+
+.heatmap-future {
+  border: 2px dashed var(--pico-muted-border-color);
+}
+
+/* === Badge === */
+.badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+/* === Safety alerts === */
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.alert-warning {
+  background: rgba(230, 126, 34, 0.15);
+  border-left: 4px solid #e67e22;
+}
+
+.alert-danger {
+  background: rgba(231, 76, 60, 0.15);
+  border-left: 4px solid #e74c3c;
+}
+
+.alert-info {
+  background: rgba(52, 152, 219, 0.15);
+  border-left: 4px solid #3498db;
+}
+
+.alert-success {
+  background: rgba(46, 204, 113, 0.15);
+  border-left: 4px solid #2ecc71;
+}
