@@ -156,6 +156,25 @@ document.addEventListener('alpine:init', () => {
     get blockInfo() { return Gamification.getBlockInfo(this.state); },
     get preWorkoutAlerts() { return Safety.getPreWorkoutAlerts(this.splitLabel, this.state); },
 
+    // Overall progress percentage for top bar
+    get overallProgress() {
+      if (!this.exercises.length) return 0;
+      const totalSetsAll = this.exercises.reduce((sum, ex) => sum + ex.sets, 0);
+      const doneSets = this.exercises.slice(0, this.currentExIdx).reduce((sum, ex) => sum + ex.sets, 0) + this.currentSetIdx;
+      return Math.round((doneSets / totalSetsAll) * 100);
+    },
+
+    getExName(id) { return Exercises[id]?.name || id; },
+
+    // Summary of completed exercise (for done items in list)
+    getExSummary(exIdx) {
+      const logs = this.sessionLogs.filter(l => l.exercise === this.exercises[exIdx]?.id);
+      if (!logs.length) return '';
+      const reps = logs.map(l => l.reps).join(', ');
+      const rpe = logs[0]?.rpe ? ' · RPE ' + logs[0].rpe : '';
+      return reps + '회' + rpe;
+    },
+
     getCooldownStep() {
       const cd = Routines.cooldown[this.splitLabel];
       return cd?.steps[this.cooldownIdx] || null;
