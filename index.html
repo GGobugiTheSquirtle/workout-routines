@@ -16,26 +16,424 @@
 
   <!-- Main Content Area -->
   <main class="container app-main">
-    <!-- Home -->
+
+    <!-- ==================== HOME ==================== -->
     <div x-show="page === 'home'" x-cloak>
-      <div id="page-home"></div>
+      <div x-data="homePage">
+        <!-- Greeting + Streak -->
+        <div style="margin-bottom: 1rem;">
+          <h2 x-text="greeting" style="margin-bottom: 0.25rem;"></h2>
+          <p class="text-workout-sm" x-text="'연속 ' + state.streak + '일째 · Lv.' + level + ' ' + phaseName"></p>
+        </div>
+
+        <!-- Weekly Heatmap -->
+        <div style="margin-bottom: 1rem;">
+          <small class="text-workout-sm">이번 주</small>
+          <div class="heatmap" style="margin-top: 0.4rem;">
+            <template x-for="(day, i) in weekDays" :key="i">
+              <div style="flex:1; text-align:center;">
+                <small x-text="day.label" class="text-workout-sm" style="font-size:0.7rem;"></small>
+                <div class="heatmap-cell"
+                     :class="day.status === 'done' ? 'heatmap-active' : day.status === 'rest' ? 'heatmap-rest' : 'heatmap-future'"
+                     style="margin-top:4px;"></div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- Today's Routine Card -->
+        <template x-if="!isRestDay">
+          <div class="card card-highlight" style="margin-bottom: 1rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+              <div>
+                <small class="text-workout-sm">오늘의 루틴</small>
+                <h3 x-text="todaySplit + '분할: ' + todayRoutineName" style="margin:0;"></h3>
+              </div>
+              <small class="text-workout-sm">~25분</small>
+            </div>
+            <p class="text-workout-sm" x-text="todayExerciseSummary" style="line-height:1.8;"></p>
+            <button class="btn-lg" style="width:100%; margin-top:0.75rem;" @click="$root.navigate('workout')">
+              운동 시작하기
+            </button>
+          </div>
+        </template>
+        <template x-if="isRestDay">
+          <div class="card" style="margin-bottom: 1rem; text-align:center;">
+            <h3 style="margin:0;">오늘은 휴식일</h3>
+            <p class="text-workout-sm">충분히 쉬세요. 내일 다시 만나요!</p>
+          </div>
+        </template>
+
+        <!-- Level Progress -->
+        <div style="margin-bottom: 1rem;">
+          <small class="text-workout-sm" x-text="phaseName + ' 진행도'"></small>
+          <div class="progress-bar" style="margin-top:0.4rem;">
+            <div class="progress-bar-fill" :style="'width:' + xpProgress.percent + '%'"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:0.25rem;">
+            <small class="text-workout-sm" x-text="'Lv.' + level"></small>
+            <small class="text-workout-sm" x-text="xpProgress.percent + '%'"></small>
+          </div>
+        </div>
+
+        <!-- Recent Badges -->
+        <div x-show="recentBadges.length > 0">
+          <small class="text-workout-sm">최근 획득 뱃지</small>
+          <div style="display:flex; gap:8px; margin-top:0.4rem;">
+            <template x-for="b in recentBadges" :key="b">
+              <div class="badge" style="background: rgba(128,128,128,0.15);" :title="Progressions.badges[b]?.name">
+                <span x-text="Progressions.badges[b]?.icon || '🏅'"></span>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- Motivation Message -->
+        <div class="alert alert-info" style="margin-top:1rem;" x-show="motivationMsg">
+          <span x-text="motivationMsg"></span>
+        </div>
+      </div>
     </div>
-    <!-- Workout -->
+
+    <!-- ==================== WORKOUT ==================== -->
     <div x-show="page === 'workout'" x-cloak>
-      <div id="page-workout"></div>
+      <div x-data="workoutPage">
+        <!-- Pre-workout / Idle -->
+        <template x-if="phase === 'idle'">
+          <div style="text-align:center; padding-top:2rem;">
+            <h2 x-text="splitName"></h2>
+            <p class="text-workout-sm" x-text="phaseName + ' · ' + splitLabel + '분할'"></p>
+            <p class="text-workout-sm" x-text="blockInfo.name + ' 주차 (RPE ' + blockInfo.rpe + ')'"></p>
+            <!-- Safety Alerts -->
+            <template x-for="alert in preWorkoutAlerts" :key="alert.message">
+              <div class="alert" :class="'alert-' + alert.type" x-text="alert.message" style="text-align:left; margin-top:1rem;"></div>
+            </template>
+            <button class="btn-lg" style="width:100%; margin-top:2rem;" @click="startWarmup()">
+              워밍업 시작 (5분)
+            </button>
+          </div>
+        </template>
+
+        <!-- Warmup Phase -->
+        <template x-if="phase === 'warmup'">
+          <div style="text-align:center; padding-top:1rem;">
+            <small class="text-workout-sm">워밍업</small>
+            <h3 x-text="warmupStep?.name"></h3>
+            <p class="text-workout-sm" x-text="warmupStep?.desc"></p>
+            <div class="text-workout-lg" style="margin:1.5rem 0;" x-text="timerDisplay"></div>
+            <button class="btn-lg" style="width:100%;" @click="nextWarmupStep()">다음</button>
+          </div>
+        </template>
+
+        <!-- Exercise Phase -->
+        <template x-if="phase === 'exercise'">
+          <div>
+            <div style="text-align:center; padding:0.5rem 0; background:var(--pico-card-background-color); border-radius:8px; margin-bottom:1rem;">
+              <small class="text-workout-sm" x-text="phaseName + ' · ' + splitLabel + '분할 · ' + splitName"></small>
+              <div style="font-weight:600;" x-text="'종목 ' + (currentExIdx+1) + '/' + exercises.length + ' · 세트 ' + (currentSetIdx+1) + '/' + currentExercise.sets"></div>
+            </div>
+            <div style="text-align:center; margin-bottom:1rem;">
+              <h2 x-text="currentExInfo.name" style="margin-bottom:0.25rem;"></h2>
+              <p class="text-workout-sm" x-text="'목표: ' + currentExercise.reps + ' · ' + currentExercise.sets + '세트'"></p>
+              <p class="text-workout-sm" x-show="currentExercise.note" x-text="currentExercise.note"></p>
+            </div>
+            <!-- Set Indicators -->
+            <div style="display:flex; gap:8px; justify-content:center; margin-bottom:1.5rem;">
+              <template x-for="(s, i) in setResults" :key="i">
+                <div class="set-indicator"
+                     :class="i < currentSetIdx ? 'set-done' : i === currentSetIdx ? 'set-current' : 'set-pending'"
+                     x-text="i < currentSetIdx ? ('✓' + s.reps) : (i+1)">
+                </div>
+              </template>
+            </div>
+            <!-- Rep Counter -->
+            <div style="text-align:center; margin-bottom:1.5rem;">
+              <div class="text-workout-lg" x-text="repCount"></div>
+              <div style="display:flex; gap:12px; justify-content:center; margin-top:0.75rem;">
+                <button class="btn-round" @click="repCount = Math.max(0, repCount - 1)">−</button>
+                <button class="btn-round" @click="repCount++">+</button>
+              </div>
+            </div>
+            <button class="btn-lg" style="width:100%;" @click="completeSet()">✓ 세트 완료</button>
+            <!-- Form Guide -->
+            <details style="margin-top:1rem;">
+              <summary style="cursor:pointer; font-size:0.9rem;">📖 폼 가이드</summary>
+              <div style="padding:0.5rem 0; font-size:0.85rem; color:var(--pico-muted-color);">
+                <template x-for="tip in currentExInfo.guide || []" :key="tip">
+                  <p x-text="'• ' + tip" style="margin:0.25rem 0;"></p>
+                </template>
+              </div>
+            </details>
+          </div>
+        </template>
+
+        <!-- Rest Timer -->
+        <template x-if="phase === 'rest'">
+          <div style="text-align:center; padding-top:2rem;">
+            <small class="text-workout-sm">휴식 중...</small>
+            <div class="text-workout-lg" style="margin:1.5rem 0; font-size:4rem;" x-text="timerDisplay"></div>
+            <p class="text-workout-sm" x-text="'권장 휴식: ' + currentExercise.rest + '초'"></p>
+            <div style="display:flex; gap:12px; justify-content:center; margin-top:1.5rem;">
+              <button @click="addRestTime(30)" style="min-height:var(--touch-min);">+30초</button>
+              <button class="btn-lg" @click="skipRest()" style="background:var(--pico-ins-color); color:#fff;">건너뛰기</button>
+            </div>
+            <div class="alert alert-info" style="margin-top:1.5rem; text-align:left;">
+              <small>다음: <strong x-text="nextExerciseName"></strong></small>
+            </div>
+          </div>
+        </template>
+
+        <!-- Pain Check -->
+        <template x-if="phase === 'pain_check'">
+          <div style="text-align:center; padding-top:2rem;">
+            <h3>관절 통증이 있나요?</h3>
+            <p class="text-workout-sm" x-text="currentExInfo.name + ' 수행 후'"></p>
+            <div style="display:flex; gap:12px; justify-content:center; margin:1.5rem 0;">
+              <button class="btn-lg" style="flex:1; background:var(--pico-ins-color); color:#fff;" @click="submitPainCheck(false)">
+                아니오, 괜찮아요
+              </button>
+              <button class="btn-lg" style="flex:1; background:var(--pico-del-color); color:#fff;" @click="submitPainCheck(true)">
+                네, 통증 있어요
+              </button>
+            </div>
+            <small class="text-workout-sm">"네" 선택 시 이 종목은 중단됩니다.</small>
+          </div>
+        </template>
+
+        <!-- RPE Check -->
+        <template x-if="phase === 'rpe'">
+          <div style="text-align:center; padding-top:2rem;">
+            <h3 x-text="currentExInfo.name + ' 완료!'"></h3>
+            <p class="text-workout-sm">오늘 RPE는? (체감 강도)</p>
+            <div style="display:flex; gap:6px; justify-content:center; margin:1.5rem 0; flex-wrap:wrap;">
+              <template x-for="n in [5,6,7,8,9,10]" :key="n">
+                <button class="btn-round" :class="rpeValue === n ? 'set-current' : ''"
+                        @click="rpeValue = n" x-text="n"
+                        style="width:48px; height:48px;"></button>
+              </template>
+            </div>
+            <button class="btn-lg" style="width:100%;" @click="submitRPE()" :disabled="!rpeValue">확인</button>
+          </div>
+        </template>
+
+        <!-- Cooldown Phase -->
+        <template x-if="phase === 'cooldown'">
+          <div style="text-align:center; padding-top:1rem;">
+            <small class="text-workout-sm">쿨다운</small>
+            <h3 x-text="getCooldownStep()?.name || '완료'"></h3>
+            <p class="text-workout-sm" x-text="getCooldownStep()?.desc || ''"></p>
+            <div class="text-workout-lg" style="margin:1.5rem 0;" x-text="timerDisplay"></div>
+            <button class="btn-lg" style="width:100%;" @click="nextCooldownStep()">다음</button>
+          </div>
+        </template>
+
+        <!-- Session Complete -->
+        <template x-if="phase === 'done'">
+          <div style="text-align:center; padding-top:2rem;">
+            <h2>운동 완료!</h2>
+            <div style="margin:1.5rem 0;">
+              <p>총 <strong x-text="totalSets + '세트'"></strong> 완료</p>
+              <p>소요 시간: <strong x-text="sessionDuration"></strong></p>
+              <p x-show="xpEarned > 0">획득 XP: <strong x-text="'+' + xpEarned"></strong></p>
+            </div>
+            <!-- Level-up prompt -->
+            <template x-if="levelUpInfo?.eligible">
+              <div class="card card-highlight" style="margin-bottom:1rem; text-align:left;">
+                <h4>단계 승급 가능!</h4>
+                <p class="text-workout-sm" x-text="'모든 ' + Routines.phaseNames[levelUpInfo.nextPhase] + ' 진입 기준을 충족했습니다.'"></p>
+                <div style="display:flex; gap:8px; margin-top:0.75rem;">
+                  <button @click="acceptLevelUp()" style="flex:1;">승급하기</button>
+                  <button @click="levelUpInfo = null" class="outline" style="flex:1;">나중에</button>
+                </div>
+              </div>
+            </template>
+            <template x-if="newBadges.length > 0">
+              <div style="margin-bottom:1.5rem;">
+                <p class="text-workout-sm">새로운 뱃지!</p>
+                <div style="display:flex; gap:8px; justify-content:center;">
+                  <template x-for="b in newBadges" :key="b">
+                    <div class="badge" style="background:rgba(241,196,15,0.2);">
+                      <span x-text="Progressions.badges[b]?.icon || '🏅'"></span>
+                    </div>
+                  </template>
+                </div>
+              </div>
+            </template>
+            <button class="btn-lg" style="width:100%;" @click="$root.navigate('home')">홈으로</button>
+          </div>
+        </template>
+      </div>
     </div>
-    <!-- History -->
+
+    <!-- ==================== HISTORY ==================== -->
     <div x-show="page === 'history'" x-cloak>
-      <div id="page-history"></div>
+      <div x-data="historyPage">
+        <h2>운동 기록</h2>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <button class="btn-round" @click="prevMonth()">◀</button>
+          <span x-text="monthLabel" style="font-weight:600;"></span>
+          <button class="btn-round" @click="nextMonth()">▶</button>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:4px; text-align:center; margin-bottom:1.5rem;">
+          <template x-for="label in ['월','화','수','목','금','토','일']">
+            <small class="text-workout-sm" x-text="label"></small>
+          </template>
+          <template x-for="day in calendarDays" :key="day.date || day.num">
+            <div @click="day.hasWorkout && selectDate(day.date)"
+                 style="aspect-ratio:1; display:flex; align-items:center; justify-content:center; border-radius:8px; font-size:0.85rem; cursor:pointer;"
+                 :style="day.hasWorkout ? 'background:var(--pico-ins-color); color:#fff;' : ''"
+                 :class="day.isToday ? 'card-highlight' : ''"
+                 x-text="day.num || ''">
+            </div>
+          </template>
+        </div>
+        <template x-if="selectedDate">
+          <div>
+            <h3 x-text="selectedDate + ' 기록'"></h3>
+            <template x-for="log in selectedLogs" :key="log.exercise + '-' + log.set_num">
+              <div class="card" style="padding:0.5rem 0.75rem;">
+                <div style="display:flex; justify-content:space-between;">
+                  <span x-text="getExName(log.exercise)"></span>
+                  <span class="text-workout-sm" x-text="'세트' + log.set_num + ': ' + log.reps + '회'"></span>
+                </div>
+                <small x-show="log.rpe" class="text-workout-sm" x-text="'RPE ' + log.rpe"></small>
+              </div>
+            </template>
+            <p x-show="selectedLogs.length === 0" class="text-workout-sm">기록이 없습니다.</p>
+          </div>
+        </template>
+      </div>
     </div>
-    <!-- Progress -->
+
+    <!-- ==================== PROGRESS ==================== -->
     <div x-show="page === 'progress'" x-cloak>
-      <div id="page-progress"></div>
+      <div x-data="progressPage" x-init="loadCharts()">
+        <h2>진행도</h2>
+        <!-- Phase Progress -->
+        <div style="margin-bottom:1.5rem;">
+          <small class="text-workout-sm" x-text="phaseName + ' 진행도'"></small>
+          <div class="progress-bar" style="margin-top:0.4rem;">
+            <div class="progress-bar-fill" :style="'width:' + xpProgress.percent + '%'"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:0.25rem;">
+            <small class="text-workout-sm" x-text="'Lv.' + level"></small>
+            <small class="text-workout-sm" x-text="'XP: ' + state.xp"></small>
+          </div>
+        </div>
+        <!-- Stats -->
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:1.5rem;">
+          <div class="card" style="text-align:center;">
+            <div style="font-size:1.5rem; font-weight:700;" x-text="state.total_workouts"></div>
+            <small class="text-workout-sm">총 운동</small>
+          </div>
+          <div class="card" style="text-align:center;">
+            <div style="font-size:1.5rem; font-weight:700;" x-text="state.streak"></div>
+            <small class="text-workout-sm">연속일</small>
+          </div>
+          <div class="card" style="text-align:center;">
+            <div style="font-size:1.5rem; font-weight:700;" x-text="state.best_streak || 0"></div>
+            <small class="text-workout-sm">최장 연속</small>
+          </div>
+        </div>
+        <!-- Charts -->
+        <h3>종목별 성장</h3>
+        <div style="margin-bottom:1rem;">
+          <select x-model="selectedExercise" @change="renderChart()" style="width:100%;">
+            <template x-for="ex in trackedExercises" :key="ex">
+              <option :value="ex" x-text="getExName(ex)"></option>
+            </template>
+          </select>
+        </div>
+        <div x-ref="chartContainer" style="margin-bottom:1.5rem; min-height:200px;"></div>
+        <!-- Badges -->
+        <h3>뱃지 컬렉션</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <template x-for="(badge, id) in Progressions.badges" :key="id">
+            <div class="badge"
+                 :style="hasBadge(id) ? 'background:rgba(241,196,15,0.2);' : 'background:rgba(128,128,128,0.1); opacity:0.3;'"
+                 :title="badge.name + ': ' + badge.desc">
+              <span x-text="badge.icon"></span>
+            </div>
+          </template>
+        </div>
+      </div>
     </div>
-    <!-- Settings -->
+
+    <!-- ==================== SETTINGS ==================== -->
     <div x-show="page === 'settings'" x-cloak>
-      <div id="page-settings"></div>
+      <div x-data="settingsPage">
+        <h2>설정</h2>
+        <!-- Theme -->
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span>다크/라이트 모드</span>
+            <button @click="$root.toggleTheme()" style="min-width:80px;"
+                    x-text="currentTheme === 'dark' ? '🌙 다크' : '☀️ 라이트'"></button>
+          </div>
+        </div>
+        <!-- Current Phase -->
+        <div class="card">
+          <h4>현재 단계</h4>
+          <p x-text="phaseName + ' (Lv.' + level + ')'"></p>
+          <small class="text-workout-sm">총 운동: <span x-text="state.total_workouts"></span>회</small>
+        </div>
+        <!-- Schedule -->
+        <div class="card">
+          <h4>주간 스케줄</h4>
+          <p class="text-workout-sm" style="margin-bottom:0.75rem;">운동일에 A 또는 B 분할을 배정하세요.</p>
+          <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:4px; text-align:center;">
+            <template x-for="(label, i) in ['월','화','수','목','금','토','일']" :key="i">
+              <div>
+                <small class="text-workout-sm" x-text="label"></small>
+                <select style="padding:4px; text-align:center; font-size:0.85rem;"
+                        :value="getScheduleForDow(i)"
+                        @change="updateSchedule(i, $event.target.value)">
+                  <option value="">휴</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                </select>
+              </div>
+            </template>
+          </div>
+          <small class="text-workout-sm" style="margin-top:0.5rem; display:block;">기본: 월(A) · 수(B) · 나머지 휴식</small>
+        </div>
+        <!-- Google Sheets -->
+        <div class="card">
+          <h4>Google Sheets 동기화</h4>
+          <div style="margin-bottom:0.75rem;">
+            <label>Apps Script URL</label>
+            <input type="url" x-model="sheetsUrl" placeholder="https://script.google.com/macros/s/..." style="width:100%;">
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label>API Key</label>
+            <input type="text" x-model="apiKey" placeholder="your-api-key" style="width:100%;">
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button @click="saveSheetsConfig()" style="flex:1;">저장</button>
+            <button @click="syncNow()" style="flex:1;" :disabled="!sheetsUrl">동기화</button>
+          </div>
+          <small class="text-workout-sm" x-show="syncStatus" x-text="syncStatus" style="margin-top:0.5rem; display:block;"></small>
+        </div>
+        <!-- Data -->
+        <div class="card">
+          <h4>데이터 관리</h4>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button @click="exportData()" style="flex:1;">JSON 내보내기</button>
+            <button @click="$refs.importFile.click()" style="flex:1;">JSON 가져오기</button>
+            <input type="file" accept=".json" x-ref="importFile" @change="importData($event)" style="display:none;">
+          </div>
+        </div>
+        <!-- Reset -->
+        <div class="card" style="border-color: var(--pico-del-color);">
+          <h4>초기화</h4>
+          <p class="text-workout-sm">모든 데이터를 삭제합니다.</p>
+          <button @click="resetConfirm()" class="outline" style="color:var(--pico-del-color); border-color:var(--pico-del-color);">
+            전체 초기화
+          </button>
+        </div>
+      </div>
     </div>
+
   </main>
 
   <!-- Bottom Tab Navigation -->
