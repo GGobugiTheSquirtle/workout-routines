@@ -1,20 +1,3 @@
-# OS
-.DS_Store
-Thumbs.db
-Desktop.ini
-
-# IDE
-.vscode/
-.idea/
-
-# Superpowers brainstorm artifacts
-.superpowers/
-
-# Internal state
-.bkit/
-
-# Environment
 .env
-
-# Claude memory (private)
-.claude/
+.DS_Store
+node_modules/
