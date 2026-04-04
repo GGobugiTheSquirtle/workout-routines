@@ -365,6 +365,187 @@ body {
    TAB-SPECIFIC STYLES (Tasks 5-8 will add here)
    ========================================================================== */
 
+/* --- Today Tab (Task 5) --- # 2026-04-04 */
+
+.today-header {
+  padding: var(--space-4) var(--space-5);
+}
+
+.today-header h2 {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+}
+
+.today-header .day-meta {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+}
+
+.workout-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 0 var(--space-4) var(--space-4);
+}
+
+.workout-card {
+  background-color: var(--bg-secondary);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.workout-card.is-current {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.workout-card.is-done {
+  opacity: 0.5;
+}
+
+.workout-card.is-pending {
+  opacity: 0.7;
+}
+
+.workout-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+}
+
+.workout-name {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.workout-name:active {
+  color: var(--accent);
+}
+
+.now-badge {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  color: var(--accent);
+  background-color: var(--accent-soft);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.workout-meta {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-3);
+}
+
+.set-indicators {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+
+.set-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.set-dot.done {
+  background-color: var(--success);
+  border-color: var(--success);
+  color: #FFFFFF;
+}
+
+.set-progress-text {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  margin-left: auto;
+}
+
+.btn-complete {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  border-radius: var(--radius-md);
+  background-color: var(--accent);
+  color: #FFFFFF;
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  min-height: 48px;
+  font-family: var(--font-sans);
+}
+
+.btn-complete:active {
+  transform: scale(0.97);
+}
+
+.btn-complete:disabled {
+  background-color: var(--border);
+  color: var(--text-tertiary);
+  cursor: default;
+}
+
+.btn-complete.all-done {
+  background-color: var(--success);
+}
+
+.note-input {
+  width: 100%;
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-family: var(--font-sans);
+  resize: none;
+}
+
+.note-input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.rest-day {
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+  color: var(--text-secondary);
+}
+
+.rest-day h2 {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-4);
+  color: var(--text-primary);
+}
+
+.complete-banner {
+  text-align: center;
+  padding: var(--space-6);
+  background-color: var(--success-soft);
+  border-radius: var(--radius-lg);
+  margin: var(--space-4);
+}
+
+.complete-banner h3 {
+  color: var(--success);
+  font-size: var(--text-lg);
+}
+
 </style>
 </head>
 <body>
@@ -545,7 +726,106 @@ function renderTab(name) {
    RENDERERS (Tasks 5-8 will replace these)
    ========================================================================== */
 
-function renderToday() {}
+function renderToday() {
+  var container = document.getElementById('tab-today');
+  var program = state.todayProgram;
+
+  // Rest day check
+  if (!program || program.length === 0) {
+    container.innerHTML = '<div class="rest-day"><h2>오늘은 휴식일</h2><p>충분히 쉬세요. 회복도 성장의 일부입니다.</p></div>';
+    return;
+  }
+
+  var dayLabel = program[0].day_label || '';
+  var dateStr = formatDateKR(state.today);
+
+  // All done check
+  var allDone = program.every(function(p) {
+    var prog = state.sessionProgress[p.exercise_id];
+    return prog && prog.every(Boolean);
+  });
+
+  var html = '<div class="today-header"><h2>' + dayLabel + '</h2>';
+  html += '<div class="day-meta">Level ' + (state.config.current_level || 1) + ' · ' + dateStr + '</div></div>';
+
+  if (allDone) {
+    html += '<div class="complete-banner"><h3>오늘 운동 완료!</h3><p>수고했어요. 기록이 저장되었습니다.</p></div>';
+  }
+
+  html += '<div class="workout-list">';
+
+  // Find current exercise (first with incomplete sets)
+  var currentIdx = program.findIndex(function(p) {
+    var prog = state.sessionProgress[p.exercise_id];
+    return prog && prog.some(function(s) { return !s; });
+  });
+
+  program.forEach(function(p, idx) {
+    var ex = state.exerciseMap[p.exercise_id] || {};
+    var progress = state.sessionProgress[p.exercise_id] || [];
+    var doneCount = progress.filter(Boolean).length;
+    var totalSets = progress.length;
+    var isDone = doneCount === totalSets;
+    var isCurrent = idx === currentIdx;
+    var statusClass = isDone ? 'is-done' : isCurrent ? 'is-current' : 'is-pending';
+
+    html += '<div class="workout-card ' + statusClass + '">';
+    html += '<div class="workout-card-header">';
+    html += '<span class="workout-name" onclick="navigateToGuide(\'' + p.exercise_id + '\')">' + (idx + 1) + '. ' + (ex.name || p.exercise_id) + '</span>';
+    if (isCurrent) html += '<span class="now-badge">NOW</span>';
+    if (isDone) html += '<span class="now-badge" style="background:var(--success-soft);color:var(--success)">DONE</span>';
+    html += '</div>';
+    html += '<div class="workout-meta">' + p.sets + '×' + p.reps + ' · ' + (ex.muscles_primary || '') + '</div>';
+
+    // Set indicators
+    html += '<div class="set-indicators">';
+    progress.forEach(function(done, si) {
+      html += '<div class="set-dot ' + (done ? 'done' : '') + '">' + (done ? '✓' : (si + 1)) + '</div>';
+    });
+    html += '<span class="set-progress-text">' + doneCount + '/' + totalSets + '</span></div>';
+
+    // Complete button + note (only for current exercise)
+    if (isCurrent) {
+      html += '<button class="btn-complete" onclick="completeSet(\'' + p.exercise_id + '\')">세트 ' + (doneCount + 1) + ' 완료</button>';
+      html += '<textarea class="note-input" placeholder="메모 (선택)" rows="1" id="note-' + p.exercise_id + '"></textarea>';
+    }
+
+    html += '</div>';
+  });
+
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+// # 2026-04-04
+async function completeSet(exerciseId) {
+  var progress = state.sessionProgress[exerciseId];
+  var setIdx = progress.findIndex(function(s) { return !s; });
+  if (setIdx === -1) return;
+
+  progress[setIdx] = true;
+
+  var noteEl = document.getElementById('note-' + exerciseId);
+  var note = noteEl ? noteEl.value.trim() : '';
+
+  // POST to Sheets (fire and forget, don't block UI)
+  api.postLog({
+    date: state.today,
+    exercise_id: exerciseId,
+    set_number: setIdx + 1,
+    reps_done: (state.todayProgram.find(function(p) { return p.exercise_id === exerciseId; }) || {}).reps || '',
+    note: note
+  }).catch(function(err) { console.error('Log post failed:', err); });
+
+  renderToday();
+}
+
+// # 2026-04-04
+function navigateToGuide(exerciseId) {
+  state.guideScrollTo = exerciseId;
+  switchTab('guide');
+}
+
 function renderCurriculum() {}
 function renderRecords() {}
 function renderGuide() {}
