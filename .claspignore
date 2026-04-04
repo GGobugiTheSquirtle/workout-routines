@@ -1,0 +1,3 @@
+# Root claspignore — clasp는 google-apps-script/ 폴더에서만 동작
+# 이 파일은 혹시 루트에서 clasp push 실행 시 보호용
+**/**

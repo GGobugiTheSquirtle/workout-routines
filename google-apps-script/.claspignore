@@ -1,0 +1,6 @@
+# Ignore everything except Apps Script files
+**/**
+!Code.gs
+!appsscript.json
+!.clasp.json
+!.claspignore

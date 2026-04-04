@@ -14,7 +14,7 @@
 // 6. 배포 URL을 복사하여 앱 Settings에서 입력
 
 // ─── Configuration ───────────────────────────────────────────────────
-const SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID_HERE';
+const SPREADSHEET_ID = '1LrPw9XkbbvQ239G6VUtLwta3HowMthvDCFkGjNG-ADo';
 const TIMEZONE = 'Asia/Seoul';
 
 // ─── HTTP Handlers ───────────────────────────────────────────────────
