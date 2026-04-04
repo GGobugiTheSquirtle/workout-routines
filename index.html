@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>맨몸운동</title>
+  <meta name="description" content="맨몸운동 루틴 관리 앱">
+  <meta name="theme-color" content="#FAFAFA" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 
 <style>
@@ -262,8 +267,8 @@ body {
 }
 
 .spinner {
-  width: 32px;
-  height: 32px;
+  width: var(--space-8);
+  height: var(--space-8);
   border: 3px solid var(--border);
   border-top-color: var(--accent);
   border-radius: 50%;
@@ -281,6 +286,22 @@ body {
   background-color: var(--bg-secondary);
   border-radius: var(--radius-xl);
   border: 1px solid var(--border);
+}
+
+.setup-card h2 {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-3);
+}
+
+.setup-card p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+.setup-card .btn-primary {
+  margin-top: var(--space-4);
+  width: 100%;
 }
 
 .setup-card input {
@@ -315,7 +336,7 @@ body {
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
-  min-height: 48px;
+  min-height: var(--space-12);
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -376,7 +397,7 @@ body {
   font-weight: var(--weight-bold);
 }
 
-.today-header .day-meta {
+.day-meta {
   font-size: var(--text-sm);
   color: var(--text-secondary);
   margin-top: var(--space-1);
@@ -394,7 +415,9 @@ body {
   border: 1.5px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: var(--space-4);
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: border-color var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out),
+              opacity var(--duration-normal) var(--ease-out);
 }
 
 .workout-card.is-current {
@@ -437,6 +460,15 @@ body {
   border-radius: var(--radius-full);
 }
 
+.done-badge {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  color: var(--success);
+  background-color: var(--success-soft);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
 .workout-meta {
   font-size: var(--text-sm);
   color: var(--text-secondary);
@@ -451,8 +483,8 @@ body {
 }
 
 .set-dot {
-  width: 28px;
-  height: 28px;
+  width: var(--space-7);
+  height: var(--space-7);
   border-radius: var(--radius-full);
   border: 2px solid var(--border);
   display: flex;
@@ -460,7 +492,9 @@ body {
   justify-content: center;
   font-size: var(--text-xs);
   color: var(--text-tertiary);
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
 }
 
 .set-dot.done {
@@ -485,7 +519,7 @@ body {
   font-size: var(--text-base);
   font-weight: var(--weight-semibold);
   cursor: pointer;
-  min-height: 48px;
+  min-height: var(--space-12);
   font-family: var(--font-sans);
 }
 
@@ -567,8 +601,10 @@ body {
   font-family: var(--font-sans);
   cursor: pointer;
   white-space: nowrap;
-  min-height: 36px;
-  transition: all var(--duration-fast) var(--ease-out);
+  min-height: var(--space-11);
+  transition: background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
 }
 
 .filter-chip.active {
@@ -701,11 +737,7 @@ body {
   font-weight: var(--weight-bold);
 }
 
-.curriculum-header .day-meta {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  margin-top: var(--space-1);
-}
+/* .day-meta is now a shared class — see Today Tab section */
 
 .level-list {
   display: flex;
@@ -719,7 +751,7 @@ body {
   border: 1.5px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: all var(--duration-normal) var(--ease-out);
+  transition: border-color var(--duration-normal) var(--ease-out);
 }
 
 .level-card.is-current {
@@ -756,6 +788,11 @@ body {
 .level-badge.locked {
   background-color: var(--bg-tertiary);
   color: var(--text-tertiary);
+}
+
+.level-badge.completed {
+  background-color: var(--success-soft);
+  color: var(--success);
 }
 
 .level-card-body {
@@ -843,7 +880,7 @@ body {
   font-weight: var(--weight-semibold);
   font-family: var(--font-sans);
   cursor: pointer;
-  min-height: 44px;
+  min-height: var(--space-11);
 }
 
 /* --- Records Tab (Task 8) --- # 2026-04-04 */
@@ -870,8 +907,8 @@ body {
   background: none;
   border: 1px solid var(--border);
   border-radius: var(--radius-full);
-  width: 32px;
-  height: 32px;
+  width: var(--space-11);
+  height: var(--space-11);
   cursor: pointer;
   color: var(--text-secondary);
   font-size: var(--text-sm);
@@ -909,7 +946,7 @@ body {
   border-radius: var(--radius-sm);
   font-size: var(--text-sm);
   cursor: pointer;
-  min-height: 36px;
+  min-height: var(--space-9);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -994,6 +1031,44 @@ body {
   margin-top: var(--space-1);
 }
 
+.header-subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.level-exercise-name {
+  flex: 1;
+  color: var(--text-primary);
+}
+
+.level-exercise-equip {
+  color: var(--text-tertiary);
+  font-size: var(--text-xs);
+}
+
+.journal-day-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-3);
+}
+
+.text-muted {
+  color: var(--text-tertiary);
+}
+
+.guide-video-link {
+  font-size: var(--text-sm);
+  color: var(--accent);
+}
+
+.error-msg {
+  color: var(--warning);
+}
+
+.mt-4 {
+  margin-top: var(--space-4);
+}
+
 .journal-summary {
   padding: var(--space-3) var(--space-4);
   background-color: var(--bg-tertiary);
@@ -1022,7 +1097,7 @@ body {
 
   <header id="app-header">
     <h1 class="app-title">맨몸운동</h1>
-    <span id="header-subtitle" style="font-size:var(--text-sm);color:var(--text-secondary)"></span>
+    <span id="header-subtitle" class="header-subtitle"></span>
   </header>
 
   <main id="main">
@@ -1230,7 +1305,7 @@ function renderToday() {
     html += '<div class="workout-card-header">';
     html += '<span class="workout-name" onclick="navigateToGuide(\'' + p.exercise_id + '\')">' + (idx + 1) + '. ' + (ex.name || p.exercise_id) + '</span>';
     if (isCurrent) html += '<span class="now-badge">NOW</span>';
-    if (isDone) html += '<span class="now-badge" style="background:var(--success-soft);color:var(--success)">DONE</span>';
+    if (isDone) html += '<span class="done-badge">DONE</span>';
     html += '</div>';
     html += '<div class="workout-meta">' + p.sets + '×' + p.reps + ' · ' + (ex.muscles_primary || '') + '</div>';
 
@@ -1308,9 +1383,9 @@ function renderCurriculum() {
     var isLocked = lv > currentLevel;
     var isCompleted = lv < currentLevel;
 
-    var statusClass = isCurrent ? 'is-current' : isLocked ? 'is-locked' : '';
+    var statusClass = isCurrent ? ' is-current' : isLocked ? ' is-locked' : '';
     var openClass = isCurrent ? ' open' : '';
-    var badgeClass = isCurrent ? 'current' : isLocked ? 'locked' : '';
+    var badgeClass = isCurrent ? 'current' : isLocked ? 'locked' : 'completed';
     var badgeLabel = isCurrent ? '진행중' : isLocked ? '잠금' : '완료';
 
     html += '<div class="level-card' + statusClass + openClass + '" id="level-' + lv + '">';
@@ -1338,8 +1413,8 @@ function renderCurriculum() {
     exercises.forEach(function(ex) {
       html += '<div class="level-exercise-row">';
       html += '<span class="level-exercise-cat">' + (ex.category || '') + '</span>';
-      html += '<span style="flex:1;color:var(--text-primary)">' + (ex.name || ex.id) + '</span>';
-      html += '<span style="color:var(--text-tertiary);font-size:var(--text-xs)">' + (ex.equipment || '') + '</span>';
+      html += '<span class="level-exercise-name">' + (ex.name || ex.id) + '</span>';
+      html += '<span class="level-exercise-equip">' + (ex.equipment || '') + '</span>';
       html += '</div>';
     });
 
@@ -1480,7 +1555,7 @@ function renderJournal(dateStr) {
   // Find day_label from programs
   var dayPrograms = (state.programs || []).filter(function(p) { return p.date === dateStr; });
   if (dayPrograms.length > 0 && dayPrograms[0].day_label) {
-    html += '<div style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:var(--space-3)">' + dayPrograms[0].day_label + '</div>';
+    html += '<div class="journal-day-label">' + dayPrograms[0].day_label + '</div>';
   }
 
   // Group logs by exercise_id
@@ -1514,7 +1589,7 @@ function renderJournal(dateStr) {
 
       var setLabel = '세트 ' + (s.set_number || (i + 1));
       var repsLabel = repsDone + '회';
-      if (planned) repsLabel += ' <span style="color:var(--text-tertiary)">(목표: ' + planned + ')</span>';
+      if (planned) repsLabel += ' <span class="text-muted">(목표: ' + planned + ')</span>';
 
       html += '<div class="journal-set-row"><span>' + setLabel + '</span><span>' + repsLabel + '</span></div>';
 
@@ -1661,7 +1736,7 @@ function renderGuide() {
     // Video link
     if (ex.video_url) {
       html += '<div class="guide-section">';
-      html += '<a href="' + ex.video_url + '" target="_blank" rel="noopener noreferrer" style="font-size:var(--text-sm);color:var(--accent);">▶ 영상 보기</a>';
+      html += '<a href="' + ex.video_url + '" target="_blank" rel="noopener noreferrer" class="guide-video-link">▶ 영상 보기</a>';
       html += '</div>';
     }
 
@@ -1784,12 +1859,11 @@ async function initApp() {
     var el = document.getElementById('loading');
     el.textContent = '';
     var p = document.createElement('p');
-    p.style.color = 'var(--warning)';
+    p.className = 'error-msg';
     p.textContent = '연결 실패: ' + err.message;
     el.appendChild(p);
     var btn = document.createElement('button');
-    btn.className = 'btn-primary';
-    btn.style.marginTop = 'var(--space-4)';
+    btn.className = 'btn-primary mt-4';
     btn.textContent = '설정';
     btn.onclick = showSetup;
     el.appendChild(btn);
@@ -1806,12 +1880,10 @@ function showSetup() {
   card.className = 'setup-card';
 
   var h2 = document.createElement('h2');
-  h2.style.cssText = 'font-size:var(--text-xl);font-weight:var(--weight-bold);margin-bottom:var(--space-3)';
   h2.textContent = '초기 설정';
   card.appendChild(h2);
 
   var desc = document.createElement('p');
-  desc.style.cssText = 'color:var(--text-secondary);margin-bottom:var(--space-4)';
   desc.textContent = 'Google Apps Script 웹앱 URL을 입력하세요.';
   card.appendChild(desc);
 
@@ -1819,12 +1891,10 @@ function showSetup() {
   input.type = 'url';
   input.id = 'setup-url';
   input.placeholder = 'https://script.google.com/...';
-  input.style.fontFamily = 'var(--font-sans)';
   card.appendChild(input);
 
   var btn = document.createElement('button');
   btn.className = 'btn-primary';
-  btn.style.cssText = 'margin-top:var(--space-4);width:100%';
   btn.textContent = '저장';
   btn.onclick = saveSetup;
   card.appendChild(btn);
