@@ -2401,6 +2401,16 @@ function saveSetup() {
   }
 }
 
+// Unregister old Service Workers + clear all caches // 2026-04-04
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(regs) {
+    regs.forEach(function(r) { r.unregister(); });
+  });
+  caches.keys().then(function(keys) {
+    keys.forEach(function(k) { caches.delete(k); });
+  });
+}
+
 // Start the app // 2026-04-04
 initApp();
 </script>
