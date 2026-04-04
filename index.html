@@ -690,6 +690,162 @@ body {
   color: var(--accent);
 }
 
+/* --- Curriculum Tab (Task 7) --- # 2026-04-04 */
+
+.curriculum-header {
+  padding: var(--space-4) var(--space-5);
+}
+
+.curriculum-header h2 {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+}
+
+.curriculum-header .day-meta {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+}
+
+.level-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 0 var(--space-4) var(--space-4);
+}
+
+.level-card {
+  background-color: var(--bg-secondary);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.level-card.is-current {
+  border-color: var(--accent);
+}
+
+.level-card.is-locked {
+  opacity: 0.5;
+}
+
+.level-card-header {
+  padding: var(--space-4);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.level-title {
+  font-weight: var(--weight-semibold);
+}
+
+.level-badge {
+  font-size: var(--text-xs);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.level-badge.current {
+  background-color: var(--accent-soft);
+  color: var(--accent);
+}
+
+.level-badge.locked {
+  background-color: var(--bg-tertiary);
+  color: var(--text-tertiary);
+}
+
+.level-card-body {
+  padding: 0 var(--space-4) var(--space-4);
+  display: none;
+}
+
+.level-card.open .level-card-body {
+  display: block;
+}
+
+.level-exercises {
+  display: flex;
+  flex-direction: column;
+}
+
+.level-exercise-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--text-sm);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.level-exercise-row:last-child {
+  border-bottom: none;
+}
+
+.level-exercise-cat {
+  font-weight: var(--weight-semibold);
+  color: var(--accent);
+  width: 50px;
+  flex-shrink: 0;
+}
+
+.progress-bar-container {
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+}
+
+.progress-bar-label {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.progress-bar {
+  height: 6px;
+  background-color: var(--border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--accent);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-normal) var(--ease-out);
+}
+
+.promotion-box {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--accent-soft);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.promotion-box p {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-3);
+}
+
+.btn-levelup {
+  padding: var(--space-3) var(--space-6);
+  border: none;
+  border-radius: var(--radius-md);
+  background-color: var(--accent);
+  color: #FFFFFF;
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  min-height: 44px;
+}
+
 </style>
 </head>
 <body>
@@ -970,7 +1126,123 @@ function navigateToGuide(exerciseId) {
   switchTab('guide');
 }
 
-function renderCurriculum() {}
+// # 2026-04-04
+function renderCurriculum() {
+  var container = document.getElementById('tab-curriculum');
+  var currentLevel = Number(state.config.current_level) || 1;
+
+  // Group exercises by level
+  var levelGroups = {};
+  (state.exercises || []).forEach(function(ex) {
+    var lv = Number(ex.level) || 1;
+    if (!levelGroups[lv]) levelGroups[lv] = [];
+    levelGroups[lv].push(ex);
+  });
+
+  var levelNames = { 1: '기초 체력', 2: '기본 근력', 3: '중급', 4: '상급', 5: '고급' };
+  var catOrder = ['push', 'pull', 'legs', 'core', 'swing'];
+
+  var html = '<div class="curriculum-header"><h2>커리큘럼</h2>';
+  html += '<div class="day-meta">현재 Level ' + currentLevel + ' · ' + (levelNames[currentLevel] || '') + '</div></div>';
+  html += '<div class="level-list">';
+
+  for (var lv = 1; lv <= 5; lv++) {
+    var isCurrent = lv === currentLevel;
+    var isLocked = lv > currentLevel;
+    var isCompleted = lv < currentLevel;
+
+    var statusClass = isCurrent ? 'is-current' : isLocked ? 'is-locked' : '';
+    var openClass = isCurrent ? ' open' : '';
+    var badgeClass = isCurrent ? 'current' : isLocked ? 'locked' : '';
+    var badgeLabel = isCurrent ? '진행중' : isLocked ? '잠금' : '완료';
+
+    html += '<div class="level-card' + statusClass + openClass + '" id="level-' + lv + '">';
+
+    // Card header
+    html += '<div class="level-card-header" onclick="toggleLevelCard(' + lv + ')">';
+    html += '<span class="level-title">Level ' + lv + ' — ' + (levelNames[lv] || '') + '</span>';
+    html += '<span class="level-badge ' + badgeClass + '">' + badgeLabel + '</span>';
+    html += '</div>';
+
+    // Card body
+    html += '<div class="level-card-body">';
+    html += '<div class="level-exercises">';
+
+    var exercises = levelGroups[lv] || [];
+    // Sort by category order
+    exercises.sort(function(a, b) {
+      var ai = catOrder.indexOf(a.category);
+      var bi = catOrder.indexOf(b.category);
+      if (ai === -1) ai = catOrder.length;
+      if (bi === -1) bi = catOrder.length;
+      return ai - bi;
+    });
+
+    exercises.forEach(function(ex) {
+      html += '<div class="level-exercise-row">';
+      html += '<span class="level-exercise-cat">' + (ex.category || '') + '</span>';
+      html += '<span style="flex:1;color:var(--text-primary)">' + (ex.name || ex.id) + '</span>';
+      html += '<span style="color:var(--text-tertiary);font-size:var(--text-xs)">' + (ex.equipment || '') + '</span>';
+      html += '</div>';
+    });
+
+    html += '</div>'; // .level-exercises
+
+    // Progress bar for current level
+    if (isCurrent) {
+      var pct = calculateLevelProgress(lv);
+      html += '<div class="progress-bar-container">';
+      html += '<div class="progress-bar-label">진행도 ' + pct + '%</div>';
+      html += '<div class="progress-bar"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div>';
+      html += '</div>';
+
+      // Promotion box if >= 80%
+      if (pct >= 80) {
+        html += '<div class="promotion-box">';
+        html += '<p>진급 준비가 되었을 수 있어요!</p>';
+        html += '<button class="btn-levelup" onclick="levelUp()">Level ' + (lv + 1) + ' 진급</button>';
+        html += '</div>';
+      }
+    }
+
+    html += '</div>'; // .level-card-body
+    html += '</div>'; // .level-card
+  }
+
+  html += '</div>'; // .level-list
+  container.innerHTML = html;
+}
+
+// # 2026-04-04
+function calculateLevelProgress(level) {
+  var levelExercises = state.exercises.filter(function(ex) { return Number(ex.level) === level; });
+  if (levelExercises.length === 0) return 0;
+  var completed = 0;
+  levelExercises.forEach(function(ex) {
+    var logs = (state.logs || []).filter(function(l) { return l.exercise_id === ex.id; });
+    var sessions = new Set(logs.map(function(l) { return l.date; })).size;
+    if (sessions >= 3) completed++;
+  });
+  return Math.round((completed / levelExercises.length) * 100);
+}
+
+// # 2026-04-04
+async function levelUp() {
+  var currentLevel = Number(state.config.current_level) || 1;
+  var newLevel = currentLevel + 1;
+  if (newLevel > 5) return;
+  if (!confirm('Level ' + newLevel + '로 진급하시겠습니까?')) return;
+  await api.postConfig('current_level', String(newLevel));
+  state.config.current_level = String(newLevel);
+  renderCurriculum();
+}
+
+// # 2026-04-04
+function toggleLevelCard(lv) {
+  var card = document.getElementById('level-' + lv);
+  if (card) card.classList.toggle('open');
+}
+
 function renderRecords() {}
 
 // # 2026-04-04
