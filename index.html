@@ -1,466 +1,673 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="dark">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#1a1a2e">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>맨몸운동 트레이너</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="assets/icons/icon-192.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>맨몸운동</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+
+<style>
+/* ==========================================================================
+   VARIABLES
+   ========================================================================== */
+
+:root {
+  /* Colors — Light */
+  --bg-primary: #FAFAFA;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #F5F5F5;
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B6B6B;
+  --text-tertiary: #9E9E9E;
+  --accent: #4F46E5;
+  --accent-soft: #EEF2FF;
+  --success: #059669;
+  --success-soft: #ECFDF5;
+  --warning: #D97706;
+  --border: #E5E5E5;
+  --border-subtle: #F0F0F0;
+
+  /* Spacing — 4px grid */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-11: 44px;
+  --space-12: 48px;
+
+  /* Typography */
+  --font-sans: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.08);
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+
+  /* Layout */
+  --tab-height: 64px;
+}
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #0A0A0A;
+    --bg-secondary: #141414;
+    --bg-tertiary: #1C1C1C;
+    --text-primary: #F5F5F5;
+    --text-secondary: #A0A0A0;
+    --text-tertiary: #666666;
+    --accent: #818CF8;
+    --accent-soft: #1E1B4B;
+    --success: #34D399;
+    --success-soft: #064E3B;
+    --warning: #FBBF24;
+    --border: #2A2A2A;
+    --border-subtle: #1F1F1F;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* ==========================================================================
+   RESET / BASE
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  min-height: 100vh; /* fallback */
+  overflow-x: hidden;
+  line-height: var(--leading-normal);
+}
+
+/* Thin scrollbar — Webkit */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-full);
+}
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  min-height: 100vh; /* fallback */
+}
+
+#app-header {
+  padding: var(--space-5) var(--space-5) var(--space-2);
+  position: sticky;
+  top: 0;
+  background-color: var(--bg-primary);
+  z-index: 10;
+}
+
+.app-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.02em;
+  line-height: var(--leading-tight);
+  color: var(--text-primary);
+}
+
+#main {
+  flex: 1;
+  padding: var(--space-4) var(--space-5);
+  padding-bottom: calc(var(--tab-height) + var(--space-4) + env(safe-area-inset-bottom, 0px));
+}
+
+/* ==========================================================================
+   TAB CONTENT
+   ========================================================================== */
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn var(--duration-normal) var(--ease-out);
+}
+
+/* ==========================================================================
+   TAB BAR
+   ========================================================================== */
+
+#tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: var(--tab-height);
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  z-index: 100;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: var(--space-2);
+  color: var(--text-tertiary);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  min-width: 64px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.tab-btn:active {
+  transform: scale(0.95);
+}
+
+.tab-btn.active {
+  color: var(--accent);
+}
+
+.tab-btn svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   LOADING
+   ========================================================================== */
+
+#loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  gap: var(--space-4);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* ==========================================================================
+   SETUP
+   ========================================================================== */
+
+.setup-card {
+  max-width: 400px;
+  margin: var(--space-12) auto;
+  padding: var(--space-6);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+}
+
+.setup-card input {
+  display: block;
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.setup-card input:focus {
+  border-color: var(--accent);
+}
+
+.setup-card input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--accent);
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  min-height: 48px;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-primary:active {
+  opacity: 0.85;
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (min-width: 700px) {
+  #main {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+/* ==========================================================================
+   TAB-SPECIFIC STYLES (Tasks 5-8 will add here)
+   ========================================================================== */
+
+</style>
 </head>
-<body x-data="app" x-init="init()">
+<body>
 
-  <!-- Main Content Area -->
-  <main class="container app-main">
+<!-- ======================================================================
+     LOADING OVERLAY
+     ====================================================================== -->
+<div id="loading">
+  <div class="spinner"></div>
+  <p>데이터 불러오는 중...</p>
+</div>
 
-    <!-- ==================== HOME ==================== -->
-    <div x-show="page === 'home'" x-cloak>
-      <div x-data="homePage">
-        <div class="mb-md">
-          <span class="text-label" x-text="'Lv.' + level + ' · ' + phaseName"></span>
-          <h2 x-text="greeting" style="margin-bottom:0.15rem;"></h2>
-          <p class="text-workout-sm" x-text="'연속 ' + state.streak + '일째'"></p>
-        </div>
+<!-- ======================================================================
+     MAIN APP (hidden initially)
+     ====================================================================== -->
+<div id="app" style="display:none">
 
-        <div class="section-label">이번 주</div>
-        <div class="heatmap mb-md">
-          <template x-for="(day, i) in weekDays" :key="i">
-            <div style="flex:1; text-align:center;">
-              <small style="font-size:0.6rem; color:var(--text-tertiary);" x-text="day.label"></small>
-              <div class="heatmap-cell" :class="day.status === 'done' ? 'heatmap-active' : day.status === 'rest' ? 'heatmap-rest' : 'heatmap-future'" style="margin-top:4px;"></div>
-            </div>
-          </template>
-        </div>
+  <header id="app-header">
+    <h1 class="app-title">맨몸운동</h1>
+    <span id="header-subtitle" style="font-size:var(--text-sm);color:var(--text-secondary)"></span>
+  </header>
 
-        <template x-if="!isRestDay">
-          <div class="card card-highlight mb-md">
-            <div class="flex-between mb-sm">
-              <div>
-                <span class="text-label">오늘의 루틴</span>
-                <h3 x-text="todaySplit + '분할 · ' + todayRoutineName" style="margin:2px 0 0;"></h3>
-              </div>
-              <span class="text-workout-sm">~25분</span>
-            </div>
-            <p class="text-workout-sm" x-text="todayExerciseSummary" style="line-height:1.8;"></p>
-            <button class="btn-lg btn-primary" style="width:100%; margin-top:0.75rem;" @click="$root.navigate('workout')">운동 시작하기</button>
-          </div>
-        </template>
-        <template x-if="isRestDay">
-          <div class="card text-center mb-md">
-            <h3 style="margin:0;">오늘은 휴식일</h3>
-            <p class="text-workout-sm">충분히 쉬세요. 내일 다시 만나요!</p>
-          </div>
-        </template>
-
-        <div class="mb-md">
-          <div class="flex-between mb-sm">
-            <span class="section-label" style="margin:0;" x-text="phaseName + ' 진행도'"></span>
-            <span style="font-size:0.7rem; color:var(--accent);" x-text="xpProgress.percent + '%'"></span>
-          </div>
-          <div class="progress-bar"><div class="progress-bar-fill" :style="'width:' + xpProgress.percent + '%'"></div></div>
-        </div>
-
-        <div x-show="recentBadges.length > 0" class="mb-md">
-          <span class="section-label">최근 뱃지</span>
-          <div style="display:flex; gap:6px; margin-top:0.4rem;">
-            <template x-for="b in recentBadges" :key="b">
-              <div class="badge" style="background:var(--glass); border:1px solid var(--glass-border);" :title="Progressions.badges[b]?.name">
-                <span x-text="Progressions.badges[b]?.icon || '🏅'"></span>
-              </div>
-            </template>
-          </div>
-        </div>
-
-        <div class="alert alert-info" x-show="motivationMsg"><span x-text="motivationMsg"></span></div>
-      </div>
-    </div>
-
-    <!-- ==================== WORKOUT ==================== -->
-    <div x-show="page === 'workout'" x-cloak>
-      <div x-data="workoutPage">
-
-        <!-- Top progress bar (always visible during workout) -->
-        <template x-if="phase !== 'idle' && phase !== 'done'">
-          <div class="top-progress"><div class="top-progress-fill" :style="'width:' + overallProgress + '%'"></div></div>
-        </template>
-
-        <!-- Idle -->
-        <template x-if="phase === 'idle'">
-          <div class="text-center" style="padding-top:1.5rem;">
-            <span class="text-label" x-text="phaseName + ' · ' + splitLabel + '분할'"></span>
-            <h2 x-text="splitName" style="margin-top:0.25rem;"></h2>
-            <p class="text-workout-sm" x-text="blockInfo.name + ' 주차 · RPE ' + blockInfo.rpe"></p>
-            <!-- Routine preview list -->
-            <div style="margin-top:1.5rem; text-align:left;">
-              <span class="section-label">오늘의 종목</span>
-              <template x-for="(ex, i) in exercises" :key="ex.id">
-                <div class="routine-item routine-item-upcoming" style="opacity:0.7;">
-                  <div class="routine-num routine-num-upcoming" x-text="i+1"></div>
-                  <div style="flex:1;">
-                    <div style="color:var(--text-primary); font-size:0.9rem;" x-text="getExName(ex.id)"></div>
-                    <div style="color:var(--text-tertiary); font-size:0.75rem;" x-text="ex.sets + '×' + ex.reps + (ex.note ? ' · ' + ex.note : '')"></div>
-                  </div>
-                </div>
-              </template>
-            </div>
-            <template x-for="a in preWorkoutAlerts" :key="a.message">
-              <div class="alert mt-sm" :class="'alert-' + a.type" x-text="a.message" style="text-align:left;"></div>
-            </template>
-            <button class="btn-lg btn-primary mt-lg" style="width:100%;" @click="startWarmup()">워밍업 시작</button>
-          </div>
-        </template>
-
-        <!-- Warmup -->
-        <template x-if="phase === 'warmup'">
-          <div class="text-center" style="padding-top:1rem;">
-            <span class="text-label">워밍업</span>
-            <h3 x-text="warmupStep?.name" class="mt-sm"></h3>
-            <p class="text-workout-sm" x-text="warmupStep?.desc"></p>
-            <div class="timer-display mt-lg mb-md" x-text="timerDisplay"></div>
-            <button class="btn-lg btn-primary" style="width:100%;" @click="nextWarmupStep()">다음</button>
-          </div>
-        </template>
-
-        <!-- Exercise: FULL ROUTINE LIST VIEW -->
-        <template x-if="phase === 'exercise' || phase === 'rest' || phase === 'pain_check'">
-          <div>
-            <!-- Header -->
-            <div class="flex-between mb-md">
-              <div>
-                <span class="text-label" x-text="splitLabel + '분할 · ' + splitName"></span>
-                <div style="font-size:0.8rem; color:var(--text-secondary); margin-top:2px;" x-text="'종목 ' + (currentExIdx+1) + '/' + exercises.length"></div>
-              </div>
-              <div class="text-center">
-                <div style="font-size:0.75rem; color:var(--text-tertiary);">세트</div>
-                <div style="font-weight:700; color:var(--text-primary);" x-text="(currentSetIdx+1) + '/' + currentExercise.sets"></div>
-              </div>
-            </div>
-
-            <!-- Full routine list with current expanded -->
-            <template x-for="(ex, i) in exercises" :key="ex.id">
-              <div>
-                <!-- Done exercise -->
-                <template x-if="i < currentExIdx">
-                  <div class="routine-item routine-item-done">
-                    <div class="routine-num routine-num-done">✓</div>
-                    <div style="flex:1;">
-                      <div style="color:var(--text-secondary); font-size:0.85rem; text-decoration:line-through;" x-text="getExName(ex.id)"></div>
-                      <div style="color:var(--text-tertiary); font-size:0.7rem;" x-text="getExSummary(i)"></div>
-                    </div>
-                  </div>
-                </template>
-
-                <!-- Current exercise (expanded) -->
-                <template x-if="i === currentExIdx">
-                  <div class="routine-item-current" style="margin-bottom:6px;">
-                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-                      <div class="routine-num routine-num-current" x-text="i+1"></div>
-                      <div style="flex:1;">
-                        <div style="color:var(--text-primary); font-weight:600;" x-text="getExName(ex.id)"></div>
-                        <div style="color:var(--text-secondary); font-size:0.75rem;" x-text="ex.sets + '×' + ex.reps + (ex.note ? ' · ' + ex.note : '')"></div>
-                      </div>
-                    </div>
-
-                    <!-- Set progress dots -->
-                    <div class="set-dots mb-md">
-                      <template x-for="(s, si) in setResults" :key="si">
-                        <div class="set-dot" :class="si < currentSetIdx ? 'set-dot-done' : si === currentSetIdx ? 'set-dot-current' : 'set-dot-pending'"></div>
-                      </template>
-                    </div>
-
-                    <!-- Pain check overlay -->
-                    <template x-if="phase === 'pain_check'">
-                      <div class="card text-center" style="background:rgba(255,107,107,0.08); border-color:rgba(255,107,107,0.25);">
-                        <p style="font-weight:600; margin-bottom:0.5rem;">관절 통증이 있나요?</p>
-                        <div style="display:flex; gap:8px;">
-                          <button class="btn-lg btn-success" style="flex:1;" @click="submitPainCheck(false)">괜찮아요</button>
-                          <button class="btn-lg btn-danger" style="flex:1;" @click="submitPainCheck(true)">통증 있어요</button>
-                        </div>
-                      </div>
-                    </template>
-
-                    <!-- Rest timer overlay -->
-                    <template x-if="phase === 'rest'">
-                      <div class="text-center">
-                        <div class="timer-display" x-text="timerDisplay"></div>
-                        <p class="text-workout-sm mt-sm" x-text="'휴식 중 · 권장 ' + currentExercise.rest + '초'"></p>
-                        <div style="display:flex; gap:8px; margin-top:1rem;">
-                          <button class="btn-round" @click="addRestTime(30)" style="flex:none;">+30</button>
-                          <button class="btn-lg btn-primary" style="flex:1;" @click="skipRest()">건너뛰기</button>
-                        </div>
-                      </div>
-                    </template>
-
-                    <!-- Rep counter (normal exercise mode) -->
-                    <template x-if="phase === 'exercise'">
-                      <div>
-                        <div class="flex-center gap-md mb-md">
-                          <button class="btn-round" @click="repCount = Math.max(0, repCount - 1)">−</button>
-                          <div class="text-workout-lg" x-text="repCount"></div>
-                          <button class="btn-round" @click="repCount++">+</button>
-                        </div>
-                        <button class="btn-lg btn-primary" style="width:100%;" @click="completeSet()">세트 완료</button>
-                        <details class="mt-sm">
-                          <summary>폼 가이드</summary>
-                          <div>
-                            <template x-for="tip in (Exercises[ex.id]?.guide || [])" :key="tip">
-                              <p x-text="'• ' + tip" style="margin:0.2rem 0; font-size:0.8rem; color:var(--text-secondary);"></p>
-                            </template>
-                          </div>
-                        </details>
-                      </div>
-                    </template>
-                  </div>
-                </template>
-
-                <!-- Upcoming exercise -->
-                <template x-if="i > currentExIdx">
-                  <div class="routine-item routine-item-upcoming">
-                    <div class="routine-num routine-num-upcoming" x-text="i+1"></div>
-                    <div style="flex:1;">
-                      <div style="color:var(--text-tertiary); font-size:0.85rem;" x-text="getExName(ex.id)"></div>
-                      <div style="color:var(--text-tertiary); font-size:0.7rem; opacity:0.6;" x-text="ex.sets + '×' + ex.reps"></div>
-                    </div>
-                  </div>
-                </template>
-              </div>
-            </template>
-          </div>
-        </template>
-
-        <!-- RPE Check -->
-        <template x-if="phase === 'rpe'">
-          <div class="text-center" style="padding-top:2rem;">
-            <span class="text-label">체감 강도</span>
-            <h3 x-text="currentExInfo.name + ' 완료'" class="mt-sm"></h3>
-            <p class="text-workout-sm">RPE를 선택하세요</p>
-            <div style="display:flex; gap:6px; justify-content:center; margin:1.5rem 0; flex-wrap:wrap;">
-              <template x-for="n in [5,6,7,8,9,10]" :key="n">
-                <button class="set-indicator" :class="rpeValue === n ? 'set-current' : 'set-pending'"
-                        @click="rpeValue = n" x-text="n"></button>
-              </template>
-            </div>
-            <button class="btn-lg btn-primary" style="width:100%;" @click="submitRPE()" :disabled="!rpeValue">확인</button>
-          </div>
-        </template>
-
-        <!-- Cooldown -->
-        <template x-if="phase === 'cooldown'">
-          <div class="text-center" style="padding-top:1rem;">
-            <span class="text-label">쿨다운</span>
-            <h3 x-text="getCooldownStep()?.name || '완료'" class="mt-sm"></h3>
-            <p class="text-workout-sm" x-text="getCooldownStep()?.desc || ''"></p>
-            <div class="timer-display mt-lg mb-md" x-text="timerDisplay"></div>
-            <button class="btn-lg btn-primary" style="width:100%;" @click="nextCooldownStep()">다음</button>
-          </div>
-        </template>
-
-        <!-- Done -->
-        <template x-if="phase === 'done'">
-          <div class="text-center" style="padding-top:2rem;">
-            <div style="font-size:3rem; margin-bottom:0.5rem;">🎉</div>
-            <h2>운동 완료!</h2>
-            <div class="stats-grid mt-lg">
-              <div class="stat-card"><div class="stat-value" x-text="totalSets"></div><div class="text-workout-sm">세트</div></div>
-              <div class="stat-card"><div class="stat-value" x-text="sessionDuration"></div><div class="text-workout-sm">시간</div></div>
-              <div class="stat-card"><div class="stat-value" x-text="'+' + xpEarned"></div><div class="text-workout-sm">XP</div></div>
-            </div>
-            <template x-if="levelUpInfo?.eligible">
-              <div class="card card-highlight mt-md" style="text-align:left;">
-                <h4>단계 승급 가능!</h4>
-                <p class="text-workout-sm" x-text="Routines.phaseNames[levelUpInfo.nextPhase] + ' 진입 기준 충족'"></p>
-                <div style="display:flex; gap:8px; margin-top:0.75rem;">
-                  <button class="btn-lg btn-primary" style="flex:1;" @click="acceptLevelUp()">승급하기</button>
-                  <button class="btn-lg" style="flex:1; background:var(--glass); border:1px solid var(--glass-border);" @click="levelUpInfo = null">나중에</button>
-                </div>
-              </div>
-            </template>
-            <template x-if="newBadges.length > 0">
-              <div class="mt-md">
-                <span class="section-label">새로운 뱃지!</span>
-                <div style="display:flex; gap:6px; justify-content:center; margin-top:0.4rem;">
-                  <template x-for="b in newBadges" :key="b">
-                    <div class="badge" style="background:rgba(253,203,110,0.15); border:1px solid rgba(253,203,110,0.3);">
-                      <span x-text="Progressions.badges[b]?.icon || '🏅'"></span>
-                    </div>
-                  </template>
-                </div>
-              </div>
-            </template>
-            <button class="btn-lg btn-primary mt-lg" style="width:100%;" @click="$root.navigate('home')">홈으로</button>
-          </div>
-        </template>
-
-      </div>
-    </div>
-
-    <!-- ==================== HISTORY ==================== -->
-    <div x-show="page === 'history'" x-cloak>
-      <div x-data="historyPage">
-        <h2>운동 기록</h2>
-        <div class="flex-between mb-md">
-          <button class="btn-round" @click="prevMonth()">◀</button>
-          <span x-text="monthLabel" style="font-weight:600;"></span>
-          <button class="btn-round" @click="nextMonth()">▶</button>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:4px; text-align:center;" class="mb-lg">
-          <template x-for="label in ['월','화','수','목','금','토','일']">
-            <small style="font-size:0.65rem; color:var(--text-tertiary); font-weight:600;" x-text="label"></small>
-          </template>
-          <template x-for="day in calendarDays" :key="day.date || day.num">
-            <div class="calendar-day" @click="day.hasWorkout && selectDate(day.date)"
-                 :class="[day.hasWorkout ? 'calendar-day-active' : '', day.isToday ? 'calendar-day-today' : '']"
-                 x-text="day.num || ''">
-            </div>
-          </template>
-        </div>
-        <template x-if="selectedDate">
-          <div>
-            <h3 x-text="selectedDate"></h3>
-            <template x-for="log in selectedLogs" :key="log.exercise + '-' + log.set_num">
-              <div class="card" style="padding:0.6rem 0.75rem;">
-                <div class="flex-between">
-                  <span style="font-size:0.9rem;" x-text="getExName(log.exercise)"></span>
-                  <span class="text-workout-sm" x-text="'세트' + log.set_num + ' · ' + log.reps + '회'"></span>
-                </div>
-                <small x-show="log.rpe" style="color:var(--accent); font-size:0.75rem;" x-text="'RPE ' + log.rpe"></small>
-              </div>
-            </template>
-            <p x-show="selectedLogs.length === 0" class="text-workout-sm text-center">기록이 없습니다.</p>
-          </div>
-        </template>
-      </div>
-    </div>
-
-    <!-- ==================== PROGRESS ==================== -->
-    <div x-show="page === 'progress'" x-cloak>
-      <div x-data="progressPage" x-init="loadCharts()">
-        <h2>진행도</h2>
-        <div class="mb-lg">
-          <div class="flex-between mb-sm">
-            <span class="text-label" x-text="phaseName + ' · Lv.' + level"></span>
-            <span style="font-size:0.7rem; color:var(--accent);" x-text="'XP ' + state.xp"></span>
-          </div>
-          <div class="progress-bar"><div class="progress-bar-fill" :style="'width:' + xpProgress.percent + '%'"></div></div>
-        </div>
-        <div class="stats-grid">
-          <div class="stat-card"><div class="stat-value" x-text="state.total_workouts"></div><div class="text-workout-sm">총 운동</div></div>
-          <div class="stat-card"><div class="stat-value" x-text="state.streak"></div><div class="text-workout-sm">연속일</div></div>
-          <div class="stat-card"><div class="stat-value" x-text="state.best_streak || 0"></div><div class="text-workout-sm">최장</div></div>
-        </div>
-        <h3>종목별 성장</h3>
-        <div class="mb-md">
-          <select x-model="selectedExercise" @change="renderChart()" style="width:100%;">
-            <template x-for="ex in trackedExercises" :key="ex"><option :value="ex" x-text="getExName(ex)"></option></template>
-          </select>
-        </div>
-        <div x-ref="chartContainer" class="mb-lg" style="min-height:200px;"></div>
-        <span class="section-label">뱃지 컬렉션</span>
-        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:0.4rem;">
-          <template x-for="(badge, id) in Progressions.badges" :key="id">
-            <div class="badge" :style="hasBadge(id) ? 'background:rgba(253,203,110,0.15); border:1px solid rgba(253,203,110,0.3);' : 'background:var(--glass); border:1px solid var(--glass-border); opacity:0.25;'" :title="badge.name"><span x-text="badge.icon"></span></div>
-          </template>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== SETTINGS ==================== -->
-    <div x-show="page === 'settings'" x-cloak>
-      <div x-data="settingsPage">
-        <h2>설정</h2>
-        <div class="card flex-between">
-          <span>다크/라이트 모드</span>
-          <button class="btn-round" @click="$root.toggleTheme()" x-text="currentTheme === 'dark' ? '🌙' : '☀️'" style="font-size:1.2rem;"></button>
-        </div>
-        <div class="card">
-          <span class="text-label">현재 단계</span>
-          <p style="margin:4px 0 0; font-weight:600;" x-text="phaseName + ' · Lv.' + level"></p>
-          <p class="text-workout-sm" x-text="'총 ' + state.total_workouts + '회 운동'"></p>
-        </div>
-        <div class="card">
-          <span class="text-label">주간 스케줄</span>
-          <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:4px; text-align:center; margin-top:0.5rem;">
-            <template x-for="(label, i) in ['월','화','수','목','금','토','일']" :key="i">
-              <div>
-                <small style="font-size:0.6rem; color:var(--text-tertiary);" x-text="label"></small>
-                <select style="padding:4px; text-align:center; font-size:0.8rem; background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius-sm); color:var(--text-primary);"
-                        :value="getScheduleForDow(i)" @change="updateSchedule(i, $event.target.value)">
-                  <option value="">휴</option><option value="A">A</option><option value="B">B</option>
-                </select>
-              </div>
-            </template>
-          </div>
-        </div>
-        <div class="card">
-          <span class="text-label">Google Sheets 동기화</span>
-          <div style="margin-top:0.5rem;">
-            <input type="url" x-model="sheetsUrl" placeholder="Apps Script URL" style="width:100%; margin-bottom:0.5rem; background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius-sm); padding:8px 12px; color:var(--text-primary);">
-            <input type="text" x-model="apiKey" placeholder="API Key" style="width:100%; margin-bottom:0.5rem; background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius-sm); padding:8px 12px; color:var(--text-primary);">
-          </div>
-          <div style="display:flex; gap:8px;">
-            <button class="btn-lg" style="flex:1; background:var(--glass); border:1px solid var(--glass-border);" @click="saveSheetsConfig()">저장</button>
-            <button class="btn-lg btn-primary" style="flex:1;" @click="syncNow()" :disabled="!sheetsUrl">동기화</button>
-          </div>
-          <small class="text-workout-sm mt-sm" x-show="syncStatus" x-text="syncStatus" style="display:block;"></small>
-        </div>
-        <div class="card">
-          <span class="text-label">데이터 관리</span>
-          <div style="display:flex; gap:8px; margin-top:0.5rem;">
-            <button class="btn-lg" style="flex:1; background:var(--glass); border:1px solid var(--glass-border);" @click="exportData()">내보내기</button>
-            <button class="btn-lg" style="flex:1; background:var(--glass); border:1px solid var(--glass-border);" @click="$refs.importFile.click()">가져오기</button>
-            <input type="file" accept=".json" x-ref="importFile" @change="importData($event)" style="display:none;">
-          </div>
-        </div>
-        <div class="card" style="border-color:var(--danger);">
-          <span class="text-label" style="color:var(--danger);">초기화</span>
-          <p class="text-workout-sm mt-sm">모든 데이터를 삭제합니다.</p>
-          <button class="btn-lg btn-danger mt-sm" style="width:100%; opacity:0.8;" @click="resetConfirm()">전체 초기화</button>
-        </div>
-      </div>
-    </div>
-
+  <main id="main">
+    <section id="tab-today" class="tab-content active"></section>
+    <section id="tab-curriculum" class="tab-content"></section>
+    <section id="tab-records" class="tab-content"></section>
+    <section id="tab-guide" class="tab-content"></section>
   </main>
 
-  <!-- Bottom Tab Navigation -->
-  <nav class="bottom-nav" role="tablist">
-    <a role="tab" :class="{ active: page === 'home' }" @click.prevent="navigate('home')" href="#/home">
-      <span class="tab-icon">🏠</span><span class="tab-label">Home</span>
-    </a>
-    <a role="tab" :class="{ active: page === 'workout' }" @click.prevent="navigate('workout')" href="#/workout">
-      <span class="tab-icon">💪</span><span class="tab-label">Workout</span>
-    </a>
-    <a role="tab" :class="{ active: page === 'history' }" @click.prevent="navigate('history')" href="#/history">
-      <span class="tab-icon">📋</span><span class="tab-label">History</span>
-    </a>
-    <a role="tab" :class="{ active: page === 'progress' }" @click.prevent="navigate('progress')" href="#/progress">
-      <span class="tab-icon">📈</span><span class="tab-label">Progress</span>
-    </a>
-    <a role="tab" :class="{ active: page === 'settings' }" @click.prevent="navigate('settings')" href="#/settings">
-      <span class="tab-icon">⚙️</span><span class="tab-label">Settings</span>
-    </a>
+  <nav id="tab-bar">
+    <!-- today: play/circle icon -->
+    <button class="tab-btn active" data-tab="today">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/>
+      </svg>
+      <span>오늘</span>
+    </button>
+    <!-- curriculum: list icon -->
+    <button class="tab-btn" data-tab="curriculum">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="8" y1="6" x2="21" y2="6"/>
+        <line x1="8" y1="12" x2="21" y2="12"/>
+        <line x1="8" y1="18" x2="21" y2="18"/>
+        <circle cx="4" cy="6" r="1" fill="currentColor"/>
+        <circle cx="4" cy="12" r="1" fill="currentColor"/>
+        <circle cx="4" cy="18" r="1" fill="currentColor"/>
+      </svg>
+      <span>커리큘럼</span>
+    </button>
+    <!-- records: calendar icon -->
+    <button class="tab-btn" data-tab="records">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      <span>기록</span>
+    </button>
+    <!-- guide: book-open icon -->
+    <button class="tab-btn" data-tab="guide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+      </svg>
+      <span>가이드</span>
+    </button>
   </nav>
 
-  <!-- Scripts: Utils (no deps) -->
-  <script src="js/utils/wakelock.js"></script>
-  <script src="js/utils/haptic.js"></script>
-  <!-- Data (no deps) -->
-  <script src="js/data/exercises.js"></script>
-  <script src="js/data/routines.js"></script>
-  <script src="js/data/progressions.js"></script>
-  <script src="js/data/motivation.js"></script>
-  <!-- Modules (may depend on data) -->
-  <script src="js/modules/storage.js"></script>
-  <script src="js/modules/timer.js"></script>
-  <script src="js/modules/safety.js"></script>
-  <script src="js/modules/charts.js"></script>
-  <script src="js/modules/sheets-api.js"></script>
-  <script src="js/modules/gamification.js"></script>
-  <!-- App (depends on everything above) MUST load before Alpine -->
-  <script src="js/app.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
+</div>
+
+<!-- ======================================================================
+     JAVASCRIPT
+     ====================================================================== -->
+<script>
+/* ==========================================================================
+   STATE
+   ========================================================================== */
+
+const state = {
+  exercises: [],
+  todayProgram: [],
+  config: {},
+  logs: [],
+  programs: [],
+  today: '',
+  activeTab: 'today',
+  sessionProgress: {},
+  exerciseMap: {},
+  guideFilter: '전체',
+  guideScrollTo: null,
+  recordsMonth: null,
+  recordsDate: null
+};
+
+/* ==========================================================================
+   API CLIENT
+   ========================================================================== */
+
+const API_URL = localStorage.getItem('sheets_url') || '';
+
+const api = {
+  async init() {
+    const res = await fetch(API_URL + '?action=init');
+    return res.json();
+  },
+  async getPrograms(month) {
+    const res = await fetch(API_URL + '?action=programs&month=' + month);
+    return res.json();
+  },
+  async getLogs(month) {
+    const res = await fetch(API_URL + '?action=logs&month=' + month);
+    return res.json();
+  },
+  async getExercises() {
+    const res = await fetch(API_URL + '?action=exercises');
+    return res.json();
+  },
+  async postLog(data) {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'log', ...data })
+    });
+    return res.json();
+  },
+  async postConfig(key, value) {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'config', key, value })
+    });
+    return res.json();
+  }
+};
+
+/* ==========================================================================
+   TAB ROUTER
+   ========================================================================== */
+
+function switchTab(tabName) {
+  state.activeTab = tabName;
+  document.querySelectorAll('.tab-content').forEach(function(el) {
+    el.classList.remove('active');
+  });
+  document.querySelectorAll('.tab-btn').forEach(function(el) {
+    el.classList.remove('active');
+  });
+  document.getElementById('tab-' + tabName).classList.add('active');
+  document.querySelector('[data-tab="' + tabName + '"]').classList.add('active');
+  window.location.hash = '/' + tabName;
+  renderTab(tabName);
+}
+
+document.getElementById('tab-bar').addEventListener('click', function(e) {
+  var btn = e.target.closest('.tab-btn');
+  if (btn) switchTab(btn.dataset.tab);
+});
+
+function handleHash() {
+  var hash = window.location.hash.replace('#/', '') || 'today';
+  if (['today', 'curriculum', 'records', 'guide'].includes(hash)) {
+    switchTab(hash);
+  }
+}
+
+window.addEventListener('hashchange', handleHash);
+
+function renderTab(name) {
+  switch (name) {
+    case 'today': renderToday(); break;
+    case 'curriculum': renderCurriculum(); break;
+    case 'records': renderRecords(); break;
+    case 'guide': renderGuide(); break;
+  }
+}
+
+/* ==========================================================================
+   RENDERERS (Tasks 5-8 will replace these)
+   ========================================================================== */
+
+function renderToday() {}
+function renderCurriculum() {}
+function renderRecords() {}
+function renderGuide() {}
+
+/* ==========================================================================
+   UTILITIES
+   ========================================================================== */
+
+function formatDateKR(dateStr) {
+  var d = new Date(dateStr + 'T00:00:00');
+  var days = ['일', '월', '화', '수', '목', '금', '토'];
+  return (d.getMonth() + 1) + '월 ' + d.getDate() + '일 ' + days[d.getDay()] + '요일';
+}
+
+/* ==========================================================================
+   APP INIT
+   ========================================================================== */
+
+async function initApp() {
+  try {
+    if (!API_URL) {
+      showSetup();
+      return;
+    }
+
+    var data = await api.init();
+    if (data.error) throw new Error(data.error);
+
+    Object.assign(state, data);
+
+    // Build exercise lookup map
+    state.exerciseMap = {};
+    state.exercises.forEach(function(ex) {
+      state.exerciseMap[ex.id] = ex;
+    });
+
+    // Initialize session progress for today's program
+    state.todayProgram.forEach(function(p) {
+      state.sessionProgress[p.exercise_id] = new Array(Number(p.sets)).fill(false);
+    });
+
+    // Load full month data
+    var month = state.today.substring(0, 7);
+    var results = await Promise.all([
+      api.getLogs(month),
+      api.getPrograms(month)
+    ]);
+    var logsData = results[0];
+    var programsData = results[1];
+
+    if (logsData.logs) state.logs = logsData.logs;
+    if (programsData.programs) state.programs = programsData.programs;
+
+    // Show app
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('app').style.display = '';
+    handleHash();
+
+  } catch (err) {
+    // NOTE: innerHTML used here with static markup + err.message from fetch API.
+    // This is a single-user personal tool; data source is trusted (user's own Sheets).
+    var el = document.getElementById('loading');
+    el.textContent = '';
+    var p = document.createElement('p');
+    p.style.color = 'var(--warning)';
+    p.textContent = '연결 실패: ' + err.message;
+    el.appendChild(p);
+    var btn = document.createElement('button');
+    btn.className = 'btn-primary';
+    btn.style.marginTop = 'var(--space-4)';
+    btn.textContent = '설정';
+    btn.onclick = showSetup;
+    el.appendChild(btn);
+  }
+}
+
+function showSetup() {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('app').style.display = '';
+  var main = document.getElementById('main');
+  // Build setup card with DOM API for safety
+  main.textContent = '';
+  var card = document.createElement('div');
+  card.className = 'setup-card';
+
+  var h2 = document.createElement('h2');
+  h2.style.cssText = 'font-size:var(--text-xl);font-weight:var(--weight-bold);margin-bottom:var(--space-3)';
+  h2.textContent = '초기 설정';
+  card.appendChild(h2);
+
+  var desc = document.createElement('p');
+  desc.style.cssText = 'color:var(--text-secondary);margin-bottom:var(--space-4)';
+  desc.textContent = 'Google Apps Script 웹앱 URL을 입력하세요.';
+  card.appendChild(desc);
+
+  var input = document.createElement('input');
+  input.type = 'url';
+  input.id = 'setup-url';
+  input.placeholder = 'https://script.google.com/...';
+  input.style.fontFamily = 'var(--font-sans)';
+  card.appendChild(input);
+
+  var btn = document.createElement('button');
+  btn.className = 'btn-primary';
+  btn.style.cssText = 'margin-top:var(--space-4);width:100%';
+  btn.textContent = '저장';
+  btn.onclick = saveSetup;
+  card.appendChild(btn);
+
+  main.appendChild(card);
+}
+
+function saveSetup() {
+  var url = document.getElementById('setup-url').value.trim();
+  if (url) {
+    localStorage.setItem('sheets_url', url);
+    location.reload();
+  }
+}
+
+// Start the app // 2026-04-04
+initApp();
+</script>
 </body>
 </html>
