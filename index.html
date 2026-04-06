@@ -5,43 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>맨몸운동</title>
   <meta name="description" content="맨몸운동 루틴 관리 앱">
-  <meta name="theme-color" content="#FAF9F7" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0C0A09" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#FAFAFA" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#09090B" media="(prefers-color-scheme: dark)">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 
 <style>
 /* ==========================================================================
-   VARIABLES — Premium Warm Fitness Palette
-   2026-04-04 — Full GUI redesign
+   VARIABLES — Refined Zinc/Blue Palette
+   2026-04-06 — Palette upgrade: warm orange → clean blue, zinc neutrals
    ========================================================================== */
 
 :root {
-  /* Colors — Light (warm stone undertone) */
-  --bg-primary: #FAF9F7;
+  /* Colors — Light (clean zinc undertone) */
+  --bg-primary: #FAFAFA;
   --bg-secondary: #FFFFFF;
-  --bg-tertiary: #F5F3F0;
-  --text-primary: #1C1917;
-  --text-secondary: #78716C;
-  --text-tertiary: #A8A29E;
-  --accent: #E5652F;
-  --accent-hover: #D4561F;
-  --accent-soft: #FFF4EF;
-  --accent-muted: rgba(229, 101, 47, 0.12);
+  --bg-tertiary: #F4F4F5;
+  --text-primary: #18181B;
+  --text-secondary: #71717A;
+  --text-tertiary: #A1A1AA;
+  --accent: #2563EB;
+  --accent-hover: #1D4ED8;
+  --accent-soft: #EFF6FF;
+  --accent-muted: rgba(37, 99, 235, 0.10);
   --success: #059669;
   --success-soft: #ECFDF5;
   --warning: #D97706;
   --warning-soft: #FFFBEB;
-  --border: #E7E5E4;
-  --border-subtle: #F0EDEB;
+  --border: #E4E4E7;
+  --border-subtle: #F4F4F5;
 
-  /* Shadows — tinted warm */
-  --shadow-xs: 0 1px 2px rgba(28, 25, 23, 0.03);
-  --shadow-sm: 0 1px 3px rgba(28, 25, 23, 0.05), 0 1px 2px rgba(28, 25, 23, 0.03);
-  --shadow-md: 0 4px 12px rgba(28, 25, 23, 0.06), 0 2px 4px rgba(28, 25, 23, 0.03);
-  --shadow-lg: 0 8px 24px rgba(28, 25, 23, 0.08), 0 4px 8px rgba(28, 25, 23, 0.04);
-  --shadow-xl: 0 16px 40px rgba(28, 25, 23, 0.10), 0 6px 12px rgba(28, 25, 23, 0.05);
+  /* Shadows — zinc-tinted */
+  --shadow-xs: 0 1px 2px rgba(24, 24, 27, 0.03);
+  --shadow-sm: 0 1px 3px rgba(24, 24, 27, 0.04), 0 1px 2px rgba(24, 24, 27, 0.02);
+  --shadow-md: 0 4px 12px rgba(24, 24, 27, 0.05), 0 2px 4px rgba(24, 24, 27, 0.03);
+  --shadow-lg: 0 8px 24px rgba(24, 24, 27, 0.07), 0 4px 8px rgba(24, 24, 27, 0.03);
+  --shadow-xl: 0 16px 40px rgba(24, 24, 27, 0.09), 0 6px 12px rgba(24, 24, 27, 0.04);
 
   /* Spacing — 4px grid */
   --space-1: 4px;
@@ -97,43 +97,44 @@
   --tab-height: 68px;
 
   /* Glass */
-  --glass-bg: rgba(255, 255, 255, 0.82);
-  --glass-border: rgba(255, 255, 255, 0.5);
-  --glass-blur: 24px;
+  --glass-bg: rgba(250, 250, 250, 0.85);
+  --glass-border: rgba(228, 228, 231, 0.6);
+  --glass-blur: 16px;
 }
 
 /* ==========================================================================
-   DARK MODE — Rich warm dark
+   DARK MODE — Zinc dark
+   2026-04-06 — Warm stone → zinc-950/900/800
    ========================================================================== */
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-primary: #0C0A09;
-    --bg-secondary: #1C1917;
-    --bg-tertiary: #292524;
-    --text-primary: #FAFAF9;
-    --text-secondary: #A8A29E;
-    --text-tertiary: #78716C;
-    --accent: #F97316;
-    --accent-hover: #FB923C;
-    --accent-soft: #2D1A10;
-    --accent-muted: rgba(249, 115, 22, 0.15);
+    --bg-primary: #09090B;
+    --bg-secondary: #18181B;
+    --bg-tertiary: #27272A;
+    --text-primary: #FAFAFA;
+    --text-secondary: #A1A1AA;
+    --text-tertiary: #52525B;
+    --accent: #3B82F6;
+    --accent-hover: #2563EB;
+    --accent-soft: #1E293B;
+    --accent-muted: rgba(59, 130, 246, 0.15);
     --success: #34D399;
     --success-soft: #052E16;
     --warning: #FBBF24;
     --warning-soft: #422006;
-    --border: #2E2A27;
-    --border-subtle: #231F1D;
+    --border: #27272A;
+    --border-subtle: #1F1F23;
 
-    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.15);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15);
-    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2);
-    --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.35), 0 6px 12px rgba(0, 0, 0, 0.2);
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.18);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.22), 0 1px 2px rgba(0, 0, 0, 0.16);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.28), 0 2px 4px rgba(0, 0, 0, 0.18);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.32), 0 4px 8px rgba(0, 0, 0, 0.22);
+    --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.38), 0 6px 12px rgba(0, 0, 0, 0.24);
 
-    --glass-bg: rgba(12, 10, 9, 0.8);
+    --glass-bg: rgba(9, 9, 11, 0.85);
     --glass-border: rgba(255, 255, 255, 0.06);
-    --glass-blur: 24px;
+    --glass-blur: 16px;
   }
 }
 
@@ -192,7 +193,7 @@ body {
   bottom: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.025;
+  opacity: 0.015;
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
@@ -201,7 +202,7 @@ body {
 
 @media (prefers-color-scheme: dark) {
   .grain-overlay {
-    opacity: 0.04;
+    opacity: 0.015;
     mix-blend-mode: screen;
   }
 }
@@ -228,8 +229,8 @@ body {
 
 .app-title {
   font-size: var(--text-3xl);
-  font-weight: var(--weight-extrabold);
-  letter-spacing: -0.04em;
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.035em;
   line-height: var(--leading-tight);
   color: var(--text-primary);
 }
@@ -272,8 +273,8 @@ body {
   width: 100%;
   height: var(--tab-height);
   background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
   border-top: 1px solid var(--glass-border);
   display: flex;
   justify-content: space-around;
@@ -620,7 +621,7 @@ body {
               opacity var(--duration-normal) var(--ease-out),
               border-color var(--duration-normal) var(--ease-out);
   animation: cardCascade var(--duration-slow) var(--ease-out) both;
-  animation-delay: calc(var(--i, 0) * 60ms);
+  animation-delay: calc(var(--i, 0) * 40ms);
 }
 
 .workout-card.is-current {
@@ -676,18 +677,18 @@ body {
 /* NOW badge — pulse animation */
 .now-badge {
   font-size: 10px;
-  font-weight: var(--weight-extrabold);
+  font-weight: var(--weight-bold);
   color: var(--accent);
   background-color: var(--accent-soft);
   padding: 3px 10px;
   border-radius: var(--radius-full);
   letter-spacing: 0.06em;
-  animation: nowPulse 2s ease-in-out infinite;
+  animation: nowPulse 2.5s ease-in-out infinite;
 }
 
 .done-badge {
   font-size: 10px;
-  font-weight: var(--weight-extrabold);
+  font-weight: var(--weight-bold);
   color: var(--success);
   background-color: var(--success-soft);
   padding: 3px 10px;
@@ -852,10 +853,9 @@ body {
 .complete-banner {
   text-align: center;
   padding: var(--space-8) var(--space-6);
-  background: linear-gradient(135deg, var(--success-soft) 0%, rgba(5, 150, 105, 0.08) 100%);
+  background-color: var(--success-soft);
   border-radius: var(--radius-xl);
   margin: var(--space-4) var(--space-1);
-  animation: bannerGlow 3s ease-in-out infinite;
 }
 
 .complete-banner h3 {
@@ -918,12 +918,12 @@ body {
   background-color: var(--accent);
   border-color: var(--accent);
   color: #FFFFFF;
-  box-shadow: 0 2px 8px rgba(229, 101, 47, 0.25);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.20);
 }
 
 @media (prefers-color-scheme: dark) {
   .filter-chip.active {
-    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
   }
 }
 
@@ -1134,7 +1134,7 @@ body {
               box-shadow var(--duration-normal) var(--ease-out),
               transform var(--duration-normal) var(--ease-out);
   animation: cardCascade var(--duration-slow) var(--ease-out) both;
-  animation-delay: calc(var(--i, 0) * 60ms);
+  animation-delay: calc(var(--i, 0) * 40ms);
 }
 
 .level-card.is-current {
@@ -1272,7 +1272,7 @@ body {
 
 .progress-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--accent) 0%, #F97316 100%);
+  background: var(--accent);
   border-radius: var(--radius-full);
   transition: width var(--duration-slow) var(--ease-out);
   animation: progressFill 0.8s var(--ease-out);
@@ -1283,15 +1283,9 @@ body {
 .promotion-box {
   margin-top: var(--space-5);
   padding: var(--space-5);
-  background: linear-gradient(135deg, var(--accent-soft) 0%, rgba(229, 101, 47, 0.06) 100%);
+  background-color: var(--accent-soft);
   border-radius: var(--radius-md);
   text-align: center;
-}
-
-@media (prefers-color-scheme: dark) {
-  .promotion-box {
-    background: linear-gradient(135deg, var(--accent-soft) 0%, rgba(249, 115, 22, 0.08) 100%);
-  }
 }
 
 .promotion-box p {
@@ -1452,12 +1446,12 @@ body {
   color: #FFFFFF;
   border-radius: var(--radius-sm);
   font-weight: var(--weight-bold);
-  box-shadow: 0 2px 6px rgba(229, 101, 47, 0.3);
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
 }
 
 @media (prefers-color-scheme: dark) {
   .day-cell.selected {
-    box-shadow: 0 2px 6px rgba(249, 115, 22, 0.35);
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.30);
   }
 }
 
@@ -1539,7 +1533,7 @@ body {
 
 .journal-summary {
   padding: var(--space-4) var(--space-5);
-  background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+  background-color: var(--bg-tertiary);
   border-radius: var(--radius-md);
   margin-top: var(--space-4);
   font-size: var(--text-sm);
