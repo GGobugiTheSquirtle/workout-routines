@@ -1,161 +1,161 @@
 ﻿date,day_label,order,exercise_id,sets,reps,rest_sec,promotion_criteria,note
-2026-04-07,Day A — Push+Core,1,pushup_incline,3,8,60,3세트x15회 안정 수행 3회 달성 → pushup_standard 진급,"첫 주! 폼에 집중, 무리하지 않기. | 30분 세션. Push+Core. | 8회. 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-04-07,Day A — Push+Core,2,pushup_close_incline,3,6,60,3세트x12회 안정 수행 → pushup_diamond 진급 (삼두 충분히 강화 후),"첫 주! 폼에 집중, 무리하지 않기. | 30분 세션. Push+Core. | 6회. 팔꿈치 몸통 밀착! 삼두근 수축 집중."
-2026-04-07,Day A — Push+Core,3,plank_standard,3,20초,30,3세트x45초 안정 → plank_side 진급,"첫 주! 폼에 집중, 무리하지 않기. | 30분 세션. Push+Core. | 20초. 배꼽을 척추 쪽으로 당기며 버티기."
-2026-04-07,Day A — Push+Core,4,dead_bug,3,8,30,3세트x15회 안정 → bird_dog 진급,"첫 주! 폼에 집중, 무리하지 않기. | 30분 세션. Push+Core. | 8회. 허리를 바닥에 밀착! 반대 팔-다리 교차."
-2026-04-08,REST,,,,,,,화요일 운동 회복일. 근육통 있으면 폼롤링. 내일 Day B 준비.
-2026-04-09,Day B — Pull+Legs,1,scap_pull,3,5,60,3세트x12회 안정 수행 → pullup_negative 진급,"첫 주! 폼에 집중, 무리하지 않기. 5회. 팔 구부리지 말고 견갑골만 아래로 당기기."
-2026-04-09,Day B — Pull+Legs,2,dead_hang,3,15초,60,3세트x30초 안정 수행 3회 달성 → 악력 충분,"첫 주! 폼에 집중, 무리하지 않기. 15초. 견갑골 하방 유지. 어깨 으쓱 절대 금지."
-2026-04-09,Day B — Pull+Legs,3,squat_band,3,15,60,3세트x25회 안정 수행 3회 달성 → squat_bodyweight 진급,"첫 주! 폼에 집중, 무리하지 않기. 15회. 밴드에 저항하며 무릎 바깥으로 밀기."
-2026-04-09,Day B — Pull+Legs,4,kb_deadlift_12,3,8,60,3세트x30회 안정 + 폼 일관 → kb_swing_16 진급,"첫 주! 폼에 집중, 무리하지 않기. 8회. 힌지 패턴 학습: 엉덩이 뒤로, 등 중립, 무릎 약간 구부리기. 스윙 준비! 힌지 패턴 학습 주. 토요일은 스윙으로 전환."
-2026-04-10,REST,,,,,,,목요일 휴식. 내일 Day FULL 전날 에너지 충전.
-2026-04-11,REST,,,,,,,금요일 휴식. 내일 전신 세션(60분) 준비.
-2026-04-12,Day FULL — 전신,1,pushup_incline,4,8,60,,"첫 주! 폼에 집중, 무리하지 않기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-04-12,Day FULL — 전신,2,inverted_row,4,5,60,3세트x12회 안정 → inverted_row_elevated 진급,"첫 주! 폼에 집중, 무리하지 않기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 5회. | 견갑골 후인! 가슴을 바에 당기기."
-2026-04-12,Day FULL — 전신,3,scap_pull,4,5,60,,"첫 주! 폼에 집중, 무리하지 않기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 5회. | 팔 구부리지 말고 견갑골만 아래로 당기기."
-2026-04-12,Day FULL — 전신,4,squat_band,4,15,60,,"첫 주! 폼에 집중, 무리하지 않기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 15회. | 밴드에 저항하며 무릎 바깥으로 밀기."
-2026-04-12,Day FULL — 전신,5,glute_bridge_band,3,12,45,3세트x20회 → glute_bridge_single 진급,"첫 주! 폼에 집중, 무리하지 않기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 정점에서 2초 유지. 둔근 squeeze."
-2026-04-12,Day FULL — 전신,6,kb_swing_12,3,12,60,3세트x20회 안정 수행 3회 달성 → kb_swing_16 진급,"첫 주! 폼에 집중, 무리하지 않기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 힙힌지가 핵심 — 팔이 아닌 골반."
-2026-04-12,Day FULL — 전신,7,lying_knee_raise,3,10,45,3세트x15회 안정 → lying_leg_raise 진급,"첫 주! 폼에 집중, 무리하지 않기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 10회. | 허리 바닥 밀착! 느리게 내리기 3초."
-2026-04-12,Day FULL — 전신,8,calf_raise,3,20,30,,"첫 주! 폼에 집중, 무리하지 않기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 20회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
-2026-04-13,REST,,,,,,,일요일 완전 휴식. 다음 주를 위해 충전하세요.
-2026-04-14,Day A — Push+Core,1,pushup_incline,3,10,60,,"적응 시작, 조금씩 reps 늘려갑니다. | 30분 세션. Push+Core. | 10회. 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-04-14,Day A — Push+Core,2,pushup_close_incline,3,8,60,,"적응 시작, 조금씩 reps 늘려갑니다. | 30분 세션. Push+Core. | 8회. 팔꿈치 몸통 밀착! 삼두근 수축 집중."
-2026-04-14,Day A — Push+Core,3,plank_standard,3,25초,30,,"적응 시작, 조금씩 reps 늘려갑니다. | 30분 세션. Push+Core. | 25초. 배꼽을 척추 쪽으로 당기며 버티기."
-2026-04-14,Day A — Push+Core,4,dead_bug,3,10,30,,"적응 시작, 조금씩 reps 늘려갑니다. | 30분 세션. Push+Core. | 10회. 허리를 바닥에 밀착! 반대 팔-다리 교차."
-2026-04-15,REST,,,,,,,화요일 운동 회복일. 근육통 있으면 폼롤링. 내일 Day B 준비.
-2026-04-16,Day B — Pull+Legs,1,scap_pull,3,7,60,,"적응 시작, 조금씩 reps 늘려갑니다. 7회. 팔 구부리지 말고 견갑골만 아래로 당기기."
-2026-04-16,Day B — Pull+Legs,2,dead_hang,3,20초,60,,"적응 시작, 조금씩 reps 늘려갑니다. 20초. 견갑골 하방 유지. 어깨 으쓱 절대 금지."
-2026-04-16,Day B — Pull+Legs,3,squat_band,3,17,60,,"적응 시작, 조금씩 reps 늘려갑니다. 17회. 밴드에 저항하며 무릎 바깥으로 밀기."
-2026-04-16,Day B — Pull+Legs,4,kb_deadlift_12,3,10,60,,"적응 시작, 조금씩 reps 늘려갑니다. 10회. 힌지 패턴 학습: 엉덩이 뒤로, 등 중립, 무릎 약간 구부리기. 스윙 준비! 힌지 패턴 학습 주. 토요일은 스윙으로 전환."
-2026-04-17,REST,,,,,,,목요일 휴식. 내일 Day FULL 전날 에너지 충전.
-2026-04-18,REST,,,,,,,금요일 휴식. 내일 전신 세션(60분) 준비.
-2026-04-19,Day FULL — 전신,1,pushup_incline,4,10,60,,"적응 시작, 조금씩 reps 늘려갑니다. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 10회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-04-19,Day FULL — 전신,2,inverted_row,4,7,60,,"적응 시작, 조금씩 reps 늘려갑니다. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 7회. | 견갑골 후인! 가슴을 바에 당기기."
-2026-04-19,Day FULL — 전신,3,scap_pull,4,7,60,,"적응 시작, 조금씩 reps 늘려갑니다. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 7회. | 팔 구부리지 말고 견갑골만 아래로 당기기."
-2026-04-19,Day FULL — 전신,4,squat_band,4,17,60,,"적응 시작, 조금씩 reps 늘려갑니다. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 17회. | 밴드에 저항하며 무릎 바깥으로 밀기."
-2026-04-19,Day FULL — 전신,5,glute_bridge_band,3,14,45,,"적응 시작, 조금씩 reps 늘려갑니다. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 14회. | 정점에서 2초 유지. 둔근 squeeze."
-2026-04-19,Day FULL — 전신,6,kb_swing_12,3,12,60,,"적응 시작, 조금씩 reps 늘려갑니다. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 힙힌지가 핵심 — 팔이 아닌 골반."
-2026-04-19,Day FULL — 전신,7,lying_knee_raise,3,12,45,,"적응 시작, 조금씩 reps 늘려갑니다. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 허리 바닥 밀착! 느리게 내리기 3초."
-2026-04-19,Day FULL — 전신,8,calf_raise,3,22,30,,"적응 시작, 조금씩 reps 늘려갑니다. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 22회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
-2026-04-20,REST,,,,,,,일요일 완전 휴식. 다음 주를 위해 충전하세요.
-2026-04-21,Day A — Push+Core,1,pushup_incline,3,12,60,,"피크 주! 최대 볼륨, 한계까지 도전. | 30분 세션. Push+Core. | 12회. 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-04-21,Day A — Push+Core,2,pushup_close_incline,3,10,60,,"피크 주! 최대 볼륨, 한계까지 도전. | 30분 세션. Push+Core. | 10회. 팔꿈치 몸통 밀착! 삼두근 수축 집중."
-2026-04-21,Day A — Push+Core,3,plank_standard,3,30초,30,,"피크 주! 최대 볼륨, 한계까지 도전. | 30분 세션. Push+Core. | 30초. 배꼽을 척추 쪽으로 당기며 버티기."
-2026-04-21,Day A — Push+Core,4,dead_bug,3,12,30,,"피크 주! 최대 볼륨, 한계까지 도전. | 30분 세션. Push+Core. | 12회. 허리를 바닥에 밀착! 반대 팔-다리 교차."
-2026-04-22,REST,,,,,,,화요일 운동 회복일. 근육통 있으면 폼롤링. 내일 Day B 준비.
-2026-04-23,Day B — Pull+Legs,1,scap_pull,3,8,60,,"피크 주! 최대 볼륨, 한계까지 도전. 8회. 팔 구부리지 말고 견갑골만 아래로 당기기."
-2026-04-23,Day B — Pull+Legs,2,dead_hang,3,25초,60,,"피크 주! 최대 볼륨, 한계까지 도전. 25초. 견갑골 하방 유지. 어깨 으쓱 절대 금지."
-2026-04-23,Day B — Pull+Legs,3,squat_band,3,20,60,,"피크 주! 최대 볼륨, 한계까지 도전. 20회. 밴드에 저항하며 무릎 바깥으로 밀기."
-2026-04-23,Day B — Pull+Legs,4,kb_swing_12,3,15,60,,"피크 주! 최대 볼륨, 한계까지 도전. 15회. 힙힌지가 핵심 — 팔이 아닌 골반."
-2026-04-24,REST,,,,,,,목요일 휴식. 내일 Day FULL 전날 에너지 충전.
-2026-04-25,REST,,,,,,,금요일 휴식. 내일 전신 세션(60분) 준비.
-2026-04-26,Day FULL — 전신,1,pushup_incline,4,12,60,,"피크 주! 최대 볼륨, 한계까지 도전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-04-26,Day FULL — 전신,2,inverted_row,4,8,60,,"피크 주! 최대 볼륨, 한계까지 도전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 견갑골 후인! 가슴을 바에 당기기."
-2026-04-26,Day FULL — 전신,3,scap_pull,4,8,60,,"피크 주! 최대 볼륨, 한계까지 도전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 팔 구부리지 말고 견갑골만 아래로 당기기."
-2026-04-26,Day FULL — 전신,4,squat_band,4,20,60,,"피크 주! 최대 볼륨, 한계까지 도전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 20회. | 밴드에 저항하며 무릎 바깥으로 밀기."
-2026-04-26,Day FULL — 전신,5,glute_bridge_band,3,16,45,,"피크 주! 최대 볼륨, 한계까지 도전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 16회. | 정점에서 2초 유지. 둔근 squeeze."
-2026-04-26,Day FULL — 전신,6,kb_swing_12,3,15,60,,"피크 주! 최대 볼륨, 한계까지 도전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 15회. | 힙힌지가 핵심 — 팔이 아닌 골반."
-2026-04-26,Day FULL — 전신,7,lying_knee_raise,3,14,45,,"피크 주! 최대 볼륨, 한계까지 도전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 14회. | 허리 바닥 밀착! 느리게 내리기 3초."
-2026-04-26,Day FULL — 전신,8,calf_raise,3,25,30,,"피크 주! 최대 볼륨, 한계까지 도전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 25회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
-2026-04-27,REST,,,,,,,일요일 완전 휴식. 다음 주를 위해 충전하세요.
-2026-04-28,Day A — Push+Core,1,pushup_incline,2,8,60,,"회복 주, 폼 점검과 다음 블록 준비. | 30분 세션. Push+Core. | 8회. 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-04-28,Day A — Push+Core,2,pushup_close_incline,2,6,60,,"회복 주, 폼 점검과 다음 블록 준비. | 30분 세션. Push+Core. | 6회. 팔꿈치 몸통 밀착! 삼두근 수축 집중."
-2026-04-28,Day A — Push+Core,3,plank_standard,2,20초,30,,"회복 주, 폼 점검과 다음 블록 준비. | 30분 세션. Push+Core. | 20초. 배꼽을 척추 쪽으로 당기며 버티기."
-2026-04-28,Day A — Push+Core,4,dead_bug,2,8,30,,"회복 주, 폼 점검과 다음 블록 준비. | 30분 세션. Push+Core. | 8회. 허리를 바닥에 밀착! 반대 팔-다리 교차."
-2026-04-29,REST,,,,,,,화요일 운동 회복일. 근육통 있으면 폼롤링. 내일 Day B 준비.
-2026-04-30,Day B — Pull+Legs,1,scap_pull,2,5,60,,"회복 주, 폼 점검과 다음 블록 준비. 5회. 팔 구부리지 말고 견갑골만 아래로 당기기."
-2026-04-30,Day B — Pull+Legs,2,dead_hang,2,15초,60,,"회복 주, 폼 점검과 다음 블록 준비. 15초. 견갑골 하방 유지. 어깨 으쓱 절대 금지."
-2026-04-30,Day B — Pull+Legs,3,squat_band,2,15,60,,"회복 주, 폼 점검과 다음 블록 준비. 15회. 밴드에 저항하며 무릎 바깥으로 밀기."
-2026-04-30,Day B — Pull+Legs,4,kb_swing_12,2,12,60,,"회복 주, 폼 점검과 다음 블록 준비. 12회. 힙힌지가 핵심 — 팔이 아닌 골반."
-2026-05-01,REST,,,,,,,목요일 휴식. 내일 Day FULL 전날 에너지 충전.
-2026-05-02,REST,,,,,,,금요일 휴식. 내일 전신 세션(60분) 준비.
-2026-05-03,Day FULL — 전신,1,pushup_incline,3,8,60,,"회복 주, 폼 점검과 다음 블록 준비. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-05-03,Day FULL — 전신,2,inverted_row,3,5,60,,"회복 주, 폼 점검과 다음 블록 준비. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 5회. | 견갑골 후인! 가슴을 바에 당기기."
-2026-05-03,Day FULL — 전신,3,scap_pull,3,5,60,,"회복 주, 폼 점검과 다음 블록 준비. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 5회. | 팔 구부리지 말고 견갑골만 아래로 당기기."
-2026-05-03,Day FULL — 전신,4,squat_band,3,15,60,,"회복 주, 폼 점검과 다음 블록 준비. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 15회. | 밴드에 저항하며 무릎 바깥으로 밀기."
-2026-05-03,Day FULL — 전신,5,glute_bridge_band,2,12,45,,"회복 주, 폼 점검과 다음 블록 준비. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 정점에서 2초 유지. 둔근 squeeze."
-2026-05-03,Day FULL — 전신,6,kb_swing_12,2,12,60,,"회복 주, 폼 점검과 다음 블록 준비. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 힙힌지가 핵심 — 팔이 아닌 골반."
-2026-05-03,Day FULL — 전신,7,lying_knee_raise,2,10,45,,"회복 주, 폼 점검과 다음 블록 준비. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 10회. | 허리 바닥 밀착! 느리게 내리기 3초."
-2026-05-03,Day FULL — 전신,8,calf_raise,2,20,30,,"회복 주, 폼 점검과 다음 블록 준비. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 20회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
-2026-05-04,REST,,,,,,,일요일 완전 휴식. 다음 주를 위해 충전하세요.
-2026-05-05,Day A — Push+Core,1,pushup_incline,3,12,60,,"새 블록 시작! 이전 피크가 새 기준. | 30분 세션. Push+Core. | 12회. 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-05-05,Day A — Push+Core,2,pushup_close_incline,3,10,60,,새 블록 시작! 이전 피크가 새 기준. | 30분 세션. Push+Core. | 10회. 팔꿈치 몸통 밀착! 삼두근 수축 집중.
-2026-05-05,Day A — Push+Core,3,plank_standard,3,30초,30,,새 블록 시작! 이전 피크가 새 기준. | 30분 세션. Push+Core. | 30초. 배꼽을 척추 쪽으로 당기며 버티기.
-2026-05-05,Day A — Push+Core,4,dead_bug,3,12,30,,새 블록 시작! 이전 피크가 새 기준. | 30분 세션. Push+Core. | 12회. 허리를 바닥에 밀착! 반대 팔-다리 교차.
-2026-05-06,REST,,,,,,,화요일 운동 회복일. 근육통 있으면 폼롤링. 내일 Day B 준비.
-2026-05-07,Day B — Pull+Legs,1,scap_pull,3,8,60,,새 블록 시작! 이전 피크가 새 기준. 8회. 팔 구부리지 말고 견갑골만 아래로 당기기.
-2026-05-07,Day B — Pull+Legs,2,dead_hang,3,25초,60,,새 블록 시작! 이전 피크가 새 기준. 25초. 견갑골 하방 유지. 어깨 으쓱 절대 금지.
-2026-05-07,Day B — Pull+Legs,3,squat_band,3,20,60,,새 블록 시작! 이전 피크가 새 기준. 20회. 밴드에 저항하며 무릎 바깥으로 밀기.
-2026-05-07,Day B — Pull+Legs,4,kb_swing_12,3,15,60,,새 블록 시작! 이전 피크가 새 기준. 15회. 힙힌지가 핵심 — 팔이 아닌 골반.
-2026-05-08,REST,,,,,,,목요일 휴식. 내일 Day FULL 전날 에너지 충전.
-2026-05-09,REST,,,,,,,금요일 휴식. 내일 전신 세션(60분) 준비.
-2026-05-10,Day FULL — 전신,1,pushup_incline,4,12,60,,"새 블록 시작! 이전 피크가 새 기준. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-05-10,Day FULL — 전신,2,inverted_row,4,8,60,,새 블록 시작! 이전 피크가 새 기준. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 견갑골 후인! 가슴을 바에 당기기.
-2026-05-10,Day FULL — 전신,3,scap_pull,4,8,60,,새 블록 시작! 이전 피크가 새 기준. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 팔 구부리지 말고 견갑골만 아래로 당기기.
-2026-05-10,Day FULL — 전신,4,squat_band,4,20,60,,새 블록 시작! 이전 피크가 새 기준. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 20회. | 밴드에 저항하며 무릎 바깥으로 밀기.
-2026-05-10,Day FULL — 전신,5,glute_bridge_band,3,16,45,,새 블록 시작! 이전 피크가 새 기준. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 16회. | 정점에서 2초 유지. 둔근 squeeze.
-2026-05-10,Day FULL — 전신,6,kb_swing_12,3,15,60,,새 블록 시작! 이전 피크가 새 기준. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 15회. | 힙힌지가 핵심 — 팔이 아닌 골반.
-2026-05-10,Day FULL — 전신,7,lying_knee_raise,3,14,45,,새 블록 시작! 이전 피크가 새 기준. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 14회. | 허리 바닥 밀착! 느리게 내리기 3초.
-2026-05-10,Day FULL — 전신,8,calf_raise,3,25,30,,"새 블록 시작! 이전 피크가 새 기준. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 25회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
-2026-05-11,REST,,,,,,,일요일 완전 휴식. 다음 주를 위해 충전하세요.
-2026-05-12,Day A — Push+Core,1,pushup_incline,3,14,60,,"볼륨 증가. 꾸준히 쌓아가기. | 30분 세션. Push+Core. | 14회. 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-05-12,Day A — Push+Core,2,pushup_close_incline,3,12,60,,볼륨 증가. 꾸준히 쌓아가기. | 30분 세션. Push+Core. | 12회. 팔꿈치 몸통 밀착! 삼두근 수축 집중.
-2026-05-12,Day A — Push+Core,3,plank_standard,3,35초,30,,볼륨 증가. 꾸준히 쌓아가기. | 30분 세션. Push+Core. | 35초. 배꼽을 척추 쪽으로 당기며 버티기.
-2026-05-12,Day A — Push+Core,4,dead_bug,3,14,30,,볼륨 증가. 꾸준히 쌓아가기. | 30분 세션. Push+Core. | 14회. 허리를 바닥에 밀착! 반대 팔-다리 교차.
-2026-05-13,REST,,,,,,,화요일 운동 회복일. 근육통 있으면 폼롤링. 내일 Day B 준비.
-2026-05-14,Day B — Pull+Legs,1,scap_pull,3,10,60,,볼륨 증가. 꾸준히 쌓아가기. 10회. 팔 구부리지 말고 견갑골만 아래로 당기기.
-2026-05-14,Day B — Pull+Legs,2,dead_hang,3,30초,60,,볼륨 증가. 꾸준히 쌓아가기. 30초. 견갑골 하방 유지. 어깨 으쓱 절대 금지.
-2026-05-14,Day B — Pull+Legs,3,squat_band,3,22,60,,볼륨 증가. 꾸준히 쌓아가기. 22회. 밴드에 저항하며 무릎 바깥으로 밀기.
-2026-05-14,Day B — Pull+Legs,4,kb_swing_12,3,17,60,,볼륨 증가. 꾸준히 쌓아가기. 17회. 힙힌지가 핵심 — 팔이 아닌 골반.
-2026-05-15,REST,,,,,,,목요일 휴식. 내일 Day FULL 전날 에너지 충전.
-2026-05-16,REST,,,,,,,금요일 휴식. 내일 전신 세션(60분) 준비.
-2026-05-17,Day FULL — 전신,1,pushup_incline,4,14,60,,"볼륨 증가. 꾸준히 쌓아가기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 14회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-05-17,Day FULL — 전신,2,inverted_row,4,10,60,,볼륨 증가. 꾸준히 쌓아가기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 10회. | 견갑골 후인! 가슴을 바에 당기기.
-2026-05-17,Day FULL — 전신,3,scap_pull,4,10,60,,볼륨 증가. 꾸준히 쌓아가기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 10회. | 팔 구부리지 말고 견갑골만 아래로 당기기.
-2026-05-17,Day FULL — 전신,4,squat_band,4,22,60,,볼륨 증가. 꾸준히 쌓아가기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 22회. | 밴드에 저항하며 무릎 바깥으로 밀기.
-2026-05-17,Day FULL — 전신,5,glute_bridge_band,3,18,45,,볼륨 증가. 꾸준히 쌓아가기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 18회. | 정점에서 2초 유지. 둔근 squeeze.
-2026-05-17,Day FULL — 전신,6,kb_swing_12,3,17,60,,볼륨 증가. 꾸준히 쌓아가기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 17회. | 힙힌지가 핵심 — 팔이 아닌 골반.
-2026-05-17,Day FULL — 전신,7,lying_knee_raise,3,16,45,,볼륨 증가. 꾸준히 쌓아가기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 16회. | 허리 바닥 밀착! 느리게 내리기 3초.
-2026-05-17,Day FULL — 전신,8,calf_raise,3,27,30,,"볼륨 증가. 꾸준히 쌓아가기. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 27회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
-2026-05-18,REST,,,,,,,일요일 완전 휴식. 다음 주를 위해 충전하세요.
-2026-05-19,Day A — Push+Core,1,pushup_incline,3,16,60,,"블록 2 피크 주! 한 단계 더. | 30분 세션. Push+Core. | 16회. 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-05-19,Day A — Push+Core,2,pushup_close_incline,3,14,60,,블록 2 피크 주! 한 단계 더. | 30분 세션. Push+Core. | 14회. 팔꿈치 몸통 밀착! 삼두근 수축 집중.
-2026-05-19,Day A — Push+Core,3,plank_standard,3,40초,30,,블록 2 피크 주! 한 단계 더. | 30분 세션. Push+Core. | 40초. 배꼽을 척추 쪽으로 당기며 버티기.
-2026-05-19,Day A — Push+Core,4,dead_bug,3,16,30,,블록 2 피크 주! 한 단계 더. | 30분 세션. Push+Core. | 16회. 허리를 바닥에 밀착! 반대 팔-다리 교차.
-2026-05-20,REST,,,,,,,화요일 운동 회복일. 근육통 있으면 폼롤링. 내일 Day B 준비.
-2026-05-21,Day B — Pull+Legs,1,scap_pull,3,12,60,,블록 2 피크 주! 한 단계 더. 12회. 팔 구부리지 말고 견갑골만 아래로 당기기.
-2026-05-21,Day B — Pull+Legs,2,dead_hang,3,35초,60,,블록 2 피크 주! 한 단계 더. 35초. 견갑골 하방 유지. 어깨 으쓱 절대 금지.
-2026-05-21,Day B — Pull+Legs,3,squat_band,3,24,60,,블록 2 피크 주! 한 단계 더. 24회. 밴드에 저항하며 무릎 바깥으로 밀기.
-2026-05-21,Day B — Pull+Legs,4,kb_swing_12,3,19,60,,블록 2 피크 주! 한 단계 더. 19회. 힙힌지가 핵심 — 팔이 아닌 골반.
-2026-05-22,REST,,,,,,,목요일 휴식. 내일 Day FULL 전날 에너지 충전.
-2026-05-23,REST,,,,,,,금요일 휴식. 내일 전신 세션(60분) 준비.
-2026-05-24,Day FULL — 전신,1,pushup_incline,4,16,60,,"블록 2 피크 주! 한 단계 더. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 16회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-05-24,Day FULL — 전신,2,inverted_row,4,12,60,,블록 2 피크 주! 한 단계 더. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 견갑골 후인! 가슴을 바에 당기기.
-2026-05-24,Day FULL — 전신,3,scap_pull,4,12,60,,블록 2 피크 주! 한 단계 더. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 팔 구부리지 말고 견갑골만 아래로 당기기.
-2026-05-24,Day FULL — 전신,4,squat_band,4,24,60,,블록 2 피크 주! 한 단계 더. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 24회. | 밴드에 저항하며 무릎 바깥으로 밀기.
-2026-05-24,Day FULL — 전신,5,glute_bridge_band,3,20,45,,블록 2 피크 주! 한 단계 더. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 20회. | 정점에서 2초 유지. 둔근 squeeze.
-2026-05-24,Day FULL — 전신,6,kb_swing_12,3,19,60,,블록 2 피크 주! 한 단계 더. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 19회. | 힙힌지가 핵심 — 팔이 아닌 골반.
-2026-05-24,Day FULL — 전신,7,lying_knee_raise,3,18,45,,블록 2 피크 주! 한 단계 더. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 18회. | 허리 바닥 밀착! 느리게 내리기 3초.
-2026-05-24,Day FULL — 전신,8,calf_raise,3,29,30,,"블록 2 피크 주! 한 단계 더. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 29회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
-2026-05-25,REST,,,,,,,일요일 완전 휴식. 다음 주를 위해 충전하세요.
-2026-05-26,Day A — Push+Core,1,pushup_incline,2,12,60,,"최종 회복 주. 다음 단계를 위한 충전. | 30분 세션. Push+Core. | 12회. 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-05-26,Day A — Push+Core,2,pushup_close_incline,2,10,60,,최종 회복 주. 다음 단계를 위한 충전. | 30분 세션. Push+Core. | 10회. 팔꿈치 몸통 밀착! 삼두근 수축 집중.
-2026-05-26,Day A — Push+Core,3,plank_standard,2,30초,30,,최종 회복 주. 다음 단계를 위한 충전. | 30분 세션. Push+Core. | 30초. 배꼽을 척추 쪽으로 당기며 버티기.
-2026-05-26,Day A — Push+Core,4,dead_bug,2,12,30,,최종 회복 주. 다음 단계를 위한 충전. | 30분 세션. Push+Core. | 12회. 허리를 바닥에 밀착! 반대 팔-다리 교차.
-2026-05-27,REST,,,,,,,화요일 운동 회복일. 근육통 있으면 폼롤링. 내일 Day B 준비.
-2026-05-28,Day B — Pull+Legs,1,scap_pull,2,8,60,,최종 회복 주. 다음 단계를 위한 충전. 8회. 팔 구부리지 말고 견갑골만 아래로 당기기.
-2026-05-28,Day B — Pull+Legs,2,dead_hang,2,25초,60,,최종 회복 주. 다음 단계를 위한 충전. 25초. 견갑골 하방 유지. 어깨 으쓱 절대 금지.
-2026-05-28,Day B — Pull+Legs,3,squat_band,2,20,60,,최종 회복 주. 다음 단계를 위한 충전. 20회. 밴드에 저항하며 무릎 바깥으로 밀기.
-2026-05-28,Day B — Pull+Legs,4,kb_swing_12,2,15,60,,최종 회복 주. 다음 단계를 위한 충전. 15회. 힙힌지가 핵심 — 팔이 아닌 골반.
-2026-05-29,REST,,,,,,,목요일 휴식. 내일 Day FULL 전날 에너지 충전.
-2026-05-30,REST,,,,,,,금요일 휴식. 내일 전신 세션(60분) 준비.
-2026-05-31,Day FULL — 전신,1,pushup_incline,3,12,60,,"최종 회복 주. 다음 단계를 위한 충전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
-2026-05-31,Day FULL — 전신,2,inverted_row,3,8,60,,최종 회복 주. 다음 단계를 위한 충전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 견갑골 후인! 가슴을 바에 당기기.
-2026-05-31,Day FULL — 전신,3,scap_pull,3,8,60,,최종 회복 주. 다음 단계를 위한 충전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 팔 구부리지 말고 견갑골만 아래로 당기기.
-2026-05-31,Day FULL — 전신,4,squat_band,3,20,60,,최종 회복 주. 다음 단계를 위한 충전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 20회. | 밴드에 저항하며 무릎 바깥으로 밀기.
-2026-05-31,Day FULL — 전신,5,glute_bridge_band,2,16,45,,최종 회복 주. 다음 단계를 위한 충전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 16회. | 정점에서 2초 유지. 둔근 squeeze.
-2026-05-31,Day FULL — 전신,6,kb_swing_12,2,15,60,,최종 회복 주. 다음 단계를 위한 충전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 15회. | 힙힌지가 핵심 — 팔이 아닌 골반.
-2026-05-31,Day FULL — 전신,7,lying_knee_raise,2,14,45,,최종 회복 주. 다음 단계를 위한 충전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 14회. | 허리 바닥 밀착! 느리게 내리기 3초.
-2026-05-31,Day FULL — 전신,8,calf_raise,2,25,30,,"최종 회복 주. 다음 단계를 위한 충전. | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 25회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
-2026-06-01,REST,,,,,,,일요일 완전 휴식. 다음 주를 위해 충전하세요.
+2026-04-06,REST (Mon),,,,,,,주간 준비일. 오늘은 쉬고 내일(화) Day A 준비.
+2026-04-07,Day A - Push+Core,1,pushup_incline,3,8,60,3세트x15회 안정 수행 3회 달성 -> pushup_standard 진급,"W1: 폼 학습 집중, 무리하지 않기 | 30분 세션. Push+Core. | 8회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-04-07,Day A - Push+Core,2,pushup_close_incline,3,6,60,3세트x12회 안정 수행 -> pushup_diamond 진급 (삼두 충분히 강화 후),"W1: 폼 학습 집중, 무리하지 않기 | 30분 세션. Push+Core. | 6회. | 팔꿈치 몸통 밀착! 삼두근 수축 집중."
+2026-04-07,Day A - Push+Core,3,plank_standard,3,20초,30,3세트x45초 안정 -> plank_side 진급,"W1: 폼 학습 집중, 무리하지 않기 | 30분 세션. Push+Core. | 20초. | 배꼽을 척추 쪽으로 당기며 버티기."
+2026-04-07,Day A - Push+Core,4,dead_bug,3,8,30,3세트x15회 안정 -> bird_dog 진급,"W1: 폼 학습 집중, 무리하지 않기 | 30분 세션. Push+Core. | 8회. | 허리를 바닥에 밀착! 반대 팔-다리 교차."
+2026-04-08,REST (Wed),,,,,,,중간 휴식일. 내일(목) Day B 준비.
+2026-04-09,Day B - Pull+Legs,1,scap_pull,3,5,60,3세트x12회 안정 수행 -> pullup_negative 진급,"W1: 폼 학습 집중, 무리하지 않기 | 30분 세션. Pull+Legs. | 5회. | 팔 구부리지 말고 견갑골만 아래로 당기기."
+2026-04-09,Day B - Pull+Legs,2,dead_hang,3,15초,60,3세트x30초 안정 수행 3회 달성 -> 악력 충분,"W1: 폼 학습 집중, 무리하지 않기 | 30분 세션. Pull+Legs. | 15초. | 견갑골 하방 유지. 어깨 으쓱 절대 금지."
+2026-04-09,Day B - Pull+Legs,3,squat_band,3,15,60,3세트x25회 안정 수행 3회 달성 -> squat_bodyweight 진급,"W1: 폼 학습 집중, 무리하지 않기 | 30분 세션. Pull+Legs. | 15회. | 밴드에 저항하며 무릎 바깥으로 밀기."
+2026-04-09,Day B - Pull+Legs,4,kb_deadlift_12,3,8,60,3세트x30회 안정 + 폼 일관 -> kb_swing_16 진급,"W1: 폼 학습 집중, 무리하지 않기 | 30분 세션. Pull+Legs. | 8회. | 힌지 패턴 학습: 엉덩이 뒤로, 등 중립, 무릎 약간 구부리기. 스윙 준비!"
+2026-04-10,REST (Fri),,,,,,,주말 전날 휴식. 내일(토) 전신 세션(60분) 에너지 충전.
+2026-04-11,Day FULL - 전신,1,pushup_incline,4,8,60,,"W1: 폼 학습 집중, 무리하지 않기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-04-11,Day FULL - 전신,2,inverted_row,4,5,60,3세트x12회 안정 -> inverted_row_elevated 진급,"W1: 폼 학습 집중, 무리하지 않기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 5회. | 견갑골 후인! 가슴을 바에 당기기."
+2026-04-11,Day FULL - 전신,3,scap_pull,4,5,60,,"W1: 폼 학습 집중, 무리하지 않기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 5회. | 팔 구부리지 말고 견갑골만 아래로 당기기."
+2026-04-11,Day FULL - 전신,4,squat_band,4,15,60,,"W1: 폼 학습 집중, 무리하지 않기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 15회. | 밴드에 저항하며 무릎 바깥으로 밀기."
+2026-04-11,Day FULL - 전신,5,glute_bridge_band,3,12,45,3세트x20회 -> glute_bridge_single 진급,"W1: 폼 학습 집중, 무리하지 않기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 정점에서 2초 유지. 둔근 squeeze."
+2026-04-11,Day FULL - 전신,6,kb_swing_12,3,12,60,3세트x20회 안정 수행 3회 달성 -> kb_swing_16 진급,"W1: 폼 학습 집중, 무리하지 않기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 힙힌지가 핵심 - 팔이 아닌 골반."
+2026-04-11,Day FULL - 전신,7,lying_knee_raise,3,10,45,3세트x15회 안정 -> lying_leg_raise 진급,"W1: 폼 학습 집중, 무리하지 않기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 10회. | 허리 바닥 밀착! 느리게 내리기 3초."
+2026-04-11,Day FULL - 전신,8,calf_raise,3,20,30,,"W1: 폼 학습 집중, 무리하지 않기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 20회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
+2026-04-12,REST (Sun),,,,,,,완전 휴식일. 다음 주를 위해 충전하세요.
+2026-04-13,REST (Mon),,,,,,,주간 준비일. 오늘은 쉬고 내일(화) Day A 준비.
+2026-04-14,Day A - Push+Core,1,pushup_incline,3,10,60,,"W2: 적응 시작, reps 증가 | 30분 세션. Push+Core. | 10회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-04-14,Day A - Push+Core,2,pushup_close_incline,3,8,60,,"W2: 적응 시작, reps 증가 | 30분 세션. Push+Core. | 8회. | 팔꿈치 몸통 밀착! 삼두근 수축 집중."
+2026-04-14,Day A - Push+Core,3,plank_standard,3,25초,30,,"W2: 적응 시작, reps 증가 | 30분 세션. Push+Core. | 25초. | 배꼽을 척추 쪽으로 당기며 버티기."
+2026-04-14,Day A - Push+Core,4,dead_bug,3,10,30,,"W2: 적응 시작, reps 증가 | 30분 세션. Push+Core. | 10회. | 허리를 바닥에 밀착! 반대 팔-다리 교차."
+2026-04-15,REST (Wed),,,,,,,중간 휴식일. 내일(목) Day B 준비.
+2026-04-16,Day B - Pull+Legs,1,scap_pull,3,7,60,,"W2: 적응 시작, reps 증가 | 30분 세션. Pull+Legs. | 7회. | 팔 구부리지 말고 견갑골만 아래로 당기기."
+2026-04-16,Day B - Pull+Legs,2,dead_hang,3,20초,60,,"W2: 적응 시작, reps 증가 | 30분 세션. Pull+Legs. | 20초. | 견갑골 하방 유지. 어깨 으쓱 절대 금지."
+2026-04-16,Day B - Pull+Legs,3,squat_band,3,17,60,,"W2: 적응 시작, reps 증가 | 30분 세션. Pull+Legs. | 17회. | 밴드에 저항하며 무릎 바깥으로 밀기."
+2026-04-16,Day B - Pull+Legs,4,kb_deadlift_12,3,10,60,,"W2: 적응 시작, reps 증가 | 30분 세션. Pull+Legs. | 10회. | 힌지 패턴 학습: 엉덩이 뒤로, 등 중립, 무릎 약간 구부리기. 스윙 준비!"
+2026-04-17,REST (Fri),,,,,,,주말 전날 휴식. 내일(토) 전신 세션(60분) 에너지 충전.
+2026-04-18,Day FULL - 전신,1,pushup_incline,4,10,60,,"W2: 적응 시작, reps 증가 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 10회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-04-18,Day FULL - 전신,2,inverted_row,4,7,60,,"W2: 적응 시작, reps 증가 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 7회. | 견갑골 후인! 가슴을 바에 당기기."
+2026-04-18,Day FULL - 전신,3,scap_pull,4,7,60,,"W2: 적응 시작, reps 증가 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 7회. | 팔 구부리지 말고 견갑골만 아래로 당기기."
+2026-04-18,Day FULL - 전신,4,squat_band,4,17,60,,"W2: 적응 시작, reps 증가 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 17회. | 밴드에 저항하며 무릎 바깥으로 밀기."
+2026-04-18,Day FULL - 전신,5,glute_bridge_band,3,14,45,,"W2: 적응 시작, reps 증가 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 14회. | 정점에서 2초 유지. 둔근 squeeze."
+2026-04-18,Day FULL - 전신,6,kb_swing_12,3,12,60,,"W2: 적응 시작, reps 증가 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 힙힌지가 핵심 - 팔이 아닌 골반."
+2026-04-18,Day FULL - 전신,7,lying_knee_raise,3,12,45,,"W2: 적응 시작, reps 증가 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 허리 바닥 밀착! 느리게 내리기 3초."
+2026-04-18,Day FULL - 전신,8,calf_raise,3,22,30,,"W2: 적응 시작, reps 증가 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 22회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
+2026-04-19,REST (Sun),,,,,,,완전 휴식일. 다음 주를 위해 충전하세요.
+2026-04-20,REST (Mon),,,,,,,주간 준비일. 오늘은 쉬고 내일(화) Day A 준비.
+2026-04-21,Day A - Push+Core,1,pushup_incline,3,12,60,,"W3: 피크 주, 한계 도전 | 30분 세션. Push+Core. | 12회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-04-21,Day A - Push+Core,2,pushup_close_incline,3,10,60,,"W3: 피크 주, 한계 도전 | 30분 세션. Push+Core. | 10회. | 팔꿈치 몸통 밀착! 삼두근 수축 집중."
+2026-04-21,Day A - Push+Core,3,plank_standard,3,30초,30,,"W3: 피크 주, 한계 도전 | 30분 세션. Push+Core. | 30초. | 배꼽을 척추 쪽으로 당기며 버티기."
+2026-04-21,Day A - Push+Core,4,dead_bug,3,12,30,,"W3: 피크 주, 한계 도전 | 30분 세션. Push+Core. | 12회. | 허리를 바닥에 밀착! 반대 팔-다리 교차."
+2026-04-22,REST (Wed),,,,,,,중간 휴식일. 내일(목) Day B 준비.
+2026-04-23,Day B - Pull+Legs,1,scap_pull,3,8,60,,"W3: 피크 주, 한계 도전 | 30분 세션. Pull+Legs. | 8회. | 팔 구부리지 말고 견갑골만 아래로 당기기."
+2026-04-23,Day B - Pull+Legs,2,dead_hang,3,25초,60,,"W3: 피크 주, 한계 도전 | 30분 세션. Pull+Legs. | 25초. | 견갑골 하방 유지. 어깨 으쓱 절대 금지."
+2026-04-23,Day B - Pull+Legs,3,squat_band,3,20,60,,"W3: 피크 주, 한계 도전 | 30분 세션. Pull+Legs. | 20회. | 밴드에 저항하며 무릎 바깥으로 밀기."
+2026-04-23,Day B - Pull+Legs,4,kb_swing_12,3,15,60,,"W3: 피크 주, 한계 도전 | 30분 세션. Pull+Legs. | 15회. | 힙힌지가 핵심 - 팔이 아닌 골반."
+2026-04-24,REST (Fri),,,,,,,주말 전날 휴식. 내일(토) 전신 세션(60분) 에너지 충전.
+2026-04-25,Day FULL - 전신,1,pushup_incline,4,12,60,,"W3: 피크 주, 한계 도전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-04-25,Day FULL - 전신,2,inverted_row,4,8,60,,"W3: 피크 주, 한계 도전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 견갑골 후인! 가슴을 바에 당기기."
+2026-04-25,Day FULL - 전신,3,scap_pull,4,8,60,,"W3: 피크 주, 한계 도전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 팔 구부리지 말고 견갑골만 아래로 당기기."
+2026-04-25,Day FULL - 전신,4,squat_band,4,20,60,,"W3: 피크 주, 한계 도전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 20회. | 밴드에 저항하며 무릎 바깥으로 밀기."
+2026-04-25,Day FULL - 전신,5,glute_bridge_band,3,16,45,,"W3: 피크 주, 한계 도전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 16회. | 정점에서 2초 유지. 둔근 squeeze."
+2026-04-25,Day FULL - 전신,6,kb_swing_12,3,15,60,,"W3: 피크 주, 한계 도전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 15회. | 힙힌지가 핵심 - 팔이 아닌 골반."
+2026-04-25,Day FULL - 전신,7,lying_knee_raise,3,14,45,,"W3: 피크 주, 한계 도전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 14회. | 허리 바닥 밀착! 느리게 내리기 3초."
+2026-04-25,Day FULL - 전신,8,calf_raise,3,25,30,,"W3: 피크 주, 한계 도전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 25회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
+2026-04-26,REST (Sun),,,,,,,완전 휴식일. 다음 주를 위해 충전하세요.
+2026-04-27,REST (Mon),,,,,,,주간 준비일. 오늘은 쉬고 내일(화) Day A 준비.
+2026-04-28,Day A - Push+Core,1,pushup_incline,2,8,60,,"W4: 디로드 - 회복과 폼 점검 | 30분 세션. Push+Core. | 8회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-04-28,Day A - Push+Core,2,pushup_close_incline,2,6,60,,W4: 디로드 - 회복과 폼 점검 | 30분 세션. Push+Core. | 6회. | 팔꿈치 몸통 밀착! 삼두근 수축 집중.
+2026-04-28,Day A - Push+Core,3,plank_standard,2,20초,30,,W4: 디로드 - 회복과 폼 점검 | 30분 세션. Push+Core. | 20초. | 배꼽을 척추 쪽으로 당기며 버티기.
+2026-04-28,Day A - Push+Core,4,dead_bug,2,8,30,,W4: 디로드 - 회복과 폼 점검 | 30분 세션. Push+Core. | 8회. | 허리를 바닥에 밀착! 반대 팔-다리 교차.
+2026-04-29,REST (Wed),,,,,,,중간 휴식일. 내일(목) Day B 준비.
+2026-04-30,Day B - Pull+Legs,1,scap_pull,2,5,60,,W4: 디로드 - 회복과 폼 점검 | 30분 세션. Pull+Legs. | 5회. | 팔 구부리지 말고 견갑골만 아래로 당기기.
+2026-04-30,Day B - Pull+Legs,2,dead_hang,2,15초,60,,W4: 디로드 - 회복과 폼 점검 | 30분 세션. Pull+Legs. | 15초. | 견갑골 하방 유지. 어깨 으쓱 절대 금지.
+2026-04-30,Day B - Pull+Legs,3,squat_band,2,15,60,,W4: 디로드 - 회복과 폼 점검 | 30분 세션. Pull+Legs. | 15회. | 밴드에 저항하며 무릎 바깥으로 밀기.
+2026-04-30,Day B - Pull+Legs,4,kb_swing_12,2,12,60,,W4: 디로드 - 회복과 폼 점검 | 30분 세션. Pull+Legs. | 12회. | 힙힌지가 핵심 - 팔이 아닌 골반.
+2026-05-01,REST (Fri),,,,,,,주말 전날 휴식. 내일(토) 전신 세션(60분) 에너지 충전.
+2026-05-02,Day FULL - 전신,1,pushup_incline,3,8,60,,"W4: 디로드 - 회복과 폼 점검 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-05-02,Day FULL - 전신,2,inverted_row,3,5,60,,W4: 디로드 - 회복과 폼 점검 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 5회. | 견갑골 후인! 가슴을 바에 당기기.
+2026-05-02,Day FULL - 전신,3,scap_pull,3,5,60,,W4: 디로드 - 회복과 폼 점검 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 5회. | 팔 구부리지 말고 견갑골만 아래로 당기기.
+2026-05-02,Day FULL - 전신,4,squat_band,3,15,60,,W4: 디로드 - 회복과 폼 점검 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 15회. | 밴드에 저항하며 무릎 바깥으로 밀기.
+2026-05-02,Day FULL - 전신,5,glute_bridge_band,2,12,45,,W4: 디로드 - 회복과 폼 점검 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 정점에서 2초 유지. 둔근 squeeze.
+2026-05-02,Day FULL - 전신,6,kb_swing_12,2,12,60,,W4: 디로드 - 회복과 폼 점검 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 힙힌지가 핵심 - 팔이 아닌 골반.
+2026-05-02,Day FULL - 전신,7,lying_knee_raise,2,10,45,,W4: 디로드 - 회복과 폼 점검 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 10회. | 허리 바닥 밀착! 느리게 내리기 3초.
+2026-05-02,Day FULL - 전신,8,calf_raise,2,20,30,,"W4: 디로드 - 회복과 폼 점검 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 20회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
+2026-05-03,REST (Sun),,,,,,,완전 휴식일. 다음 주를 위해 충전하세요.
+2026-05-04,REST (Mon),,,,,,,주간 준비일. 오늘은 쉬고 내일(화) Day A 준비.
+2026-05-05,Day A - Push+Core,1,pushup_incline,3,12,60,,"W5: 새 블록! 이전 피크가 새 기준 | 30분 세션. Push+Core. | 12회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-05-05,Day A - Push+Core,2,pushup_close_incline,3,10,60,,W5: 새 블록! 이전 피크가 새 기준 | 30분 세션. Push+Core. | 10회. | 팔꿈치 몸통 밀착! 삼두근 수축 집중.
+2026-05-05,Day A - Push+Core,3,plank_standard,3,30초,30,,W5: 새 블록! 이전 피크가 새 기준 | 30분 세션. Push+Core. | 30초. | 배꼽을 척추 쪽으로 당기며 버티기.
+2026-05-05,Day A - Push+Core,4,dead_bug,3,12,30,,W5: 새 블록! 이전 피크가 새 기준 | 30분 세션. Push+Core. | 12회. | 허리를 바닥에 밀착! 반대 팔-다리 교차.
+2026-05-06,REST (Wed),,,,,,,중간 휴식일. 내일(목) Day B 준비.
+2026-05-07,Day B - Pull+Legs,1,scap_pull,3,8,60,,W5: 새 블록! 이전 피크가 새 기준 | 30분 세션. Pull+Legs. | 8회. | 팔 구부리지 말고 견갑골만 아래로 당기기.
+2026-05-07,Day B - Pull+Legs,2,dead_hang,3,25초,60,,W5: 새 블록! 이전 피크가 새 기준 | 30분 세션. Pull+Legs. | 25초. | 견갑골 하방 유지. 어깨 으쓱 절대 금지.
+2026-05-07,Day B - Pull+Legs,3,squat_band,3,20,60,,W5: 새 블록! 이전 피크가 새 기준 | 30분 세션. Pull+Legs. | 20회. | 밴드에 저항하며 무릎 바깥으로 밀기.
+2026-05-07,Day B - Pull+Legs,4,kb_swing_12,3,15,60,,W5: 새 블록! 이전 피크가 새 기준 | 30분 세션. Pull+Legs. | 15회. | 힙힌지가 핵심 - 팔이 아닌 골반.
+2026-05-08,REST (Fri),,,,,,,주말 전날 휴식. 내일(토) 전신 세션(60분) 에너지 충전.
+2026-05-09,Day FULL - 전신,1,pushup_incline,4,12,60,,"W5: 새 블록! 이전 피크가 새 기준 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-05-09,Day FULL - 전신,2,inverted_row,4,8,60,,W5: 새 블록! 이전 피크가 새 기준 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 견갑골 후인! 가슴을 바에 당기기.
+2026-05-09,Day FULL - 전신,3,scap_pull,4,8,60,,W5: 새 블록! 이전 피크가 새 기준 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 팔 구부리지 말고 견갑골만 아래로 당기기.
+2026-05-09,Day FULL - 전신,4,squat_band,4,20,60,,W5: 새 블록! 이전 피크가 새 기준 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 20회. | 밴드에 저항하며 무릎 바깥으로 밀기.
+2026-05-09,Day FULL - 전신,5,glute_bridge_band,3,16,45,,W5: 새 블록! 이전 피크가 새 기준 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 16회. | 정점에서 2초 유지. 둔근 squeeze.
+2026-05-09,Day FULL - 전신,6,kb_swing_12,3,15,60,,W5: 새 블록! 이전 피크가 새 기준 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 15회. | 힙힌지가 핵심 - 팔이 아닌 골반.
+2026-05-09,Day FULL - 전신,7,lying_knee_raise,3,14,45,,W5: 새 블록! 이전 피크가 새 기준 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 14회. | 허리 바닥 밀착! 느리게 내리기 3초.
+2026-05-09,Day FULL - 전신,8,calf_raise,3,25,30,,"W5: 새 블록! 이전 피크가 새 기준 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 25회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
+2026-05-10,REST (Sun),,,,,,,완전 휴식일. 다음 주를 위해 충전하세요.
+2026-05-11,REST (Mon),,,,,,,주간 준비일. 오늘은 쉬고 내일(화) Day A 준비.
+2026-05-12,Day A - Push+Core,1,pushup_incline,3,14,60,,"W6: 볼륨 증가. 꾸준히 쌓아가기 | 30분 세션. Push+Core. | 14회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-05-12,Day A - Push+Core,2,pushup_close_incline,3,12,60,,W6: 볼륨 증가. 꾸준히 쌓아가기 | 30분 세션. Push+Core. | 12회. | 팔꿈치 몸통 밀착! 삼두근 수축 집중.
+2026-05-12,Day A - Push+Core,3,plank_standard,3,35초,30,,W6: 볼륨 증가. 꾸준히 쌓아가기 | 30분 세션. Push+Core. | 35초. | 배꼽을 척추 쪽으로 당기며 버티기.
+2026-05-12,Day A - Push+Core,4,dead_bug,3,14,30,,W6: 볼륨 증가. 꾸준히 쌓아가기 | 30분 세션. Push+Core. | 14회. | 허리를 바닥에 밀착! 반대 팔-다리 교차.
+2026-05-13,REST (Wed),,,,,,,중간 휴식일. 내일(목) Day B 준비.
+2026-05-14,Day B - Pull+Legs,1,scap_pull,3,10,60,,W6: 볼륨 증가. 꾸준히 쌓아가기 | 30분 세션. Pull+Legs. | 10회. | 팔 구부리지 말고 견갑골만 아래로 당기기.
+2026-05-14,Day B - Pull+Legs,2,dead_hang,3,30초,60,,W6: 볼륨 증가. 꾸준히 쌓아가기 | 30분 세션. Pull+Legs. | 30초. | 견갑골 하방 유지. 어깨 으쓱 절대 금지.
+2026-05-14,Day B - Pull+Legs,3,squat_band,3,22,60,,W6: 볼륨 증가. 꾸준히 쌓아가기 | 30분 세션. Pull+Legs. | 22회. | 밴드에 저항하며 무릎 바깥으로 밀기.
+2026-05-14,Day B - Pull+Legs,4,kb_swing_12,3,17,60,,W6: 볼륨 증가. 꾸준히 쌓아가기 | 30분 세션. Pull+Legs. | 17회. | 힙힌지가 핵심 - 팔이 아닌 골반.
+2026-05-15,REST (Fri),,,,,,,주말 전날 휴식. 내일(토) 전신 세션(60분) 에너지 충전.
+2026-05-16,Day FULL - 전신,1,pushup_incline,4,14,60,,"W6: 볼륨 증가. 꾸준히 쌓아가기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 14회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-05-16,Day FULL - 전신,2,inverted_row,4,10,60,,W6: 볼륨 증가. 꾸준히 쌓아가기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 10회. | 견갑골 후인! 가슴을 바에 당기기.
+2026-05-16,Day FULL - 전신,3,scap_pull,4,10,60,,W6: 볼륨 증가. 꾸준히 쌓아가기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 10회. | 팔 구부리지 말고 견갑골만 아래로 당기기.
+2026-05-16,Day FULL - 전신,4,squat_band,4,22,60,,W6: 볼륨 증가. 꾸준히 쌓아가기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 22회. | 밴드에 저항하며 무릎 바깥으로 밀기.
+2026-05-16,Day FULL - 전신,5,glute_bridge_band,3,18,45,,W6: 볼륨 증가. 꾸준히 쌓아가기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 18회. | 정점에서 2초 유지. 둔근 squeeze.
+2026-05-16,Day FULL - 전신,6,kb_swing_12,3,17,60,,W6: 볼륨 증가. 꾸준히 쌓아가기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 17회. | 힙힌지가 핵심 - 팔이 아닌 골반.
+2026-05-16,Day FULL - 전신,7,lying_knee_raise,3,16,45,,W6: 볼륨 증가. 꾸준히 쌓아가기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 16회. | 허리 바닥 밀착! 느리게 내리기 3초.
+2026-05-16,Day FULL - 전신,8,calf_raise,3,27,30,,"W6: 볼륨 증가. 꾸준히 쌓아가기 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 27회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
+2026-05-17,REST (Sun),,,,,,,완전 휴식일. 다음 주를 위해 충전하세요.
+2026-05-18,REST (Mon),,,,,,,주간 준비일. 오늘은 쉬고 내일(화) Day A 준비.
+2026-05-19,Day A - Push+Core,1,pushup_incline,3,16,60,,"W7: 블록 2 피크 주! 한 단계 더 | 30분 세션. Push+Core. | 16회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-05-19,Day A - Push+Core,2,pushup_close_incline,3,14,60,,W7: 블록 2 피크 주! 한 단계 더 | 30분 세션. Push+Core. | 14회. | 팔꿈치 몸통 밀착! 삼두근 수축 집중.
+2026-05-19,Day A - Push+Core,3,plank_standard,3,40초,30,,W7: 블록 2 피크 주! 한 단계 더 | 30분 세션. Push+Core. | 40초. | 배꼽을 척추 쪽으로 당기며 버티기.
+2026-05-19,Day A - Push+Core,4,dead_bug,3,16,30,,W7: 블록 2 피크 주! 한 단계 더 | 30분 세션. Push+Core. | 16회. | 허리를 바닥에 밀착! 반대 팔-다리 교차.
+2026-05-20,REST (Wed),,,,,,,중간 휴식일. 내일(목) Day B 준비.
+2026-05-21,Day B - Pull+Legs,1,scap_pull,3,12,60,,W7: 블록 2 피크 주! 한 단계 더 | 30분 세션. Pull+Legs. | 12회. | 팔 구부리지 말고 견갑골만 아래로 당기기.
+2026-05-21,Day B - Pull+Legs,2,dead_hang,3,35초,60,,W7: 블록 2 피크 주! 한 단계 더 | 30분 세션. Pull+Legs. | 35초. | 견갑골 하방 유지. 어깨 으쓱 절대 금지.
+2026-05-21,Day B - Pull+Legs,3,squat_band,3,24,60,,W7: 블록 2 피크 주! 한 단계 더 | 30분 세션. Pull+Legs. | 24회. | 밴드에 저항하며 무릎 바깥으로 밀기.
+2026-05-21,Day B - Pull+Legs,4,kb_swing_12,3,19,60,,W7: 블록 2 피크 주! 한 단계 더 | 30분 세션. Pull+Legs. | 19회. | 힙힌지가 핵심 - 팔이 아닌 골반.
+2026-05-22,REST (Fri),,,,,,,주말 전날 휴식. 내일(토) 전신 세션(60분) 에너지 충전.
+2026-05-23,Day FULL - 전신,1,pushup_incline,4,16,60,,"W7: 블록 2 피크 주! 한 단계 더 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 16회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-05-23,Day FULL - 전신,2,inverted_row,4,12,60,,W7: 블록 2 피크 주! 한 단계 더 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 견갑골 후인! 가슴을 바에 당기기.
+2026-05-23,Day FULL - 전신,3,scap_pull,4,12,60,,W7: 블록 2 피크 주! 한 단계 더 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 팔 구부리지 말고 견갑골만 아래로 당기기.
+2026-05-23,Day FULL - 전신,4,squat_band,4,24,60,,W7: 블록 2 피크 주! 한 단계 더 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 24회. | 밴드에 저항하며 무릎 바깥으로 밀기.
+2026-05-23,Day FULL - 전신,5,glute_bridge_band,3,20,45,,W7: 블록 2 피크 주! 한 단계 더 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 20회. | 정점에서 2초 유지. 둔근 squeeze.
+2026-05-23,Day FULL - 전신,6,kb_swing_12,3,19,60,,W7: 블록 2 피크 주! 한 단계 더 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 19회. | 힙힌지가 핵심 - 팔이 아닌 골반.
+2026-05-23,Day FULL - 전신,7,lying_knee_raise,3,18,45,,W7: 블록 2 피크 주! 한 단계 더 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 18회. | 허리 바닥 밀착! 느리게 내리기 3초.
+2026-05-23,Day FULL - 전신,8,calf_raise,3,29,30,,"W7: 블록 2 피크 주! 한 단계 더 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 29회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
+2026-05-24,REST (Sun),,,,,,,완전 휴식일. 다음 주를 위해 충전하세요.
+2026-05-25,REST (Mon),,,,,,,주간 준비일. 오늘은 쉬고 내일(화) Day A 준비.
+2026-05-26,Day A - Push+Core,1,pushup_incline,2,12,60,,"W8: 최종 디로드. 다음 단계를 위한 충전 | 30분 세션. Push+Core. | 12회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-05-26,Day A - Push+Core,2,pushup_close_incline,2,10,60,,W8: 최종 디로드. 다음 단계를 위한 충전 | 30분 세션. Push+Core. | 10회. | 팔꿈치 몸통 밀착! 삼두근 수축 집중.
+2026-05-26,Day A - Push+Core,3,plank_standard,2,30초,30,,W8: 최종 디로드. 다음 단계를 위한 충전 | 30분 세션. Push+Core. | 30초. | 배꼽을 척추 쪽으로 당기며 버티기.
+2026-05-26,Day A - Push+Core,4,dead_bug,2,12,30,,W8: 최종 디로드. 다음 단계를 위한 충전 | 30분 세션. Push+Core. | 12회. | 허리를 바닥에 밀착! 반대 팔-다리 교차.
+2026-05-27,REST (Wed),,,,,,,중간 휴식일. 내일(목) Day B 준비.
+2026-05-28,Day B - Pull+Legs,1,scap_pull,2,8,60,,W8: 최종 디로드. 다음 단계를 위한 충전 | 30분 세션. Pull+Legs. | 8회. | 팔 구부리지 말고 견갑골만 아래로 당기기.
+2026-05-28,Day B - Pull+Legs,2,dead_hang,2,25초,60,,W8: 최종 디로드. 다음 단계를 위한 충전 | 30분 세션. Pull+Legs. | 25초. | 견갑골 하방 유지. 어깨 으쓱 절대 금지.
+2026-05-28,Day B - Pull+Legs,3,squat_band,2,20,60,,W8: 최종 디로드. 다음 단계를 위한 충전 | 30분 세션. Pull+Legs. | 20회. | 밴드에 저항하며 무릎 바깥으로 밀기.
+2026-05-28,Day B - Pull+Legs,4,kb_swing_12,2,15,60,,W8: 최종 디로드. 다음 단계를 위한 충전 | 30분 세션. Pull+Legs. | 15회. | 힙힌지가 핵심 - 팔이 아닌 골반.
+2026-05-29,REST (Fri),,,,,,,주말 전날 휴식. 내일(토) 전신 세션(60분) 에너지 충전.
+2026-05-30,Day FULL - 전신,1,pushup_incline,3,12,60,,"W8: 최종 디로드. 다음 단계를 위한 충전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 12회. | 팔꿈치 45도, 가슴이 바에 닿을 듯이."
+2026-05-30,Day FULL - 전신,2,inverted_row,3,8,60,,W8: 최종 디로드. 다음 단계를 위한 충전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 견갑골 후인! 가슴을 바에 당기기.
+2026-05-30,Day FULL - 전신,3,scap_pull,3,8,60,,W8: 최종 디로드. 다음 단계를 위한 충전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 8회. | 팔 구부리지 말고 견갑골만 아래로 당기기.
+2026-05-30,Day FULL - 전신,4,squat_band,3,20,60,,W8: 최종 디로드. 다음 단계를 위한 충전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 20회. | 밴드에 저항하며 무릎 바깥으로 밀기.
+2026-05-30,Day FULL - 전신,5,glute_bridge_band,2,16,45,,W8: 최종 디로드. 다음 단계를 위한 충전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 16회. | 정점에서 2초 유지. 둔근 squeeze.
+2026-05-30,Day FULL - 전신,6,kb_swing_12,2,15,60,,W8: 최종 디로드. 다음 단계를 위한 충전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 15회. | 힙힌지가 핵심 - 팔이 아닌 골반.
+2026-05-30,Day FULL - 전신,7,lying_knee_raise,2,14,45,,W8: 최종 디로드. 다음 단계를 위한 충전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 14회. | 허리 바닥 밀착! 느리게 내리기 3초.
+2026-05-30,Day FULL - 전신,8,calf_raise,2,25,30,,"W8: 최종 디로드. 다음 단계를 위한 충전 | 60분 전신 세션. Push+Pull+Legs+Core+Swing 균형 잡기. | 25회. | 정점 2초 유지, 3초에 걸쳐 내려오기."
+2026-05-31,REST (Sun),,,,,,,완전 휴식일. 다음 주를 위해 충전하세요.
