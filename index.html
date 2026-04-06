@@ -2314,7 +2314,11 @@ async function initApp() {
     var data = await api.init();
     if (data.error) throw new Error(data.error);
 
-    Object.assign(state, data);
+    // Map API response keys to state keys // 2026-04-07 fix
+    state.exercises = data.exercises || [];
+    state.todayProgram = data.programs || data.todayProgram || [];
+    state.config = data.user_config || data.config || {};
+    state.today = data.today || '';
 
     // Build exercise lookup map
     state.exerciseMap = {};
