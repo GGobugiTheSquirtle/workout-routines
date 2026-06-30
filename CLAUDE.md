@@ -16,9 +16,9 @@
 
 ## Google Sheets Schema
 - `exercises` — exercise database (id, name, category, level, form_guide, etc.)
-- `programs` — monthly schedule (date, exercise_id, sets, reps, note)
+- `programs` — schedule (date, **seq**, day_label, exercise_id, sets, reps, note). `seq` = 순차 진행용 "하루" 일련번호(휴식일 포함). seq 있으면 앱은 날짜가 아닌 `current_seq` 커서 기준으로 "현재 하루"를 표시
 - `logs` — workout records (date, exercise_id, set_number, reps_done, note)
-- `user_config` — key/value settings (current_level, start_date, etc.)
+- `user_config` — key/value settings (current_level, start_date, **current_seq**, etc.). `current_seq` = 현재 진행 중인 일정 번호. 완료/건너뛰기 시 +1 → 다음 일정 표시(날짜 무관, 스킵해도 연속성 유지)
 
 ## Conventions
 - 한국어 UI, 영어 코드

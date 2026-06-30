@@ -465,6 +465,35 @@ body {
   }
 }
 
+/* Sequential progression controls // 2026-06-30 */
+.day-advance {
+  margin-top: var(--space-6);
+  text-align: center;
+}
+.day-advance .btn-primary {
+  width: 100%;
+}
+.day-advance .day-meta {
+  margin-top: var(--space-3);
+}
+.btn-skip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-3) var(--space-5);
+  background-color: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  min-height: 44px;
+}
+.btn-skip:active { transform: scale(0.97); }
+
 /* ==========================================================================
    ANIMATIONS
    ========================================================================== */
@@ -1752,6 +1781,10 @@ const state = {
   logs: [],
   programs: [],
   today: '',
+  currentSeq: null,
+  totalDays: null,
+  isRest: false,
+  nextLabel: '',
   activeTab: 'today',
   sessionProgress: {},
   exerciseMap: {},
@@ -1849,14 +1882,24 @@ function renderToday() {
   var container = document.getElementById('tab-today');
   var program = state.todayProgram;
 
-  // Rest day check
-  if (!program || program.length === 0) {
-    container.innerHTML = '<div class="rest-day"><span class="rest-day-icon">&#127769;</span><h2>오늘은 휴식일</h2><p>충분히 쉬세요. 회복도 성장의 일부입니다.</p></div>';
+  var seqMode = state.currentSeq != null;
+  var dayCounter = seqMode ? ('Day ' + state.currentSeq + ' / ' + state.totalDays) : formatDateKR(state.today);
+
+  // Rest day check (seq 모드: is_rest 플래그 / 레거시: 빈 프로그램)
+  if (state.isRest || !program || program.length === 0) {
+    var rhtml = '<div class="rest-day"><span class="rest-day-icon">&#127769;</span><h2>휴식일</h2>';
+    rhtml += '<p>충분히 쉬세요. 회복도 성장의 일부입니다.</p>';
+    if (seqMode) {
+      rhtml += '<div class="day-meta">' + dayCounter + (state.nextLabel ? ' · 다음: ' + state.nextLabel : '') + '</div>';
+      rhtml += '<button class="btn-primary mt-4" onclick="advanceDay()">휴식 완료 — 다음 일정으로 &rarr;</button>';
+    }
+    rhtml += '</div>';
+    container.innerHTML = rhtml;
     return;
   }
 
   var dayLabel = program[0].day_label || '';
-  var dateStr = formatDateKR(state.today);
+  var dateStr = dayCounter;
 
   // All done check
   var allDone = program.every(function(p) {
@@ -1934,7 +1977,39 @@ function renderToday() {
   });
 
   html += '</div>';
+
+  // Sequential progression controls // 2026-06-30
+  if (state.currentSeq != null) {
+    html += '<div class="day-advance">';
+    if (allDone) {
+      html += '<button class="btn-primary" onclick="advanceDay()">완료 — 다음 일정으로 &rarr;</button>';
+    } else {
+      html += '<button class="btn-skip" onclick="advanceDay()">건너뛰고 다음 일정으로 &rarr;</button>';
+    }
+    if (state.nextLabel) html += '<div class="day-meta">다음: ' + state.nextLabel + '</div>';
+    html += '</div>';
+  }
+
   container.innerHTML = html;
+}
+
+// 다음 일정으로 진행 — current_seq 커서를 +1 (완료/건너뛰기 공통). 날짜와 무관, 스킵해도 순서 유지. // 2026-06-30
+async function advanceDay() {
+  if (state.currentSeq == null) return;
+  if (state.totalDays != null && state.currentSeq >= state.totalDays) {
+    alert('프로그램의 마지막 일정입니다. 수고하셨습니다!');
+    return;
+  }
+  var next = state.currentSeq + 1;
+  try {
+    await api.postConfig('current_seq', next);
+  } catch (err) {
+    console.error('Advance failed:', err);
+    alert('다음 일정 저장에 실패했습니다. 네트워크를 확인하세요.');
+    return;
+  }
+  // 새 커서로 깨끗하게 재로드 (세션 진행상태 초기화 포함)
+  location.reload();
 }
 
 // # 2026-04-04
@@ -2452,9 +2527,17 @@ async function initApp() {
 
     // Map API response keys to state keys // 2026-04-07 fix
     state.exercises = data.exercises || [];
-    state.todayProgram = data.programs || data.todayProgram || [];
+    // Drop rest-day marker rows (empty exercise_id); rest state comes from is_rest flag
+    state.todayProgram = (data.programs || data.todayProgram || []).filter(function(p) {
+      return p.exercise_id;
+    });
     state.config = data.user_config || data.config || {};
     state.today = data.today || '';
+    // Sequential-progress mode (커서 기반)
+    state.currentSeq = data.current_seq != null ? Number(data.current_seq) : null;
+    state.totalDays = data.total_days != null ? Number(data.total_days) : null;
+    state.isRest = !!data.is_rest;
+    state.nextLabel = data.next_label || '';
 
     // Build exercise lookup map
     state.exerciseMap = {};
@@ -2463,8 +2546,10 @@ async function initApp() {
     });
 
     // Initialize session progress for today's program
+    state.sessionProgress = {};
     state.todayProgram.forEach(function(p) {
-      state.sessionProgress[p.exercise_id] = new Array(Number(p.sets)).fill(false);
+      var sets = Number(p.sets);
+      if (sets > 0) state.sessionProgress[p.exercise_id] = new Array(sets).fill(false);
     });
 
     // Load full month data

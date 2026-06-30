@@ -91,11 +91,44 @@ function handleInit() {
 
   const exercises = getSheetData('exercises');
   const allPrograms = getSheetData('programs');
-  const todayPrograms = allPrograms.filter(function(row) {
-    return row.date === today;
-  });
   const config = getConfigMap();
 
+  // 순차 모드(seq 컬럼 존재): current_seq 커서가 가리키는 "하루"만 반환.
+  //   완료 시 클라이언트가 current_seq를 +1 하여 다음 일정으로 진행 → 날짜와 무관, 스킵해도 연속성 유지.
+  // 날짜 모드(레거시): seq 없으면 오늘 날짜 일정 반환.
+  var hasSeq = allPrograms.some(function(r) { return r.seq !== '' && r.seq != null; });
+
+  if (hasSeq) {
+    var seqs = allPrograms
+      .map(function(r) { return Number(r.seq); })
+      .filter(function(n) { return !isNaN(n); });
+    var totalDays = seqs.length ? Math.max.apply(null, seqs) : 0;
+
+    var currentSeq = Number(config.current_seq) || 1;
+    if (currentSeq < 1) currentSeq = 1;
+    if (currentSeq > totalDays) currentSeq = totalDays;
+
+    var dayPrograms = allPrograms.filter(function(r) {
+      return Number(r.seq) === currentSeq;
+    });
+    var isRest = dayPrograms.every(function(r) { return !r.exercise_id; });
+    var nextRows = allPrograms.filter(function(r) { return Number(r.seq) === currentSeq + 1; });
+    var nextLabel = nextRows.length ? (nextRows[0].day_label || '') : '';
+
+    return {
+      exercises: exercises,
+      programs: dayPrograms,
+      user_config: config,
+      today: today,
+      current_seq: currentSeq,
+      total_days: totalDays,
+      is_rest: isRest,
+      next_label: nextLabel,
+    };
+  }
+
+  // 레거시 날짜 모드
+  var todayPrograms = allPrograms.filter(function(row) { return row.date === today; });
   return {
     exercises: exercises,
     programs: todayPrograms,
@@ -305,4 +338,58 @@ function getConfigMap() {
 function jsonResponse(data) {
   return ContentService.createTextOutput(JSON.stringify(data))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ─── One-time Setup (수동 실행) ───────────────────────────────────────
+
+/**
+ * setupThreeMonthProgram — 3개월 입문(순차 seq) 프로그램을 시트에 일회성 import
+ * // 2026-06-30
+ *
+ * GitHub raw에서 data/programs-3month.csv를 받아 'programs' 시트를 전체 교체하고,
+ * user_config 에 current_seq=1 을 시드한다. logs/exercises 시트는 건드리지 않는다.
+ *
+ * 실행: Apps Script 편집기 상단 함수 드롭다운에서 setupThreeMonthProgram 선택 → ▶ 실행 (최초 1회).
+ *       처음 실행 시 권한 승인(스프레드시트 + 외부 fetch) 팝업 → 허용.
+ * ⚠️ PR 머지 후 실행할 것 — CSV가 master 브랜치에 있어야 fetch 성공.
+ *
+ * @returns {Object} { success, programRows }
+ */
+function setupThreeMonthProgram() {
+  var CSV_URL = 'https://raw.githubusercontent.com/GGobugiTheSquirtle/workout-routines/master/data/programs-3month.csv';
+
+  var resp = UrlFetchApp.fetch(CSV_URL, { muteHttpExceptions: true });
+  if (resp.getResponseCode() !== 200) {
+    throw new Error('CSV fetch 실패 (HTTP ' + resp.getResponseCode() + '): ' + CSV_URL);
+  }
+
+  var rows = Utilities.parseCsv(resp.getContentText()); // 따옴표/줄바꿈 필드 안전 파싱
+  if (rows.length < 2) {
+    throw new Error('CSV가 비어 있거나 헤더만 있음');
+  }
+
+  // setValues는 직사각형 배열 요구 → 행 폭을 헤더 기준으로 정규화
+  var width = rows[0].length;
+  var norm = rows.map(function(r) {
+    var out = r.slice(0, width);
+    while (out.length < width) out.push('');
+    return out;
+  });
+
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+
+  // 1) programs 시트 전체 교체 (값만 clear, 서식 유지)
+  var sheet = ss.getSheetByName('programs');
+  if (!sheet) {
+    sheet = ss.insertSheet('programs');
+  }
+  sheet.clearContents();
+  sheet.getRange(1, 1, norm.length, width).setValues(norm);
+
+  // 2) current_seq=1 시드 (기존 값 있으면 1로 리셋 → 프로그램 처음부터)
+  handleConfigWrite({ key: 'current_seq', value: 1 });
+
+  var imported = norm.length - 1;
+  Logger.log('완료: programs ' + imported + '행 import + current_seq=1 시드');
+  return { success: true, programRows: imported };
 }
