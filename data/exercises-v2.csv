@@ -132,7 +132,7 @@ band_assisted_pullup,밴드 보조 턱걸이,pull,"치닝디핑, 밴드",2,"광�
 2초 올라가기 + 1초 정점 + 3초 내려오기","밴드에 너무 의존(바운스) → 제어된 속도로 당기기
 반동 사용 → 데드행에서 정적으로 시작
 턱만 내밀기 → 가슴을 바에 당기는 이미지","밴드 상태 확인 — 마모/균열 시 교체
-80kg 사용자에게 필수 브릿지: 네거티브 → 밴드보조 → 풀 풀업",pullup_negative,pullup_standard,https://www.youtube.com/results?search_query=%EB%B0%B4%EB%93%9C%20%EB%B3%B4%EC%A1%B0%20%ED%84%B1%EA%B1%B8%EC%9D%B4%20%EC%9E%90%EC%84%B8
+80kg 사용자에게 필수 브릿지: 네거티브 → 밴드보조 → 풀 풀업",pullup_negative,chinup,https://www.youtube.com/watch?v=SIYet5taYIE
 inverted_row_elevated,발 올린 인버티드 로우,pull,치닝디핑,2,"광배근, 능형근, 후면삼각근","이두근, 하부승모근","기본 인버티드 로우 자세에서 발을 의자/박스 위에 올림
 체중 부하 증가 — 상체가 더 수평에 가까워짐
 견갑골 후인 집중, 가슴을 바에 당기기
@@ -216,14 +216,14 @@ pullup_standard,턱걸이,pull,치닝디핑,3,"광배근, 대원근","이두근,
 2초 올라가기 + 정점 1초 + 3초 내려오기","반동(kipping) → 정적 당기기, 데드행에서 시작
 턱을 과도하게 내밀기 → 가슴을 바에 당기는 이미지
 하강 시 제어 없음(free fall) → 에센트릭 3초","어깨/팔꿈치 통증 시 밴드보조로 복귀
-1개도 못 하면 밴드보조 턱걸이 계속",band_assisted_pullup,pullup_wide,https://www.youtube.com/results?search_query=%ED%84%B1%EA%B1%B8%EC%9D%B4%20%EC%9E%90%EC%84%B8
+1개도 못 하면 밴드보조 턱걸이 계속",chinup,pullup_wide,https://www.youtube.com/results?search_query=%ED%84%B1%EA%B1%B8%EC%9D%B4%20%EC%9E%90%EC%84%B8
 chinup,친업,pull,치닝디핑,3,"이두근, 광배근","전완근, 하부승모근","언더핸드(supinated) 그립, 어깨너비보다 약간 좁게
 이두근 자극 증가, 턱걸이보다 쉬운 편
 당기기 시작 시 견갑골 하방 유지
 턱이 바 위로 올라갈 때까지","팔만 사용 → 등(광배근) 수축 함께 느끼기
 반동 사용 → 데드행에서 시작
 하강 너무 빠름 → 에센트릭 3초","팔꿈치 통증(골퍼 엘보) 주의
-과도한 볼륨 시 이두건 부상 위험",pullup_standard,,https://www.youtube.com/results?search_query=%EC%B9%9C%EC%97%85%20%EC%9E%90%EC%84%B8
+과도한 볼륨 시 이두건 부상 위험",band_assisted_pullup,pullup_standard,https://www.youtube.com/results?search_query=%EC%B9%9C%EC%97%85%20%EC%9E%90%EC%84%B8
 hanging_knee_raise,행잉 니레이즈,core,치닝디핑,3,"복직근(하부), 장요근","복사근, 전완근(악력)","바에 매달려 무릎을 가슴 쪽으로 올리기
 골반 후방경사(posterior tilt) — 등을 살짝 둥글게
 올릴 때 호기, 내릴 때 흡기, 반동 없이
