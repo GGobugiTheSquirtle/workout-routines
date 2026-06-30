@@ -91,11 +91,44 @@ function handleInit() {
 
   const exercises = getSheetData('exercises');
   const allPrograms = getSheetData('programs');
-  const todayPrograms = allPrograms.filter(function(row) {
-    return row.date === today;
-  });
   const config = getConfigMap();
 
+  // 순차 모드(seq 컬럼 존재): current_seq 커서가 가리키는 "하루"만 반환.
+  //   완료 시 클라이언트가 current_seq를 +1 하여 다음 일정으로 진행 → 날짜와 무관, 스킵해도 연속성 유지.
+  // 날짜 모드(레거시): seq 없으면 오늘 날짜 일정 반환.
+  var hasSeq = allPrograms.some(function(r) { return r.seq !== '' && r.seq != null; });
+
+  if (hasSeq) {
+    var seqs = allPrograms
+      .map(function(r) { return Number(r.seq); })
+      .filter(function(n) { return !isNaN(n); });
+    var totalDays = seqs.length ? Math.max.apply(null, seqs) : 0;
+
+    var currentSeq = Number(config.current_seq) || 1;
+    if (currentSeq < 1) currentSeq = 1;
+    if (currentSeq > totalDays) currentSeq = totalDays;
+
+    var dayPrograms = allPrograms.filter(function(r) {
+      return Number(r.seq) === currentSeq;
+    });
+    var isRest = dayPrograms.every(function(r) { return !r.exercise_id; });
+    var nextRows = allPrograms.filter(function(r) { return Number(r.seq) === currentSeq + 1; });
+    var nextLabel = nextRows.length ? (nextRows[0].day_label || '') : '';
+
+    return {
+      exercises: exercises,
+      programs: dayPrograms,
+      user_config: config,
+      today: today,
+      current_seq: currentSeq,
+      total_days: totalDays,
+      is_rest: isRest,
+      next_label: nextLabel,
+    };
+  }
+
+  // 레거시 날짜 모드
+  var todayPrograms = allPrograms.filter(function(row) { return row.date === today; });
   return {
     exercises: exercises,
     programs: todayPrograms,
