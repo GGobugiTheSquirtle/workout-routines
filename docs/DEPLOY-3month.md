@@ -29,21 +29,24 @@
 
 ---
 
-## 3. programs 시트 채우기 + current_seq 시드
+## 3. exercises + programs 시트 채우기 + current_seq 시드
 
 Apps Script 편집기에서 일회용 함수 실행:
 
 1. 상단 함수 드롭다운에서 **`setupThreeMonthProgram`** 선택
 2. **▶ Run**
 3. 최초 실행 시 권한 승인 팝업 (스프레드시트 접근 + 외부 fetch) → **허용**
-4. 실행 로그에 `완료: programs 246행 import + current_seq=1 시드` 뜨면 성공
+4. 실행 로그에 `완료: exercises 65행 + programs 246행 import + current_seq=1 시드` 뜨면 성공
 
 이 함수가 하는 일:
+- `exercises` 시트를 최신본(65종, 신규 운동 + 큐레이션 영상 URL)으로 **전체 교체**
+  → 신규 운동(고블릿/클린&프레스/겟업) 고아참조 방지 + 영상 링크 반영
 - `programs` 시트를 3개월 프로그램(246행, seq 1~84)으로 **전체 교체**
 - `user_config`에 `current_seq = 1` 시드 (처음부터 시작)
-- `logs` / `exercises` 시트는 **건드리지 않음**
+- `logs` 시트와 user_config의 다른 사용자 데이터는 **건드리지 않음**
 
 ### 수동 대안 (스크립트 실행이 꺼려지면)
+- `exercises` 시트 → **File → Import → Upload → `data/exercises-v2.csv` → "Replace current sheet"**
 - `programs` 시트 → **File → Import → Upload → `data/programs-3month.csv` → "Replace current sheet"**
 - `user_config` 시트 → 행 추가: `current_seq | 1`
 

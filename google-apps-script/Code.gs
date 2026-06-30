@@ -342,30 +342,27 @@ function jsonResponse(data) {
 
 // ─── One-time Setup (수동 실행) ───────────────────────────────────────
 
+var RAW_BASE = 'https://raw.githubusercontent.com/GGobugiTheSquirtle/workout-routines/master/data/';
+
 /**
- * setupThreeMonthProgram — 3개월 입문(순차 seq) 프로그램을 시트에 일회성 import
+ * importCsvToSheet_ — GitHub raw CSV를 받아 지정 시트를 전체 교체
  * // 2026-06-30
  *
- * GitHub raw에서 data/programs-3month.csv를 받아 'programs' 시트를 전체 교체하고,
- * user_config 에 current_seq=1 을 시드한다. logs/exercises 시트는 건드리지 않는다.
- *
- * 실행: Apps Script 편집기 상단 함수 드롭다운에서 setupThreeMonthProgram 선택 → ▶ 실행 (최초 1회).
- *       처음 실행 시 권한 승인(스프레드시트 + 외부 fetch) 팝업 → 허용.
- * ⚠️ PR 머지 후 실행할 것 — CSV가 master 브랜치에 있어야 fetch 성공.
- *
- * @returns {Object} { success, programRows }
+ * @param {Spreadsheet} ss
+ * @param {string} sheetName
+ * @param {string} csvFile — RAW_BASE 기준 파일명
+ * @returns {number} import된 데이터 행수 (헤더 제외)
  */
-function setupThreeMonthProgram() {
-  var CSV_URL = 'https://raw.githubusercontent.com/GGobugiTheSquirtle/workout-routines/master/data/programs-3month.csv';
-
-  var resp = UrlFetchApp.fetch(CSV_URL, { muteHttpExceptions: true });
+function importCsvToSheet_(ss, sheetName, csvFile) {
+  var url = RAW_BASE + csvFile;
+  var resp = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
   if (resp.getResponseCode() !== 200) {
-    throw new Error('CSV fetch 실패 (HTTP ' + resp.getResponseCode() + '): ' + CSV_URL);
+    throw new Error('CSV fetch 실패 (HTTP ' + resp.getResponseCode() + '): ' + url);
   }
 
   var rows = Utilities.parseCsv(resp.getContentText()); // 따옴표/줄바꿈 필드 안전 파싱
   if (rows.length < 2) {
-    throw new Error('CSV가 비어 있거나 헤더만 있음');
+    throw new Error(csvFile + ' 가 비어 있거나 헤더만 있음');
   }
 
   // setValues는 직사각형 배열 요구 → 행 폭을 헤더 기준으로 정규화
@@ -376,20 +373,43 @@ function setupThreeMonthProgram() {
     return out;
   });
 
-  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-
-  // 1) programs 시트 전체 교체 (값만 clear, 서식 유지)
-  var sheet = ss.getSheetByName('programs');
+  var sheet = ss.getSheetByName(sheetName);
   if (!sheet) {
-    sheet = ss.insertSheet('programs');
+    sheet = ss.insertSheet(sheetName);
   }
   sheet.clearContents();
   sheet.getRange(1, 1, norm.length, width).setValues(norm);
 
-  // 2) current_seq=1 시드 (기존 값 있으면 1로 리셋 → 프로그램 처음부터)
+  return norm.length - 1;
+}
+
+/**
+ * setupThreeMonthProgram — 3개월 입문(순차 seq) 프로그램을 시트에 일회성 import
+ * // 2026-06-30
+ *
+ * GitHub raw(master)에서 두 CSV를 받아 시트를 전체 교체하고 current_seq=1 시드:
+ *   - exercises-v2.csv  → 'exercises' 시트 (신규 운동 + 큐레이션 영상 URL 포함)
+ *   - programs-3month.csv → 'programs' 시트 (순차 seq 일정)
+ * logs / (current_seq 외) user_config 의 사용자 데이터는 건드리지 않는다.
+ *
+ * 실행: Apps Script 편집기 상단 함수 드롭다운에서 setupThreeMonthProgram 선택 → ▶ 실행 (최초 1회).
+ *       처음 실행 시 권한 승인(스프레드시트 + 외부 fetch) 팝업 → 허용.
+ * ⚠️ PR 머지 후 실행할 것 — CSV가 master 브랜치에 있어야 fetch 성공.
+ *
+ * @returns {Object} { success, exerciseRows, programRows }
+ */
+function setupThreeMonthProgram() {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+
+  // 1) exercises 시트 교체 (신규 운동 + 영상 URL이 여기 있어 program 고아참조 방지)
+  var exRows = importCsvToSheet_(ss, 'exercises', 'exercises-v2.csv');
+
+  // 2) programs 시트 교체 (순차 seq 일정)
+  var prRows = importCsvToSheet_(ss, 'programs', 'programs-3month.csv');
+
+  // 3) current_seq=1 시드 (기존 값 있으면 1로 리셋 → 프로그램 처음부터)
   handleConfigWrite({ key: 'current_seq', value: 1 });
 
-  var imported = norm.length - 1;
-  Logger.log('완료: programs ' + imported + '행 import + current_seq=1 시드');
-  return { success: true, programRows: imported };
+  Logger.log('완료: exercises ' + exRows + '행 + programs ' + prRows + '행 import + current_seq=1 시드');
+  return { success: true, exerciseRows: exRows, programRows: prRows };
 }
