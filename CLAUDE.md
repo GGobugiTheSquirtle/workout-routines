@@ -3,22 +3,26 @@
 ## Tech Stack
 - Vanilla HTML/CSS/JS (no framework, no build)
 - Single index.html — CSS/JS inline (GitHub Pages)
-- Google Sheets — 4 sheets (exercises, programs, logs, user_config)
+- 정적 데이터: repo `data/*.csv` (exercises, programs) — Apps Script가 raw로 fetch
+- Google Sheets — 사용자 데이터 2 sheets (logs, user_config)
 - Google Apps Script — API gateway (Code.gs)
 - Pretendard font (CDN) or system font stack
 - CSS custom properties for dark/light theming
 
 ## Architecture
 - Online-first: no PWA, no ServiceWorker, no offline cache
-- App shell has ZERO hardcoded data — everything fetched from Sheets
+- App shell has ZERO hardcoded data — everything fetched via Apps Script API
+- **데이터 소스 분리 (2026-07-01)**:
+  - **정적 데이터 (exercises, programs)** → repo `data/*.csv`가 원본. Apps Script가 GitHub **raw CSV에서 직접 fetch** (`fetchCsvAsObjects_`). CSV 푸시 = 앱 자동 반영(raw CDN ~5분), 수동 시트 동기화 불필요.
+  - **사용자 데이터 (logs, user_config)** → Google Sheets 읽기/쓰기 (`getSheetData`/`handleConfigWrite`).
+  - `exercises`/`programs` 시트는 vestigial(더 이상 안 읽음). Sheet UI 직접 편집 불가 — 프로그램/운동 변경은 CSV(git)로만.
 - LocalStorage for session temp state only (current set progress)
-- Apps Script doGet/doPost for all Sheets I/O
 
-## Google Sheets Schema
-- `exercises` — exercise database (id, name, category, level, form_guide, etc.)
-- `programs` — schedule (date, **seq**, day_label, exercise_id, sets, reps, note). `seq` = 순차 진행용 "하루" 일련번호(휴식일 포함). seq 있으면 앱은 날짜가 아닌 `current_seq` 커서 기준으로 "현재 하루"를 표시
-- `logs` — workout records (date, exercise_id, set_number, reps_done, note)
-- `user_config` — key/value settings (current_level, start_date, **current_seq**, etc.). `current_seq` = 현재 진행 중인 일정 번호. 완료/건너뛰기 시 +1 → 다음 일정 표시(날짜 무관, 스킵해도 연속성 유지)
+## 데이터 스키마
+- `data/exercises-v2.csv` (repo) — exercise DB (id, name, category, level, form_guide, video_url, progression_from/to, etc.)
+- `data/programs-3month.csv` (repo) — schedule (date, **seq**, day_label, order, exercise_id, sets, reps, rest_sec, promotion_criteria, note). `seq` = 순차 진행 "하루" 일련번호(휴식일 포함). 앱은 날짜가 아닌 `current_seq` 커서 기준 "현재 하루" 표시. **행 순서 = 표시 순서**(order 컬럼은 표시용 메타, 정렬 안 함)
+- Sheet `logs` — workout records (date, exercise_id, set_number, reps_done, note)
+- Sheet `user_config` — key/value (current_level, start_date, **current_seq**). `current_seq` = 현재 일정 번호, 완료/건너뛰기 시 +1 (날짜 무관, 스킵해도 연속성 유지)
 
 ## Conventions
 - 한국어 UI, 영어 코드
