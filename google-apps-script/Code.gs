@@ -89,8 +89,8 @@ function doPost(e) {
 function handleInit() {
   const today = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd');
 
-  const exercises = getSheetData('exercises');
-  const allPrograms = getSheetData('programs');
+  const exercises = fetchCsvAsObjects_('exercises-v2.csv');
+  const allPrograms = fetchCsvAsObjects_('programs-3month.csv');
   const config = getConfigMap();
 
   // 순차 모드(seq 컬럼 존재): current_seq 커서가 가리키는 "하루"만 반환.
@@ -141,14 +141,14 @@ function handleInit() {
  * exercises — 전체 운동 DB 반환
  */
 function handleExercises() {
-  return { exercises: getSheetData('exercises') };
+  return { exercises: fetchCsvAsObjects_('exercises-v2.csv') };
 }
 
 /**
  * programs — 월별 스케줄 반환 (YYYY-MM 필터)
  */
 function handlePrograms(month) {
-  const allPrograms = getSheetData('programs');
+  const allPrograms = fetchCsvAsObjects_('programs-3month.csv');
 
   if (!month) {
     return { programs: allPrograms };
@@ -340,76 +340,61 @@ function jsonResponse(data) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-// ─── One-time Setup (수동 실행) ───────────────────────────────────────
+// ─── Repo CSV Data Source ────────────────────────────────────────────
+// programs / exercises 는 repo(GitHub)가 원본인 정적 데이터 → 시트 대신 raw CSV에서 직접 읽는다.
+// // 2026-07-01: CSV 푸시만으로 앱 반영(수동 시트 동기화 불필요). logs / user_config 만 시트 사용.
 
 var RAW_BASE = 'https://raw.githubusercontent.com/GGobugiTheSquirtle/workout-routines/master/data/';
 
 /**
- * importCsvToSheet_ — GitHub raw CSV를 받아 지정 시트를 전체 교체
- * // 2026-06-30
+ * fetchCsvAsObjects_ — GitHub raw CSV를 받아 헤더 기반 오브젝트 배열로 반환
+ * // 2026-07-01
+ * getSheetData 와 동일한 형태({header: value, ...}[])이지만 소스가 시트가 아닌 repo CSV.
+ * parseCsv 로 따옴표/줄바꿈 필드 안전 파싱. 날짜는 CSV상 이미 'YYYY-MM-DD' 문자열이라 변환 불필요.
  *
- * @param {Spreadsheet} ss
- * @param {string} sheetName
- * @param {string} csvFile — RAW_BASE 기준 파일명
- * @returns {number} import된 데이터 행수 (헤더 제외)
+ * @param {string} csvFile — RAW_BASE 기준 파일명 (예: 'programs-3month.csv')
+ * @returns {Object[]}
  */
-function importCsvToSheet_(ss, sheetName, csvFile) {
+function fetchCsvAsObjects_(csvFile) {
   var url = RAW_BASE + csvFile;
   var resp = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
   if (resp.getResponseCode() !== 200) {
     throw new Error('CSV fetch 실패 (HTTP ' + resp.getResponseCode() + '): ' + url);
   }
 
-  var rows = Utilities.parseCsv(resp.getContentText()); // 따옴표/줄바꿈 필드 안전 파싱
+  var rows = Utilities.parseCsv(resp.getContentText());
   if (rows.length < 2) {
-    throw new Error(csvFile + ' 가 비어 있거나 헤더만 있음');
+    return [];
   }
 
-  // setValues는 직사각형 배열 요구 → 행 폭을 헤더 기준으로 정규화
-  var width = rows[0].length;
-  var norm = rows.map(function(r) {
-    var out = r.slice(0, width);
-    while (out.length < width) out.push('');
-    return out;
-  });
-
-  var sheet = ss.getSheetByName(sheetName);
-  if (!sheet) {
-    sheet = ss.insertSheet(sheetName);
+  var headers = rows[0].map(function(h) { return String(h).trim(); });
+  var out = [];
+  for (var i = 1; i < rows.length; i++) {
+    var obj = {};
+    for (var j = 0; j < headers.length; j++) {
+      obj[headers[j]] = rows[i][j] !== undefined ? rows[i][j] : '';
+    }
+    out.push(obj);
   }
-  sheet.clearContents();
-  sheet.getRange(1, 1, norm.length, width).setValues(norm);
-
-  return norm.length - 1;
+  return out;
 }
 
 /**
- * setupThreeMonthProgram — 3개월 입문(순차 seq) 프로그램을 시트에 일회성 import
- * // 2026-06-30
+ * setupThreeMonthProgram — (초기 세팅용) current_seq 를 없을 때만 1로 시드
+ * // 2026-07-01: CSV 직접 읽기 전환 후 시트 import는 폐지. 진행도 보존 위해 idempotent.
+ *   이미 current_seq 가 있으면 아무것도 하지 않음 → 습관적으로 재실행해도 진행도 안 날아감.
+ *   신규 스프레드시트 최초 1회만 필요. programs/exercises 는 이제 자동(CSV)이라 실행 불필요.
  *
- * GitHub raw(master)에서 두 CSV를 받아 시트를 전체 교체하고 current_seq=1 시드:
- *   - exercises-v2.csv  → 'exercises' 시트 (신규 운동 + 큐레이션 영상 URL 포함)
- *   - programs-3month.csv → 'programs' 시트 (순차 seq 일정)
- * logs / (current_seq 외) user_config 의 사용자 데이터는 건드리지 않는다.
- *
- * 실행: Apps Script 편집기 상단 함수 드롭다운에서 setupThreeMonthProgram 선택 → ▶ 실행 (최초 1회).
- *       처음 실행 시 권한 승인(스프레드시트 + 외부 fetch) 팝업 → 허용.
- * ⚠️ PR 머지 후 실행할 것 — CSV가 master 브랜치에 있어야 fetch 성공.
- *
- * @returns {Object} { success, exerciseRows, programRows }
+ * @returns {Object}
  */
 function setupThreeMonthProgram() {
-  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-
-  // 1) exercises 시트 교체 (신규 운동 + 영상 URL이 여기 있어 program 고아참조 방지)
-  var exRows = importCsvToSheet_(ss, 'exercises', 'exercises-v2.csv');
-
-  // 2) programs 시트 교체 (순차 seq 일정)
-  var prRows = importCsvToSheet_(ss, 'programs', 'programs-3month.csv');
-
-  // 3) current_seq=1 시드 (기존 값 있으면 1로 리셋 → 프로그램 처음부터)
-  handleConfigWrite({ key: 'current_seq', value: 1 });
-
-  Logger.log('완료: exercises ' + exRows + '행 + programs ' + prRows + '행 import + current_seq=1 시드');
-  return { success: true, exerciseRows: exRows, programRows: prRows };
+  var config = getConfigMap();
+  var cur = config.current_seq;
+  if (cur === undefined || cur === '' || cur === null) {
+    handleConfigWrite({ key: 'current_seq', value: 1 });
+    Logger.log('current_seq=1 시드 완료. (programs/exercises 는 이제 CSV 자동 로드 — 재실행 불필요)');
+    return { success: true, seeded: true };
+  }
+  Logger.log('current_seq 이미 존재(' + cur + ') → 변경 없음. programs/exercises 는 CSV 자동 로드.');
+  return { success: true, seeded: false, current_seq: cur };
 }
