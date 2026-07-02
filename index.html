@@ -837,6 +837,44 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* 세트 추가/삭제 — dot 행 끝의 점선 고스트 컨트롤 // 2026-07-03 */
+.set-adjust {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  border: 1.5px dashed var(--border);
+  background: none;
+  color: var(--text-tertiary);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  font-family: var(--font-sans);
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+}
+
+.set-adjust.remove {
+  margin-left: var(--space-1);
+}
+
+.set-adjust:active:not(:disabled) {
+  transform: scale(0.9);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.set-adjust:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
 /* --- Reps Stepper — 실제 수행 횟수 기록 // 2026-07-02 --- */
 
 .set-action-row {
@@ -2292,6 +2330,12 @@ function renderToday() {
     progress.forEach(function(done, si) {
       html += '<div class="set-dot ' + (done ? 'done' : '') + '">' + (done ? '✓' : (si + 1)) + '</div>';
     });
+    // 세트 추가/삭제 — 현재 운동 카드에서만 (완료 세트 삭제 불가) // 2026-07-03
+    if (isCurrent) {
+      var canRemove = totalSets > 1 && totalSets > doneCount;
+      html += '<button class="set-adjust remove" onclick="adjustSets(\'' + p.exercise_id + '\', -1)"' + (canRemove ? '' : ' disabled') + ' aria-label="세트 삭제">−</button>';
+      html += '<button class="set-adjust add" onclick="adjustSets(\'' + p.exercise_id + '\', 1)" aria-label="세트 추가">+</button>';
+    }
     html += '<span class="set-progress-text">' + doneCount + '/' + totalSets + '</span></div>';
 
     // Complete button + reps stepper + note (only for current exercise) // 2026-07-02
@@ -2377,6 +2421,25 @@ function parseReps(reps) {
   if (!m) return null;
   var unit = m[2] || '';
   return { value: Number(m[1]), unit: unit, step: unit === '초' ? 5 : 1 };
+}
+
+// 세트 추가/삭제 — 세션 상태만 조작 (완료 세트는 로그 전송됨 → 삭제 불가) // 2026-07-03
+function adjustSets(exId, delta) {
+  var progress = state.sessionProgress[exId];
+  if (!progress) return;
+  var doneCount = progress.filter(Boolean).length;
+  if (delta > 0) {
+    if (progress.length >= 10) return; // 레이아웃 상한
+    progress.push(false);
+  } else {
+    // 완료 세트는 항상 앞쪽 prefix → 마지막 세트 pop = 미완료 세트 제거. 최소 1개 유지.
+    if (progress.length <= 1 || progress.length <= doneCount) return;
+    progress.pop();
+  }
+  vibrate(8);
+  // 세트 트리밍으로 운동/세션이 완료 상태가 될 수 있음 → wake lock 재평가
+  if (sessionActive()) acquireWakeLockIfActive(); else releaseWakeLock();
+  renderToday();
 }
 
 // 스테퍼 증감 — 횟수 ±1, 시간 ±5초 // 2026-07-02
