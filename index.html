@@ -837,6 +837,57 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* --- Reps Stepper — 실제 수행 횟수 기록 // 2026-07-02 --- */
+
+.set-action-row {
+  display: flex;
+  gap: var(--space-2);
+  align-items: stretch;
+}
+
+.reps-stepper {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-tertiary);
+  overflow: hidden;
+}
+
+.stepper-btn {
+  width: var(--space-11);
+  min-height: var(--space-12);
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+}
+
+.stepper-btn:active {
+  background-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.reps-value {
+  min-width: 44px;
+  text-align: center;
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.set-action-row .btn-complete {
+  width: auto;
+  flex: 1;
+}
+
 /* --- Complete Button --- */
 
 .btn-complete {
@@ -2243,9 +2294,19 @@ function renderToday() {
     });
     html += '<span class="set-progress-text">' + doneCount + '/' + totalSets + '</span></div>';
 
-    // Complete button + note (only for current exercise)
+    // Complete button + reps stepper + note (only for current exercise) // 2026-07-02
     if (isCurrent) {
+      var repsInfo = parseReps(p.reps);
+      html += '<div class="set-action-row">';
+      if (repsInfo) {
+        html += '<div class="reps-stepper">';
+        html += '<button class="stepper-btn" onclick="stepReps(\'' + p.exercise_id + '\', -1)" aria-label="횟수 줄이기">−</button>';
+        html += '<span class="reps-value" id="reps-' + p.exercise_id + '" data-step="' + repsInfo.step + '" data-unit="' + repsInfo.unit + '">' + repsInfo.value + repsInfo.unit + '</span>';
+        html += '<button class="stepper-btn" onclick="stepReps(\'' + p.exercise_id + '\', 1)" aria-label="횟수 늘리기">+</button>';
+        html += '</div>';
+      }
       html += '<button class="btn-complete" onclick="completeSet(\'' + p.exercise_id + '\')">세트 ' + (doneCount + 1) + ' 완료</button>';
+      html += '</div>';
       html += '<textarea class="note-input" placeholder="메모 (선택)" rows="1" id="note-' + p.exercise_id + '"></textarea>';
     }
 
@@ -2310,6 +2371,25 @@ async function advanceDay() {
   location.reload();
 }
 
+// reps 파싱 — "8"(횟수) 또는 "20초"(시간)만 스테퍼 지원, 그 외 null // 2026-07-02
+function parseReps(reps) {
+  var m = String(reps == null ? '' : reps).trim().match(/^(\d+)(초)?$/);
+  if (!m) return null;
+  var unit = m[2] || '';
+  return { value: Number(m[1]), unit: unit, step: unit === '초' ? 5 : 1 };
+}
+
+// 스테퍼 증감 — 횟수 ±1, 시간 ±5초 // 2026-07-02
+function stepReps(exId, dir) {
+  var el = document.getElementById('reps-' + exId);
+  if (!el) return;
+  var step = Number(el.dataset.step) || 1;
+  var cur = parseInt(el.textContent, 10) || 0;
+  var next = Math.max(0, cur + dir * step);
+  el.textContent = next + (el.dataset.unit || '');
+  vibrate(8);
+}
+
 // 첫 미완료 운동 index // 2026-07-02
 function currentExerciseIdx() {
   return state.todayProgram.findIndex(function(p) {
@@ -2350,11 +2430,13 @@ function completeSet(exerciseId) {
   var note = noteEl ? noteEl.value.trim() : '';
   var programEntry = state.todayProgram.find(function(p) { return p.exercise_id === exerciseId; }) || {};
 
+  // 스테퍼 값 우선 (실제 수행 횟수), 없으면 목표값 // 2026-07-02
+  var repsEl = document.getElementById('reps-' + exerciseId);
   var payload = {
     date: state.today,
     exercise_id: exerciseId,
     set_number: setIdx + 1,
-    reps_done: programEntry.reps || '',
+    reps_done: repsEl ? repsEl.textContent : (programEntry.reps || ''),
     note: note
   };
 
