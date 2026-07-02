@@ -9,6 +9,8 @@
   <meta name="theme-color" content="#09090B" media="(prefers-color-scheme: dark)">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <!-- 인라인 favicon — 404 제거 // 2026-07-02 -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563EB'/%3E%3Cpolygon points='26,20 48,32 26,44' fill='%23FFFFFF'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 
 <style>
@@ -227,6 +229,11 @@ body {
   transition: box-shadow var(--duration-normal) var(--ease-out);
 }
 
+/* 스크롤 시 헤더 구분 섀도 // 2026-07-02 */
+#app-header.scrolled {
+  box-shadow: var(--shadow-md);
+}
+
 .app-title {
   font-size: var(--text-3xl);
   font-weight: var(--weight-bold);
@@ -348,29 +355,59 @@ body {
 }
 
 /* ==========================================================================
-   LOADING — Skeleton-style branded
+   LOADING — Skeleton (레이아웃 매칭 shimmer) // 2026-07-02
    ========================================================================== */
 
 #loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;
   min-height: 100dvh;
-  gap: var(--space-5);
+  max-width: 520px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+#loading.load-failed {
+  align-items: center;
+  justify-content: center;
   color: var(--text-secondary);
   font-size: var(--text-sm);
 }
 
-.spinner {
-  width: var(--space-10);
-  height: var(--space-10);
-  border: 3px solid var(--border);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.7s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+.skeleton-line {
+  height: 14px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--border) 50%, var(--bg-tertiary) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
 }
+
+.skeleton-line.lg {
+  height: 28px;
+  width: 40%;
+  border-radius: var(--radius-md);
+}
+
+.skeleton-line.sm {
+  width: 55%;
+  margin-bottom: var(--space-4);
+}
+
+.skeleton-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.skeleton-card .skeleton-line:nth-child(1) { width: 45%; }
+.skeleton-card .skeleton-line:nth-child(2) { width: 70%; }
+.skeleton-card .skeleton-line:nth-child(3) { width: 30%; }
 
 /* ==========================================================================
    SETUP
@@ -520,9 +557,36 @@ body {
   }
 }
 
-@keyframes spin {
+@keyframes timerSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bannerPop {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
   }
 }
 
@@ -884,6 +948,7 @@ body {
   background-color: var(--success-soft);
   border-radius: var(--radius-xl);
   margin: var(--space-4) var(--space-1);
+  animation: bannerPop var(--duration-slow) var(--ease-spring) both; /* 2026-07-02 */
 }
 
 .complete-banner h3 {
@@ -1675,6 +1740,204 @@ body {
 }
 
 /* ==========================================================================
+   SESSION PROGRESS + LAST RECORD (Today tab) // 2026-07-02
+   ========================================================================== */
+
+.session-progress {
+  margin-top: var(--space-3);
+  height: 4px;
+  background-color: var(--border-subtle);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.session-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-slow) var(--ease-out);
+}
+
+.last-record {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  margin: calc(-1 * var(--space-3)) 0 var(--space-4);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   REST TIMER — 세트 완료 시 자동 시작 // 2026-07-02
+   ========================================================================== */
+
+#rest-timer {
+  position: fixed;
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: calc(var(--tab-height) + env(safe-area-inset-bottom, 0px) + var(--space-3));
+  display: none;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  z-index: 110;
+}
+
+#rest-timer.visible {
+  display: flex;
+  animation: timerSlideUp var(--duration-normal) var(--ease-out);
+}
+
+@media (min-width: 700px) {
+  #rest-timer {
+    max-width: 488px;
+    left: 50%;
+    right: auto;
+    width: calc(100% - 32px);
+    transform: translateX(-50%);
+  }
+}
+
+.rest-timer-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 52px;
+}
+
+.rest-timer-label {
+  font-size: 10px;
+  font-weight: var(--weight-bold);
+  color: var(--text-tertiary);
+  letter-spacing: 0.06em;
+}
+
+.rest-timer-time {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-extrabold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.rest-timer-track {
+  flex: 1;
+  height: 4px;
+  background-color: var(--border-subtle);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.rest-timer-fill {
+  height: 100%;
+  width: 100%;
+  background: var(--accent);
+  border-radius: var(--radius-full);
+  transition: width 0.2s linear;
+}
+
+.rest-timer-btn {
+  padding: var(--space-2) var(--space-3);
+  min-height: var(--space-11);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.rest-timer-btn:active {
+  transform: scale(0.96);
+}
+
+.rest-timer-btn.skip {
+  background-color: transparent;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   TOAST — alert() 대체 + 실행 취소 // 2026-07-02
+   ========================================================================== */
+
+#toast-container {
+  position: fixed;
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: calc(var(--tab-height) + env(safe-area-inset-bottom, 0px) + 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  z-index: 120;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  max-width: 100%;
+  padding: var(--space-3) var(--space-5);
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-lg);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  animation: toastIn var(--duration-normal) var(--ease-out);
+  transition: opacity var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out);
+}
+
+.toast.hide {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.toast-action {
+  border: none;
+  background: none;
+  padding: var(--space-1) 0;
+  color: #93C5FD;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  .toast-action {
+    color: #2563EB;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION — 접근성 // 2026-07-02
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ==========================================================================
    UTILITY CLASSES
    ========================================================================== */
 
@@ -1701,9 +1964,13 @@ body {
 <!-- ======================================================================
      LOADING OVERLAY
      ====================================================================== -->
-<div id="loading">
-  <div class="spinner"></div>
-  <p>데이터 불러오는 중...</p>
+<!-- 스켈레톤 로딩 — 레이아웃 매칭 shimmer // 2026-07-02 -->
+<div id="loading" aria-busy="true">
+  <div class="skeleton-line lg"></div>
+  <div class="skeleton-line sm"></div>
+  <div class="skeleton-card"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
+  <div class="skeleton-card"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
+  <div class="skeleton-card"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
 </div>
 
 <!-- ======================================================================
@@ -1764,6 +2031,20 @@ body {
     </button>
   </nav>
 
+  <!-- 휴식 타이머 — 세트 완료 시 자동 시작 // 2026-07-02 -->
+  <div id="rest-timer" aria-live="polite">
+    <div class="rest-timer-info">
+      <span class="rest-timer-label">휴식</span>
+      <span id="rest-timer-time" class="rest-timer-time">0:00</span>
+    </div>
+    <div class="rest-timer-track"><div id="rest-timer-fill" class="rest-timer-fill"></div></div>
+    <button class="rest-timer-btn" onclick="extendRestTimer(30)">+30초</button>
+    <button class="rest-timer-btn skip" onclick="endRestTimer(false)">건너뛰기</button>
+  </div>
+
+  <!-- 토스트 컨테이너 // 2026-07-02 -->
+  <div id="toast-container" aria-live="polite"></div>
+
 </div>
 
 <!-- ======================================================================
@@ -1779,6 +2060,7 @@ const state = {
   todayProgram: [],
   config: {},
   logs: [],
+  logsHistory: [], // 전월 포함 로그 — "지난번" 기록 표시용 // 2026-07-02
   programs: [],
   today: '',
   currentSeq: null,
@@ -1907,8 +2189,20 @@ function renderToday() {
     return prog && prog.every(Boolean);
   });
 
+  // 세션 세트 진행률 // 2026-07-02
+  var totalSets = 0, doneSets = 0;
+  program.forEach(function(p) {
+    var prog = state.sessionProgress[p.exercise_id] || [];
+    totalSets += prog.length;
+    doneSets += prog.filter(Boolean).length;
+  });
+
   var html = '<div class="today-header"><h2>' + dayLabel + '</h2>';
-  html += '<div class="day-meta">Level ' + (state.config.current_level || 1) + ' · ' + dateStr + '</div></div>';
+  html += '<div class="day-meta">Level ' + (state.config.current_level || 1) + ' · ' + dateStr + (totalSets ? ' · 세트 ' + doneSets + '/' + totalSets : '') + '</div>';
+  if (totalSets) {
+    html += '<div class="session-progress"><div class="session-progress-fill" style="width:' + Math.round(doneSets / totalSets * 100) + '%"></div></div>';
+  }
+  html += '</div>';
 
   if (allDone) {
     html += '<div class="complete-banner"><h3>오늘 운동 완료!</h3><p>수고했어요. 기록이 저장되었습니다.</p></div>';
@@ -1917,10 +2211,7 @@ function renderToday() {
   html += '<div class="workout-list">';
 
   // Find current exercise (first with incomplete sets)
-  var currentIdx = program.findIndex(function(p) {
-    var prog = state.sessionProgress[p.exercise_id];
-    return prog && prog.some(function(s) { return !s; });
-  });
+  var currentIdx = currentExerciseIdx();
 
   program.forEach(function(p, idx) {
     var ex = state.exerciseMap[p.exercise_id] || {};
@@ -1938,6 +2229,12 @@ function renderToday() {
     if (isDone) html += '<span class="done-badge">DONE</span>';
     html += '</div>';
     html += '<div class="workout-meta">' + p.sets + '×' + p.reps + ' · ' + (ex.muscles_primary || '') + '</div>';
+
+    // 지난 세션 기록 — 점진적 과부하 참고용 // 2026-07-02
+    var last = lastSessionInfo(p.exercise_id);
+    if (last) {
+      html += '<div class="last-record">지난번 ' + last.label + ' · ' + last.reps.join(' · ') + '</div>';
+    }
 
     // Set indicators
     html += '<div class="set-indicators">';
@@ -1996,8 +2293,9 @@ function renderToday() {
 // 다음 일정으로 진행 — current_seq 커서를 +1 (완료/건너뛰기 공통). 날짜와 무관, 스킵해도 순서 유지. // 2026-06-30
 async function advanceDay() {
   if (state.currentSeq == null) return;
+  flushPendingLog(); // 미저장 세트 확정 후 진행 // 2026-07-02
   if (state.totalDays != null && state.currentSeq >= state.totalDays) {
-    alert('프로그램의 마지막 일정입니다. 수고하셨습니다!');
+    showToast('프로그램의 마지막 일정입니다. 수고하셨습니다!');
     return;
   }
   var next = state.currentSeq + 1;
@@ -2005,34 +2303,269 @@ async function advanceDay() {
     await api.postConfig('current_seq', next);
   } catch (err) {
     console.error('Advance failed:', err);
-    alert('다음 일정 저장에 실패했습니다. 네트워크를 확인하세요.');
+    showToast('다음 일정 저장 실패 — 네트워크를 확인하세요');
     return;
   }
   // 새 커서로 깨끗하게 재로드 (세션 진행상태 초기화 포함)
   location.reload();
 }
 
-// # 2026-04-04
-async function completeSet(exerciseId) {
+// 첫 미완료 운동 index // 2026-07-02
+function currentExerciseIdx() {
+  return state.todayProgram.findIndex(function(p) {
+    var prog = state.sessionProgress[p.exercise_id];
+    return prog && prog.some(function(s) { return !s; });
+  });
+}
+
+// 직전 세션 기록 (전월 포함 logsHistory 기준) // 2026-07-02
+function lastSessionInfo(exId) {
+  var prior = (state.logsHistory || []).filter(function(l) {
+    return l.exercise_id === exId && l.date && l.date < state.today;
+  });
+  if (!prior.length) return null;
+  var lastDate = prior.reduce(function(m, l) { return l.date > m ? l.date : m; }, '');
+  var sets = prior.filter(function(l) { return l.date === lastDate; });
+  sets.sort(function(a, b) { return (Number(a.set_number) || 0) - (Number(b.set_number) || 0); });
+  var d = new Date(lastDate + 'T00:00:00');
+  return {
+    label: (d.getMonth() + 1) + '/' + d.getDate(),
+    reps: sets.map(function(s) { return s.reps_done || '-'; })
+  };
+}
+
+// 2026-07-02 — 세트 완료: undo 5초 창 후 POST, 휴식 타이머 자동 시작, 햅틱
+function completeSet(exerciseId) {
   var progress = state.sessionProgress[exerciseId];
   var setIdx = progress.findIndex(function(s) { return !s; });
   if (setIdx === -1) return;
+
+  flushPendingLog(); // 직전 세트 pending 확정
+  primeAudio();      // 사용자 제스처 시점에 AudioContext 준비 (타이머 비프용)
+  vibrate(15);
 
   progress[setIdx] = true;
 
   var noteEl = document.getElementById('note-' + exerciseId);
   var note = noteEl ? noteEl.value.trim() : '';
+  var programEntry = state.todayProgram.find(function(p) { return p.exercise_id === exerciseId; }) || {};
 
-  // POST to Sheets (fire and forget, don't block UI)
-  api.postLog({
+  var payload = {
     date: state.today,
     exercise_id: exerciseId,
     set_number: setIdx + 1,
-    reps_done: (state.todayProgram.find(function(p) { return p.exercise_id === exerciseId; }) || {}).reps || '',
+    reps_done: programEntry.reps || '',
     note: note
-  }).catch(function(err) { console.error('Log post failed:', err); });
+  };
+
+  // 기록 탭 즉시 반영용 로컬 push (undo 시 제거)
+  var localLog = { date: payload.date, exercise_id: exerciseId, set_number: payload.set_number, reps_done: payload.reps_done, note: note };
+  state.logs.push(localLog);
+  state.logsHistory.push(localLog);
+
+  var prevIdx = currentExerciseIdx();
+
+  var pending = { payload: payload, exerciseId: exerciseId, setIdx: setIdx, localLog: localLog };
+  pending.timeoutId = setTimeout(function() { flushPendingLog(); }, 5000);
+  pendingLog = pending;
+
+  var allDone = state.todayProgram.every(function(pp) {
+    var prog = state.sessionProgress[pp.exercise_id];
+    return prog && prog.every(Boolean);
+  });
+
+  if (allDone) {
+    endRestTimer(false);
+    vibrate([30, 60, 30, 60, 80]);
+    releaseWakeLock();
+  } else {
+    startRestTimer(programEntry.rest_sec);
+  }
 
   renderToday();
+
+  pending.dismissToast = showToast('세트 ' + (setIdx + 1) + ' 완료', {
+    actionLabel: '실행 취소',
+    onAction: function() { undoSet(pending); }
+  });
+
+  // 다음 운동으로 넘어갔으면 해당 카드로 스크롤
+  var newIdx = currentExerciseIdx();
+  if (newIdx !== -1 && newIdx !== prevIdx) scrollToCurrentCard();
+}
+
+// 세트 실행 취소 — pending 상태에서만 가능 // 2026-07-02
+function undoSet(pending) {
+  if (pendingLog !== pending) return; // 이미 저장 확정된 세트는 무시
+  pendingLog = null;
+  clearTimeout(pending.timeoutId);
+  var progress = state.sessionProgress[pending.exerciseId];
+  if (progress) progress[pending.setIdx] = false;
+  var li = state.logs.indexOf(pending.localLog);
+  if (li !== -1) state.logs.splice(li, 1);
+  var hi = state.logsHistory.indexOf(pending.localLog);
+  if (hi !== -1) state.logsHistory.splice(hi, 1);
+  endRestTimer(false);
+  acquireWakeLockIfActive(); // allDone 상태가 되돌려졌을 수 있음
+  renderToday();
+}
+
+/* --- Pending log (undo 창) --- // 2026-07-02 */
+
+var pendingLog = null;
+
+function flushPendingLog(useBeacon) {
+  if (!pendingLog) return;
+  var p = pendingLog;
+  pendingLog = null;
+  clearTimeout(p.timeoutId);
+  if (p.dismissToast) p.dismissToast();
+  if (useBeacon && navigator.sendBeacon) {
+    navigator.sendBeacon(API_URL, JSON.stringify(Object.assign({ action: 'log' }, p.payload)));
+  } else {
+    api.postLog(p.payload).catch(function(err) { console.error('Log post failed:', err); });
+  }
+}
+
+// 페이지 이탈 시 미저장 세트 유실 방지
+window.addEventListener('pagehide', function() { flushPendingLog(true); });
+
+/* --- Rest Timer --- // 2026-07-02 */
+
+var restTimer = { deadline: 0, total: 0, interval: null };
+
+function startRestTimer(sec) {
+  sec = Number(sec) > 0 ? Number(sec) : 60;
+  restTimer.total = sec;
+  restTimer.deadline = Date.now() + sec * 1000;
+  document.getElementById('rest-timer').classList.add('visible');
+  clearInterval(restTimer.interval);
+  restTimer.interval = setInterval(tickRestTimer, 200);
+  tickRestTimer();
+}
+
+function tickRestTimer() {
+  var remainMs = restTimer.deadline - Date.now();
+  var remain = Math.max(0, Math.ceil(remainMs / 1000));
+  document.getElementById('rest-timer-time').textContent = Math.floor(remain / 60) + ':' + String(remain % 60).padStart(2, '0');
+  var pct = restTimer.total > 0 ? Math.max(0, remainMs / (restTimer.total * 1000)) : 0;
+  document.getElementById('rest-timer-fill').style.width = (pct * 100) + '%';
+  if (remainMs <= 0) endRestTimer(true);
+}
+
+function endRestTimer(notify) {
+  clearInterval(restTimer.interval);
+  restTimer.interval = null;
+  document.getElementById('rest-timer').classList.remove('visible');
+  if (notify) {
+    vibrate([150, 80, 150]);
+    playBeep();
+  }
+}
+
+function extendRestTimer(sec) {
+  restTimer.deadline += sec * 1000;
+  restTimer.total += sec;
+  tickRestTimer();
+}
+
+/* --- Toast --- // 2026-07-02 */
+
+function showToast(msg, opts) {
+  opts = opts || {};
+  var container = document.getElementById('toast-container');
+  var t = document.createElement('div');
+  t.className = 'toast';
+  var span = document.createElement('span');
+  span.textContent = msg;
+  t.appendChild(span);
+  if (opts.actionLabel) {
+    var btn = document.createElement('button');
+    btn.className = 'toast-action';
+    btn.textContent = opts.actionLabel;
+    btn.onclick = function() {
+      dismiss();
+      if (opts.onAction) opts.onAction();
+    };
+    t.appendChild(btn);
+  }
+  container.appendChild(t);
+  var hideTimer = setTimeout(dismiss, opts.duration || (opts.actionLabel ? 5000 : 2800));
+  function dismiss() {
+    clearTimeout(hideTimer);
+    if (!t.parentNode) return;
+    t.classList.add('hide');
+    setTimeout(function() { t.remove(); }, 250);
+  }
+  return dismiss;
+}
+
+/* --- Haptics + Beep --- // 2026-07-02 */
+
+function vibrate(pattern) {
+  if (navigator.vibrate) { try { navigator.vibrate(pattern); } catch (e) {} }
+}
+
+var audioCtx = null;
+
+function primeAudio() {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+  } catch (e) {}
+}
+
+function playBeep() {
+  if (!audioCtx) return;
+  try {
+    [0, 0.18].forEach(function(offset) {
+      var osc = audioCtx.createOscillator();
+      var gain = audioCtx.createGain();
+      osc.frequency.value = 880;
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      var now = audioCtx.currentTime + offset;
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.12, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.14);
+      osc.start(now);
+      osc.stop(now + 0.15);
+    });
+  } catch (e) {}
+}
+
+/* --- Wake Lock — 운동 중 화면 꺼짐 방지 --- // 2026-07-02 */
+
+var wakeLock = null;
+
+function sessionActive() {
+  if (state.isRest || !state.todayProgram.length) return false;
+  return currentExerciseIdx() !== -1;
+}
+
+function acquireWakeLockIfActive() {
+  if (!('wakeLock' in navigator)) return;
+  if (!sessionActive() || document.visibilityState !== 'visible') return;
+  navigator.wakeLock.request('screen').then(function(lock) { wakeLock = lock; }).catch(function() {});
+}
+
+function releaseWakeLock() {
+  if (wakeLock) {
+    wakeLock.release().catch(function() {});
+    wakeLock = null;
+  }
+}
+
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'visible') acquireWakeLockIfActive();
+});
+
+// 다음 운동 카드로 부드럽게 스크롤 // 2026-07-02
+function scrollToCurrentCard() {
+  setTimeout(function() {
+    var card = document.querySelector('#tab-today .workout-card.is-current');
+    if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 80);
 }
 
 // # 2026-04-04
@@ -2552,27 +3085,35 @@ async function initApp() {
       if (sets > 0) state.sessionProgress[p.exercise_id] = new Array(sets).fill(false);
     });
 
-    // Load full month data
+    // Load full month data (+ 전월 로그 — "지난번" 기록용 // 2026-07-02)
     var month = state.today.substring(0, 7);
+    var prevD = new Date(state.today + 'T00:00:00');
+    prevD.setMonth(prevD.getMonth() - 1);
+    var prevMonth = prevD.getFullYear() + '-' + String(prevD.getMonth() + 1).padStart(2, '0');
     var results = await Promise.all([
       api.getLogs(month),
-      api.getPrograms(month)
+      api.getPrograms(month),
+      api.getLogs(prevMonth).catch(function() { return {}; })
     ]);
     var logsData = results[0];
     var programsData = results[1];
+    var prevLogsData = results[2];
 
     if (logsData.logs) state.logs = logsData.logs;
     if (programsData.programs) state.programs = programsData.programs;
+    state.logsHistory = (prevLogsData.logs || []).concat(state.logs);
 
     // Show app
     document.getElementById('loading').style.display = 'none';
     document.getElementById('app').style.display = '';
     handleHash();
+    acquireWakeLockIfActive(); // 운동 중 화면 꺼짐 방지 // 2026-07-02
 
   } catch (err) {
     // NOTE: innerHTML used here with static markup + err.message from fetch API.
     // This is a single-user personal tool; data source is trusted (user's own Sheets).
     var el = document.getElementById('loading');
+    el.classList.add('load-failed'); // 2026-07-02 — 스켈레톤 → 센터 에러 레이아웃
     el.textContent = '';
     var p = document.createElement('p');
     p.className = 'error-msg';
@@ -2635,6 +3176,12 @@ if ('serviceWorker' in navigator) {
     keys.forEach(function(k) { caches.delete(k); });
   });
 }
+
+// 스크롤 시 헤더 섀도 토글 // 2026-07-02
+window.addEventListener('scroll', function() {
+  var h = document.getElementById('app-header');
+  if (h) h.classList.toggle('scrolled', window.scrollY > 4);
+}, { passive: true });
 
 // Start the app // 2026-04-04
 initApp();
