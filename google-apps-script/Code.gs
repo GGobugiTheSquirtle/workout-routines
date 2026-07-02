@@ -166,7 +166,12 @@ function handlePrograms(month) {
  * logs — 월별 운동 기록 반환 (YYYY-MM 필터)
  */
 function handleLogs(month) {
-  const allLogs = getSheetData('logs');
+  // 2026-07-02 21:15 — logs.date가 시트 자동변환으로 Date 객체로 올 수 있음 → 응답 자체를 정규화.
+  // (실사례: 2026-07-02 첫 실기록 후 "row.date.substring is not a function" — 기록 탭 공백)
+  const allLogs = getSheetData('logs').map(function(row) {
+    row.date = toDateStr_(row.date);
+    return row;
+  });
 
   if (!month) {
     return { logs: allLogs };
@@ -177,6 +182,17 @@ function handleLogs(month) {
   });
 
   return { logs: filtered };
+}
+
+/**
+ * toDateStr_ — Date/유사Date/문자열 무엇이 와도 'YYYY-MM-DD' (Asia/Seoul) 문자열로 정규화
+ * instanceof가 실패하는 경우까지 duck-typing으로 방어 // 2026-07-02 21:15
+ */
+function toDateStr_(v) {
+  if (v instanceof Date || (v && typeof v.getTime === 'function')) {
+    return Utilities.formatDate(v, TIMEZONE, 'yyyy-MM-dd');
+  }
+  return v == null ? '' : String(v);
 }
 
 // ─── POST Handlers ───────────────────────────────────────────────────
@@ -290,8 +306,8 @@ function getSheetData(sheetName) {
     var obj = {};
     for (var j = 0; j < headers.length; j++) {
       var cell = data[i][j];
-      // Date 객체 → YYYY-MM-DD 문자열 변환 (Asia/Seoul)
-      if (cell instanceof Date) {
+      // Date 객체 → YYYY-MM-DD 문자열 변환 (Asia/Seoul). duck-typing 병행 // 2026-07-02 21:15
+      if (cell instanceof Date || (cell && typeof cell.getTime === 'function')) {
         cell = Utilities.formatDate(cell, TIMEZONE, 'yyyy-MM-dd');
       }
       obj[headers[j]] = cell;
