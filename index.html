@@ -2265,7 +2265,7 @@ function renderToday() {
       rhtml += '<button class="btn-primary mt-4" onclick="advanceDay()">휴식 완료 — 다음 일정으로 &rarr;</button>';
     }
     rhtml += '</div>';
-    container.innerHTML = rhtml;
+    container.innerHTML = rhtml + renderDailyFootCare(); // 휴식일에도 발 관리 노출 // 2026-07-03
     return;
   }
 
@@ -2392,7 +2392,36 @@ function renderToday() {
     html += '</div>';
   }
 
-  container.innerHTML = html;
+  container.innerHTML = html + renderDailyFootCare(); // 하단 발 관리 카드 (매일) // 2026-07-03
+}
+
+// 발 관리 데일리 카드 — 운동일·휴식일 모두 Today 하단에 노출. exercises CSV의 plantar_care 행에서 렌더 // 2026-07-03
+var DAILY_FOOT_CARE_ID = 'plantar_care';
+function renderDailyFootCare() {
+  var ex = state.exerciseMap[DAILY_FOOT_CARE_ID];
+  if (!ex) return ''; // CSV에 없으면 카드 미표시 (앱 셸은 데이터 무보유 원칙 유지)
+  var h = '<div class="workout-card foot-care-card" style="margin-top:var(--space-4)">';
+  h += '<div class="workout-card-header">';
+  h += '<span class="workout-name" style="cursor:default">&#129462; ' + (ex.name || '발 관리') + '</span>';
+  h += '<span class="guide-tag">매일</span></div>';
+  h += '<div class="workout-meta">족저근막 데일리 케어 · 운동 전/후 아무 때나</div>';
+  h += '<div class="inline-guide-toggle" onclick="toggleInlineGuide(\'footcare\')"><span>루틴 보기</span><span class="chevron">&#9660;</span></div>';
+  h += '<div class="inline-guide-body" id="guide-inline-footcare">';
+  if (ex.form_guide) {
+    h += '<div class="inline-guide-section"><div class="inline-guide-label">3분 루틴</div><ul>';
+    h += ex.form_guide.split('\n').filter(Boolean).map(function(l) { return '<li>' + l.trim() + '</li>'; }).join('');
+    h += '</ul></div>';
+  }
+  if (ex.safety_notes) {
+    h += '<div class="inline-guide-section"><div class="inline-guide-label">주의</div><ul>';
+    h += ex.safety_notes.split('\n').filter(Boolean).map(function(l) { return '<li>' + l.trim() + '</li>'; }).join('');
+    h += '</ul></div>';
+  }
+  if (ex.video_url) {
+    h += '<a href="' + ex.video_url + '" target="_blank" rel="noopener noreferrer" class="inline-guide-video">&#9654; 영상 보기</a>';
+  }
+  h += '</div></div>';
+  return h;
 }
 
 // 다음 일정으로 진행 — current_seq 커서를 +1 (완료/건너뛰기 공통). 날짜와 무관, 스킵해도 순서 유지. // 2026-06-30
@@ -2825,9 +2854,12 @@ function renderCurriculum() {
   container.innerHTML = html;
 }
 
-// # 2026-04-04
+// # 2026-04-04 (2026-07-03: cardio/care는 근력 진행도 계산에서 제외)
+var STRENGTH_CATS = ['push', 'pull', 'legs', 'core', 'swing'];
 function calculateLevelProgress(level) {
-  var levelExercises = state.exercises.filter(function(ex) { return Number(ex.level) === level; });
+  var levelExercises = state.exercises.filter(function(ex) {
+    return Number(ex.level) === level && STRENGTH_CATS.indexOf(ex.category) !== -1;
+  });
   if (levelExercises.length === 0) return 0;
   var completed = 0;
   levelExercises.forEach(function(ex) {
@@ -3025,7 +3057,9 @@ function renderGuide() {
     { key: 'pull', label: 'Pull' },
     { key: 'legs', label: 'Legs' },
     { key: 'core', label: 'Core' },
-    { key: 'swing', label: 'Swing' }
+    { key: 'swing', label: 'Swing' },
+    { key: 'cardio', label: 'Cardio' }, // 2026-07-03 컨디셔닝 운동
+    { key: 'care', label: 'Care' }       // 2026-07-03 발 관리
   ];
 
   // Filter exercises
