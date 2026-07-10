@@ -33,6 +33,9 @@ function doGet(e) {
     const action = (e.parameter && e.parameter.action) || '';
 
     switch (action) {
+      case 'boot':
+        return jsonResponse(handleBoot());
+
       case 'init':
         return jsonResponse(handleInit());
 
@@ -83,8 +86,29 @@ function doPost(e) {
 // ─── GET Handlers ────────────────────────────────────────────────────
 
 /**
+ * boot — 경량 부트 응답: 사용자 데이터(시트)만 반환 // 2026-07-10 23:10
+ * 초기로딩 최적화 — 정적 데이터(exercises/programs CSV)는 클라이언트가
+ * GitHub Pages same-origin으로 직접 fetch. 서버는 시트 2개 읽기만.
+ * (기존 init은 UrlFetchApp CSV 2건 직렬 포함 실측 ~4s → boot는 시트만)
+ * logs는 전체 반환(개인용 소량, 실측 월 1.7KB) — 월 필터·이력은 클라이언트 로컬.
+ */
+function handleBoot() {
+  var today = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd');
+  var logs = getSheetData('logs').map(function(row) {
+    row.date = toDateStr_(row.date);
+    return row;
+  });
+  return {
+    user_config: getConfigMap(),
+    logs: logs,
+    today: today,
+  };
+}
+
+/**
  * init — 앱 로드 시 한 번의 호출로 필요한 데이터 전부 반환
  * exercises 전체 + 오늘의 programs + user_config
+ * // 2026-07-10 23:10 — 레거시(구버전 캐시 HTML 호환용). 신규 클라이언트는 boot 사용.
  */
 function handleInit() {
   const today = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd');

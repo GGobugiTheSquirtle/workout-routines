@@ -2149,8 +2149,10 @@ const state = {
   todayProgram: [],
   config: {},
   logs: [],
-  logsHistory: [], // 전월 포함 로그 — "지난번" 기록 표시용 // 2026-07-02
+  logsAll: [], // 전체 로그 (boot 1회 수신) — 월 필터 로컬 처리용 // 2026-07-10 23:10
+  logsHistory: [], // 전체 이력 — "지난번" 기록 표시용 // 2026-07-02 (2026-07-10 전월→전체)
   programs: [],
+  allPrograms: [], // 전체 스케줄 (repo CSV 직접 fetch) // 2026-07-10 23:10
   today: '',
   currentSeq: null,
   totalDays: null,
@@ -2171,21 +2173,11 @@ const state = {
 
 const API_URL = localStorage.getItem('sheets_url') || 'https://script.google.com/macros/s/AKfycby_0_keb2239-sOTSJTZXhXFW-7tgX6fa9_QrXI20zRxPTQ4Ht19yPi5qnteG8FMk2-/exec';
 
+// 2026-07-10 23:10 — 초기로딩 최적화: init/getPrograms/getLogs/getExercises 제거.
+// 정적 데이터는 same-origin CSV fetch(아래 STATIC DATA 섹션), 사용자 데이터는 boot 1건.
 const api = {
-  async init() {
-    const res = await fetch(API_URL + '?action=init');
-    return res.json();
-  },
-  async getPrograms(month) {
-    const res = await fetch(API_URL + '?action=programs&month=' + month);
-    return res.json();
-  },
-  async getLogs(month) {
-    const res = await fetch(API_URL + '?action=logs&month=' + month);
-    return res.json();
-  },
-  async getExercises() {
-    const res = await fetch(API_URL + '?action=exercises');
+  async boot() {
+    const res = await fetch(API_URL + '?action=boot');
     return res.json();
   },
   async postLog(data) {
@@ -2203,6 +2195,66 @@ const api = {
     return res.json();
   }
 };
+
+/* ==========================================================================
+   STATIC DATA — repo CSV same-origin fetch
+   2026-07-10 23:10 — 초기로딩 최적화: GAS가 서버측 UrlFetchApp으로 CSV를
+   내려받던 것(init ~4s)을 클라이언트 same-origin fetch(~0.3s)로 전환.
+   앱과 CSV가 같은 repo의 GitHub Pages에서 서비스되므로 CORS 불필요.
+   ========================================================================== */
+
+// RFC 4180 미니 파서 — 따옴표 필드 내 콤마/줄바꿈/이중따옴표 지원
+function parseCsv(text) {
+  if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1); // BOM 제거
+  var rows = [], row = [], field = '', inQuotes = false;
+  for (var i = 0; i < text.length; i++) {
+    var c = text[i];
+    if (inQuotes) {
+      if (c === '"') {
+        if (text[i + 1] === '"') { field += '"'; i++; }
+        else inQuotes = false;
+      } else field += c;
+    } else if (c === '"') {
+      inQuotes = true;
+    } else if (c === ',') {
+      row.push(field); field = '';
+    } else if (c === '\n' || c === '\r') {
+      if (c === '\r' && text[i + 1] === '\n') i++;
+      row.push(field); field = '';
+      rows.push(row); row = [];
+    } else {
+      field += c;
+    }
+  }
+  if (field !== '' || row.length) { row.push(field); rows.push(row); }
+  return rows;
+}
+
+// GAS getSheetData/fetchCsvAsObjects_ 와 동일 형태({header: value}[])로 반환
+async function fetchCsvObjects(file) {
+  var res = await fetch('data/' + file);
+  if (!res.ok) throw new Error('CSV 로드 실패 (HTTP ' + res.status + '): ' + file);
+  var rows = parseCsv(await res.text());
+  if (rows.length < 2) return [];
+  var headers = rows[0].map(function(h) { return String(h).trim(); });
+  var out = [];
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i].length === 1 && rows[i][0] === '') continue; // 빈 행 스킵
+    var obj = {};
+    for (var j = 0; j < headers.length; j++) {
+      obj[headers[j]] = rows[i][j] !== undefined ? rows[i][j] : '';
+    }
+    out.push(obj);
+  }
+  return out;
+}
+
+// 월(YYYY-MM) 필터 — logs/programs 공용 // 2026-07-10 23:10
+function filterByMonth(rows, month) {
+  return rows.filter(function(r) {
+    return r.date && String(r.date).substring(0, 7) === month;
+  });
+}
 
 /* ==========================================================================
    TAB ROUTER
@@ -2535,6 +2587,7 @@ function completeSet(exerciseId) {
   // 기록 탭 즉시 반영용 로컬 push (undo 시 제거)
   var localLog = { date: payload.date, exercise_id: exerciseId, set_number: payload.set_number, reps_done: payload.reps_done, note: note };
   state.logs.push(localLog);
+  state.logsAll.push(localLog); // 월 이동 시 로컬 필터 원본 // 2026-07-10 23:10
   state.logsHistory.push(localLog);
 
   var prevIdx = currentExerciseIdx();
@@ -2577,6 +2630,8 @@ function undoSet(pending) {
   if (progress) progress[pending.setIdx] = false;
   var li = state.logs.indexOf(pending.localLog);
   if (li !== -1) state.logs.splice(li, 1);
+  var ai = state.logsAll.indexOf(pending.localLog); // 2026-07-10 23:10
+  if (ai !== -1) state.logsAll.splice(ai, 1);
   var hi = state.logsHistory.indexOf(pending.localLog);
   if (hi !== -1) state.logsHistory.splice(hi, 1);
   endRestTimer(false);
@@ -3024,8 +3079,8 @@ function renderJournal(dateStr) {
   return html;
 }
 
-// # 2026-04-04
-async function changeMonth(delta) {
+// # 2026-04-04 (2026-07-10 23:10 — API 재호출 → 로컬 필터. 데이터는 boot 때 전부 보유)
+function changeMonth(delta) {
   var parts = state.recordsMonth.split('-').map(Number);
   var newMonth = parts[1] + delta;
   var newYear = parts[0];
@@ -3033,12 +3088,8 @@ async function changeMonth(delta) {
   if (newMonth > 12) { newMonth = 1; newYear++; }
   state.recordsMonth = newYear + '-' + String(newMonth).padStart(2, '0');
   state.recordsDate = null;
-  try {
-    var data = await api.getLogs(state.recordsMonth);
-    if (data.logs) state.logs = data.logs;
-    var pData = await api.getPrograms(state.recordsMonth);
-    if (pData.programs) state.programs = pData.programs;
-  } catch (err) { console.error('Failed to fetch month data:', err); }
+  state.logs = filterByMonth(state.logsAll, state.recordsMonth);
+  state.programs = filterByMonth(state.allPrograms, state.recordsMonth);
   renderRecords();
 }
 
@@ -3234,22 +3285,54 @@ async function initApp() {
       return;
     }
 
-    var data = await api.init();
-    if (data.error) throw new Error(data.error);
+    // 2026-07-10 23:10 — 초기로딩 최적화 (실측 6.5~8s → GAS 1건 수준)
+    // 구조: [GAS init(CSV 2건 서버 fetch 포함) → logs/programs 3건] 2라운드 직렬
+    //   → [same-origin CSV 2건 + GAS boot 1건] 병렬 1라운드
+    var results = await Promise.all([
+      fetchCsvObjects('exercises-v2.csv'),
+      fetchCsvObjects('programs-3month.csv'),
+      api.boot()
+    ]);
+    var exercises = results[0];
+    var allPrograms = results[1];
+    var boot = results[2];
+    if (boot.error) throw new Error(boot.error);
 
-    // Map API response keys to state keys // 2026-04-07 fix
-    state.exercises = data.exercises || [];
+    state.exercises = exercises;
+    state.allPrograms = allPrograms;
+    state.config = boot.user_config || {};
+    state.today = boot.today || '';
+
+    // Sequential-progress mode 커서 계산 — 구 GAS handleInit 로직 클라이언트 포팅
+    var dayPrograms;
+    var hasSeq = allPrograms.some(function(r) { return r.seq !== '' && r.seq != null; });
+    if (hasSeq) {
+      var seqs = allPrograms
+        .map(function(r) { return Number(r.seq); })
+        .filter(function(n) { return !isNaN(n); });
+      var totalDays = seqs.length ? Math.max.apply(null, seqs) : 0;
+      var currentSeq = Number(state.config.current_seq) || 1;
+      if (currentSeq < 1) currentSeq = 1;
+      if (currentSeq > totalDays) currentSeq = totalDays;
+      dayPrograms = allPrograms.filter(function(r) { return Number(r.seq) === currentSeq; });
+      var nextRows = allPrograms.filter(function(r) { return Number(r.seq) === currentSeq + 1; });
+      state.currentSeq = currentSeq;
+      state.totalDays = totalDays;
+      state.isRest = dayPrograms.every(function(r) { return !r.exercise_id; });
+      state.nextLabel = nextRows.length ? (nextRows[0].day_label || '') : '';
+    } else {
+      // 레거시 날짜 모드
+      dayPrograms = allPrograms.filter(function(r) { return r.date === state.today; });
+      state.currentSeq = null;
+      state.totalDays = null;
+      state.isRest = false;
+      state.nextLabel = '';
+    }
+
     // Drop rest-day marker rows (empty exercise_id); rest state comes from is_rest flag
-    state.todayProgram = (data.programs || data.todayProgram || []).filter(function(p) {
+    state.todayProgram = dayPrograms.filter(function(p) {
       return p.exercise_id;
     });
-    state.config = data.user_config || data.config || {};
-    state.today = data.today || '';
-    // Sequential-progress mode (커서 기반)
-    state.currentSeq = data.current_seq != null ? Number(data.current_seq) : null;
-    state.totalDays = data.total_days != null ? Number(data.total_days) : null;
-    state.isRest = !!data.is_rest;
-    state.nextLabel = data.next_label || '';
 
     // Build exercise lookup map
     state.exerciseMap = {};
@@ -3264,23 +3347,12 @@ async function initApp() {
       if (sets > 0) state.sessionProgress[p.exercise_id] = new Array(sets).fill(false);
     });
 
-    // Load full month data (+ 전월 로그 — "지난번" 기록용 // 2026-07-02)
+    // 로그·월 데이터 — boot이 로그 전체 반환(소량), 월 필터는 로컬
     var month = state.today.substring(0, 7);
-    var prevD = new Date(state.today + 'T00:00:00');
-    prevD.setMonth(prevD.getMonth() - 1);
-    var prevMonth = prevD.getFullYear() + '-' + String(prevD.getMonth() + 1).padStart(2, '0');
-    var results = await Promise.all([
-      api.getLogs(month),
-      api.getPrograms(month),
-      api.getLogs(prevMonth).catch(function() { return {}; })
-    ]);
-    var logsData = results[0];
-    var programsData = results[1];
-    var prevLogsData = results[2];
-
-    if (logsData.logs) state.logs = logsData.logs;
-    if (programsData.programs) state.programs = programsData.programs;
-    state.logsHistory = (prevLogsData.logs || []).concat(state.logs);
+    state.logsAll = boot.logs || [];
+    state.logs = filterByMonth(state.logsAll, month);
+    state.logsHistory = state.logsAll.slice(); // "지난번" 기록용 — 전월 한정 → 전체 이력
+    state.programs = filterByMonth(allPrograms, month);
 
     // Show app
     document.getElementById('loading').style.display = 'none';
