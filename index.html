@@ -2485,11 +2485,11 @@ function renderDailyFootCare() {
   h += '<div class="workout-card-header">';
   h += '<span class="workout-name" style="cursor:default">&#129462; ' + (ex.name || '발 관리') + '</span>';
   h += '<span class="guide-tag">매일</span></div>';
-  h += '<div class="workout-meta">족저근막 데일리 케어 · 운동 전/후 아무 때나</div>';
+  h += '<div class="workout-meta">아침 첫 발 딛기 전 ①② 필수 · 나머지는 하루 1회</div>'; // 2026-10-11 20:42 걷기 전 스트레칭 강조
   h += '<div class="inline-guide-toggle" onclick="toggleInlineGuide(\'footcare\')"><span>루틴 보기</span><span class="chevron">&#9660;</span></div>';
   h += '<div class="inline-guide-body" id="guide-inline-footcare">';
   if (ex.form_guide) {
-    h += '<div class="inline-guide-section"><div class="inline-guide-label">3분 루틴</div><ul>';
+    h += '<div class="inline-guide-section"><div class="inline-guide-label">루틴</div><ul>'; // 2026-10-11 20:42 5단계로 확장
     h += ex.form_guide.split('\n').filter(Boolean).map(function(l) { return '<li>' + l.trim() + '</li>'; }).join('');
     h += '</ul></div>';
   }
