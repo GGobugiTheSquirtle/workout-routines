@@ -1854,6 +1854,26 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* 프로그램 안내 — 주차 목표(헤더) + 운동별 요령(카드) // 2026-10-11 20:19 */
+.session-note {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-3);
+  line-height: 1.5;
+}
+
+.session-note strong {
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+}
+
+.exercise-cue {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  margin: calc(-1 * var(--space-3)) 0 var(--space-4);
+  line-height: 1.5;
+}
+
 /* ==========================================================================
    REST TIMER — 세트 완료 시 자동 시작 // 2026-07-02
    ========================================================================== */
@@ -2340,6 +2360,11 @@ function renderToday() {
 
   var html = '<div class="today-header"><h2>' + dayLabel + '</h2>';
   html += '<div class="day-meta">Level ' + (state.config.current_level || 1) + ' · ' + dateStr + (totalSets ? ' · 세트 ' + doneSets + '/' + totalSets : '') + '</div>';
+  // 주차 목표·세션 안내 (programs.note 앞 두 칸) // 2026-10-11 20:19
+  var sessionNote = splitProgramNote(program[0].note);
+  if (sessionNote.theme) {
+    html += '<div class="session-note"><strong>' + sessionNote.theme + '</strong>' + (sessionNote.desc ? '<br>' + sessionNote.desc : '') + '</div>';
+  }
   if (totalSets) {
     html += '<div class="session-progress"><div class="session-progress-fill" style="width:' + Math.round(doneSets / totalSets * 100) + '%"></div></div>';
   }
@@ -2370,6 +2395,10 @@ function renderToday() {
     if (isDone) html += '<span class="done-badge">DONE</span>';
     html += '</div>';
     html += '<div class="workout-meta">' + p.sets + '×' + p.reps + ' · ' + (ex.muscles_primary || '') + '</div>';
+
+    // 운동별 수행 요령 (programs.note 마지막 칸: 한쪽 기준·EMOM 등) // 2026-10-11 20:19
+    var cue = splitProgramNote(p.note).cue;
+    if (cue) html += '<div class="exercise-cue">' + cue + '</div>';
 
     // 지난 세션 기록 — 점진적 과부하 참고용 // 2026-07-02
     var last = lastSessionInfo(p.exercise_id);
@@ -2494,6 +2523,16 @@ async function advanceDay() {
   }
   // 새 커서로 깨끗하게 재로드 (세션 진행상태 초기화 포함)
   location.reload();
+}
+
+// programs.note 분해 — "주차 목표 | 세션 안내 | 운동별 요령" 3칸 형식 // 2026-10-11 20:19
+// 3칸 미만이면 전체를 운동별 요령으로 취급 (세션 안내 미표시)
+function splitProgramNote(note) {
+  var parts = String(note == null ? '' : note).split(' | ').map(function(s) { return s.trim(); });
+  if (parts.length >= 3) {
+    return { theme: parts[0], desc: parts[1], cue: parts.slice(2).join(' | ') };
+  }
+  return { theme: '', desc: '', cue: parts.join(' | ') };
 }
 
 // reps 파싱 — "8"(횟수) 또는 "20초"(시간)만 스테퍼 지원, 그 외 null // 2026-07-02
