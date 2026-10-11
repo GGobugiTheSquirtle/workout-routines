@@ -13,7 +13,7 @@
 - Online-first: no PWA, no ServiceWorker, no offline cache
 - App shell has ZERO hardcoded data — everything fetched via Apps Script API
 - **데이터 소스 분리 (2026-07-01)**:
-  - **정적 데이터 (exercises, programs)** → repo `data/*.csv`가 원본. Apps Script가 GitHub **raw CSV에서 직접 fetch** (`fetchCsvAsObjects_`). CSV 푸시 = 앱 자동 반영(raw CDN ~5분), 수동 시트 동기화 불필요.
+  - **정적 데이터 (exercises, programs)** → repo `data/*.csv`가 원본. 앱(`index.html`)이 GitHub Pages에서 **same-origin으로 직접 fetch** (`fetchCsvObjects`, 2026-07-10~). master 푸시 = Pages 빌드 후 자동 반영, 수동 시트 동기화 불필요. (Code.gs `fetchCsvAsObjects_`는 레거시 `init` 호환용으로만 raw CSV fetch)
   - **사용자 데이터 (logs, user_config)** → Google Sheets 읽기/쓰기 (`getSheetData`/`handleConfigWrite`).
   - `exercises`/`programs` 시트는 vestigial(더 이상 안 읽음). Sheet UI 직접 편집 불가 — 프로그램/운동 변경은 CSV(git)로만.
 - LocalStorage for session temp state only (current set progress)
@@ -21,6 +21,10 @@
 ## 데이터 스키마
 - `data/exercises-v2.csv` (repo) — exercise DB (id, name, category, level, form_guide, video_url, progression_from/to, etc.)
 - `data/programs-3month.csv` (repo) — schedule (date, **seq**, day_label, order, exercise_id, sets, reps, rest_sec, promotion_criteria, note). `seq` = 순차 진행 "하루" 일련번호(휴식일 포함). 앱은 날짜가 아닌 `current_seq` 커서 기준 "현재 하루" 표시. **행 순서 = 표시 순서**(order 컬럼은 표시용 메타, 정렬 안 함)
+  - **v2 (2026-10-11~)**: 주 4일 A/B 2분할, 7일 주기 A·B·휴·A·B·휴·휴 × 12주 = 84 seq. A = 밀기·코어 + 스윙 EMOM, B = 당기기·하체 + 파워 스윙. 일정표: `docs/3month-schedule.md` (CSV에서 생성). v1(주 6일)은 `archive/`
+  - `note` = `주차 목표 | 세션 안내 | 운동별 요령` 3칸 (` | ` 구분). 앱 Today 헤더에 앞 두 칸, 운동 카드에 마지막 칸 표시
+  - `reps`는 정수 또는 `N초`만 (앱 스테퍼 `^\d+(초)?$`). 한 세션 안에 같은 `exercise_id` 중복 금지 (세션 진행상태 키)
+- `archive/` — 앱이 읽지 않는 이전 버전 CSV·문서 보관
 - Sheet `logs` — workout records (date, exercise_id, set_number, reps_done, note)
 - Sheet `user_config` — key/value (current_level, start_date, **current_seq**). `current_seq` = 현재 일정 번호, 완료/건너뛰기 시 +1 (날짜 무관, 스킵해도 연속성 유지)
 
