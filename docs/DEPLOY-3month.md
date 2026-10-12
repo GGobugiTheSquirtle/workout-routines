@@ -39,10 +39,10 @@ npx @google/clasp deploy -i AKfycby_0_keb2239-sOTSJTZXhXFW-7tgX6fa9_QrXI20zRxPTQ
 - Apps Script 편집기 → `setupThreeMonthProgram` ▶ Run (current_seq=1 시드, idempotent — 이미 있으면 no-op이라 진행도 안 날아감)
 - 또는 `user_config` 시트에 행 추가: `current_seq | 1`
 
-### E. 프로그램을 통째로 교체할 때 (예: 2026-10-11 v1 주 6일 → v2 주 4일)
+### E. 프로그램을 통째로 교체할 때 (예: 2026-10 v1 주 6일 → v2 A/B 48세션)
 `current_seq`는 순번 커서라 새 CSV에서도 같은 번호를 가리킨다. 처음부터 시작하려면:
 1. 새 CSV가 master에 반영된 **직후** `user_config` 시트의 `current_seq` 값을 `1`로 수정
-2. 앱 새로고침 → `Day 1 / 84` 확인
+2. 앱 새로고침 → `Day 1 / 48` 확인
 (반영 전에 리셋하면 옛 프로그램 Day 1이 보이고, 그 상태에서 진행하면 커서가 다시 올라감)
 
 ---
@@ -51,7 +51,7 @@ npx @google/clasp deploy -i AKfycby_0_keb2239-sOTSJTZXhXFW-7tgX6fa9_QrXI20zRxPTQ
 ```
 curl -sL ".../exec?action=init" | jq '{ex:(.exercises|length), seq:.current_seq, days:.total_days}'
 ```
-- exercises 69, current_seq 존재, total_days 84 면 정상
+- exercises 69, current_seq 존재, total_days 48 이면 정상 (`action=init`은 레거시 경로)
 - 앱 새로고침 → 현재 seq의 일정 + 운동별 지정 영상 표시
 - 완료/건너뛰기 → current_seq +1
 

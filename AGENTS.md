@@ -15,7 +15,7 @@
 | 신체 | 174cm / 80kg |
 | 목표 | 근비대 우선 (muscle building priority) |
 | 시간 | 하루 최대 30분 |
-| 분할 | 2-split A-B-R-A-B-R-R |
+| 분할 | 2-split A/B 교대 — 최소 주 2회, 주 4회까지 (2026-10-12 꾸준함 우선 전환, 원래 A-B-R-A-B-R-R) |
 
 ### 장비
 

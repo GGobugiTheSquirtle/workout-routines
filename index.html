@@ -2466,6 +2466,9 @@ function renderToday() {
     html += '<div class="day-advance">';
     if (allDone) {
       html += '<button class="btn-primary" onclick="advanceDay()">완료 — 다음 일정으로 &rarr;</button>';
+    } else if (doneSets > 0) {
+      // 최소 세션 — 일부만 해도 완료로 인정하고 다음으로 // 2026-10-12 13:14
+      html += '<button class="btn-skip" onclick="advanceDay()">여기까지 — 다음 일정으로 &rarr;</button>';
     } else {
       html += '<button class="btn-skip" onclick="advanceDay()">건너뛰고 다음 일정으로 &rarr;</button>';
     }

@@ -5,7 +5,7 @@
 
 | 파일 | 내용 | 대체 |
 |---|---|---|
-| `data/programs-3month-v1-6day.csv` | 3개월 프로그램 v1 — 주 6일 PPL+Full (2026-06-29 ~ 09-20, 84일) | `data/programs-3month.csv` (v2, 주 4일 A/B) |
+| `data/programs-3month-v1-6day.csv` | 3개월 프로그램 v1 — 주 6일 PPL+Full (2026-06-29 ~ 09-20, 84일) | `data/programs-3month.csv` (v2, A/B 교대 48세션) |
 | `data/programs-v2.csv` | 4월 2분할 스케줄 v2.1 | 〃 |
 | `data/programs-8weeks.csv` | 4월 8주 Level 1 스케줄 | 〃 |
 | `data/initial-programs-april.csv` | 4월 초기 샘플 스케줄 | 〃 |

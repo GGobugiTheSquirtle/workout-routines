@@ -21,8 +21,8 @@
 ## 데이터 스키마
 - `data/exercises-v2.csv` (repo) — exercise DB (id, name, category, level, form_guide, video_url, progression_from/to, etc.)
 - `data/programs-3month.csv` (repo) — schedule (date, **seq**, day_label, order, exercise_id, sets, reps, rest_sec, promotion_criteria, note). `seq` = 순차 진행 "하루" 일련번호(휴식일 포함). 앱은 날짜가 아닌 `current_seq` 커서 기준 "현재 하루" 표시. **행 순서 = 표시 순서**(order 컬럼은 표시용 메타, 정렬 안 함)
-  - **v2 (2026-10-11~)**: 주 4일 A/B 2분할, 7일 주기 A·B·휴·A·B·휴·휴 × 12주 = 84 seq. A = 밀기·코어 + 스윙 EMOM, B = 당기기·하체 + 파워 스윙. 일정표: `docs/3month-schedule.md` (CSV에서 생성). v1(주 6일)은 `archive/`
-  - `note` = `주차 목표 | 세션 안내 | 운동별 요령` 3칸 (` | ` 구분). 앱 Today 헤더에 앞 두 칸, 운동 카드에 마지막 칸 표시
+  - **v2 (2026-10-12~, 꾸준함 우선)**: A/B 교대 48 seq (12단계 × A·B·A·B), **휴식일 행 없음** — 앱은 항상 다음 운동 표시. 최소 주 2회(권장일 화 A·수 B), 주 4회까지. A = 밀기·코어 + 스윙 EMOM, B = 당기기·하체 + 파워 스윙. 일정표: `docs/3month-schedule.md` (CSV에서 생성). v1(주 6일)은 `archive/`
+  - `note` = `단계 목표 | 세션 안내 | 운동별 요령` 3칸 (` | ` 구분). 앱 Today 헤더에 앞 두 칸, 운동 카드에 마지막 칸 표시
   - `reps`는 정수 또는 `N초`만 (앱 스테퍼 `^\d+(초)?$`). 한 세션 안에 같은 `exercise_id` 중복 금지 (세션 진행상태 키)
 - `archive/` — 앱이 읽지 않는 이전 버전 CSV·문서 보관
 - Sheet `logs` — workout records (date, exercise_id, set_number, reps_done, note)
