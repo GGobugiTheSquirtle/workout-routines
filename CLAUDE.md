@@ -26,6 +26,7 @@
   - `reps`는 정수 또는 `N초`만 (앱 스테퍼 `^\d+(초)?$`). 한 세션 안에 같은 `exercise_id` 중복 금지 (세션 진행상태 키)
 - `archive/` — 앱이 읽지 않는 이전 버전 CSV·문서 보관
 - Sheet `logs` — workout records (date, exercise_id, set_number, reps_done, note)
+  - **몸 기록 (2026-10-12~)**: 같은 시트에 `exercise_id`가 `body_weight`(kg) / `body_waist`(cm)인 행, `set_number`=1, `reps_done`=측정값. 날짜당 마지막 값 유효. 앱은 boot 직후 `body_*` 행을 `state.bodyLogs`로 분리 → 운동 집계·캘린더에 섞이지 않음. 입력·표시는 기록 탭 '몸 기록' 카드 (Code.gs 변경 없음)
 - Sheet `user_config` — key/value (current_level, start_date, **current_seq**). `current_seq` = 현재 일정 번호, 완료/건너뛰기 시 +1 (날짜 무관, 스킵해도 연속성 유지)
 
 ## Conventions

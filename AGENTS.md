@@ -30,6 +30,7 @@
 - **데이터 원본**: 운동·일정은 repo `data/exercises-v2.csv`·`data/programs-3month.csv` (git), 기록·설정은 Google Sheets `logs`·`user_config` 2시트
 - **모든 판단은 데이터 기반**: logs 시트 기록 수치에 근거하여 제안
 - **기록 불변성**: logs는 append-only, 수정/삭제 없음
+- **몸 기록**: logs 시트의 `body_weight`(kg)·`body_waist`(cm) 행 — 체중·허리 추세 판단 근거 (날짜당 마지막 값)
 
 ### 에이전트 간 협업
 
