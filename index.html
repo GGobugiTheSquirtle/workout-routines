@@ -3330,7 +3330,8 @@ function renderBodyCard() {
   });
   h += '</div>';
   h += '<button class="btn-primary body-save" onclick="saveBody()">저장</button>';
-  h += '<div class="body-hint">아침 화장실 후·식전, 같은 조건으로. 허리는 배꼽 높이에서 숨을 편히 내쉰 상태로.</div>';
+  // 허리 측정 부위: WHO·대한비만학회 기준(갈비뼈 맨 아래 ~ 골반뼈 맨 위의 중간). 가장 넓은 곳 아님 // 2026-10-12 19:16
+  h += '<div class="body-hint">체중: 아침 화장실 후·식전. 허리: 갈비뼈 맨 아래와 골반뼈 맨 위의 <b>중간</b> 높이(가장 넓은 곳 아님), 숨을 편히 내쉰 상태로 2번 재서 평균.</div>';
 
   // 최근 기록 (최대 6일)
   var dates = {};
