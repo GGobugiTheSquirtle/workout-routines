@@ -1816,6 +1816,126 @@ body {
   font-weight: var(--weight-medium);
 }
 
+/* --- 몸 기록 카드 (기록 탭) // 2026-10-12 19:08 --- */
+.body-card {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  margin: 0 var(--space-2) var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+
+.body-card-title {
+  font-weight: var(--weight-bold);
+  font-size: var(--text-base);
+  margin-bottom: var(--space-3);
+}
+
+.body-latest {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.body-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.body-stat-label {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.body-stat-value {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+}
+
+.body-stat-sub {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.body-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.body-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  min-width: 0;
+}
+
+.body-field-date {
+  grid-column: 1 / -1;
+}
+
+.body-input {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.body-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-muted);
+  outline: none;
+}
+
+.body-save {
+  width: 100%;
+  margin-top: var(--space-3);
+}
+
+.body-save:disabled {
+  opacity: 0.5;
+}
+
+.body-hint {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  margin-top: var(--space-2);
+  line-height: 1.5;
+}
+
+.body-history {
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-2);
+}
+
+.body-history-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  padding: var(--space-1) 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.journal-body {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-4);
+  font-variant-numeric: tabular-nums;
+}
+
 .journal-summary {
   padding: var(--space-4) var(--space-5);
   background-color: var(--bg-tertiary);
@@ -3007,6 +3127,7 @@ function renderRecords() {
   html += '</div>';
   html += '</div>';
 
+  html += renderBodyCard(); // 몸 기록 — 날짜·체중·허리 // 2026-10-12 19:08
   html += renderMiniCalendar(year, month);
   html += renderJournal(state.recordsDate);
 
@@ -3054,6 +3175,10 @@ function renderJournal(dateStr) {
   html += '<div class="journal-date">' + (dateStr ? formatDateKR(dateStr) : '') + '</div>';
 
   var dayLogs = (state.logs || []).filter(function(l) { return l.date === dateStr; });
+
+  // 그날 몸 기록 한 줄 // 2026-10-12 19:08
+  var bodyLine = bodyValuesOn(dateStr);
+  if (bodyLine) html += '<div class="journal-body">' + bodyLine + '</div>';
 
   if (dayLogs.length === 0) {
     html += '<div class="journal-empty">이 날의 기록이 없습니다.</div>';
@@ -3119,6 +3244,144 @@ function renderJournal(dateStr) {
 
   html += '</div>';
   return html;
+}
+
+/* --------------------------------------------------------------------------
+   몸 기록 — 날짜·체중·허리 // 2026-10-12 19:08
+   저장: logs 시트에 exercise_id 'body_*' 행 (set_number=1, reps_done=측정값).
+   같은 날 여러 번 저장하면 마지막 값이 유효. 백엔드(Code.gs) 변경 없음.
+   -------------------------------------------------------------------------- */
+var BODY_METRICS = [
+  { id: 'body_weight', label: '체중', unit: 'kg', step: '0.01', min: 30, max: 250, digits: 2 },
+  { id: 'body_waist', label: '허리', unit: 'cm', step: '0.1', min: 40, max: 200, digits: 1 }
+];
+
+function isBodyLog(l) {
+  return String((l && l.exercise_id) || '').indexOf('body_') === 0;
+}
+
+// metric id → [{date, value}] 날짜 오름차순, 날짜당 마지막 값
+function bodySeries(metricId) {
+  var byDate = {};
+  (state.bodyLogs || []).forEach(function(l) {
+    if (l.exercise_id !== metricId) return;
+    var v = parseFloat(l.reps_done);
+    if (!isNaN(v) && l.date) byDate[l.date] = v;
+  });
+  return Object.keys(byDate).sort().map(function(d) { return { date: d, value: byDate[d] }; });
+}
+
+function fmtBody(value, metric) {
+  return Number(value.toFixed(metric.digits)) + metric.unit;
+}
+
+function bodyValuesOn(dateStr) {
+  var parts = [];
+  BODY_METRICS.forEach(function(m) {
+    var hit = bodySeries(m.id).filter(function(p) { return p.date === dateStr; })[0];
+    if (hit) parts.push(m.label + ' ' + fmtBody(hit.value, m));
+  });
+  return parts.join(' · ');
+}
+
+function renderBodyCard() {
+  var weight = BODY_METRICS[0], waist = BODY_METRICS[1];
+  var ws = bodySeries(weight.id), ss = bodySeries(waist.id);
+  var h = '<div class="body-card">';
+  h += '<div class="body-card-title">몸 기록</div>';
+
+  // 최신값 + 시작 대비 변화 + 7일 평균(체중)
+  if (ws.length || ss.length) {
+    h += '<div class="body-latest">';
+    [[weight, ws], [waist, ss]].forEach(function(pair) {
+      var m = pair[0], s = pair[1];
+      if (!s.length) return;
+      var last = s[s.length - 1], first = s[0];
+      var line = '<div class="body-stat"><span class="body-stat-label">' + m.label + '</span>';
+      line += '<span class="body-stat-value">' + fmtBody(last.value, m) + '</span>';
+      var sub = [];
+      if (m.id === 'body_waist') sub.push((last.value / 2.54).toFixed(1) + '인치');
+      if (s.length > 1) {
+        var diff = last.value - first.value;
+        sub.push('시작 대비 ' + (diff > 0 ? '+' : '') + Number(diff.toFixed(m.digits)) + m.unit);
+      }
+      if (m.id === 'body_weight') {
+        var cutoff = new Date(last.date + 'T00:00:00');
+        cutoff.setDate(cutoff.getDate() - 6); // 로컬 날짜 기준 (toISOString은 UTC라 하루 밀림)
+        var cut = cutoff.getFullYear() + '-' + String(cutoff.getMonth() + 1).padStart(2, '0') + '-' + String(cutoff.getDate()).padStart(2, '0');
+        var week = s.filter(function(p) { return p.date >= cut; });
+        if (week.length >= 2) {
+          var avg = week.reduce(function(a, p) { return a + p.value; }, 0) / week.length;
+          sub.push('7일 평균 ' + fmtBody(avg, m));
+        }
+      }
+      line += '<span class="body-stat-sub">' + sub.join(' · ') + '</span></div>';
+      h += line;
+    });
+    h += '</div>';
+  }
+
+  // 입력 폼 — 비운 칸은 저장 안 함
+  h += '<div class="body-form">';
+  h += '<label class="body-field body-field-date"><span>날짜</span><input type="date" id="body-date" class="body-input" value="' + state.today + '" max="' + state.today + '"></label>';
+  BODY_METRICS.forEach(function(m) {
+    h += '<label class="body-field"><span>' + m.label + ' (' + m.unit + ')</span>';
+    h += '<input type="number" inputmode="decimal" id="' + m.id + '-input" class="body-input" step="' + m.step + '" min="' + m.min + '" max="' + m.max + '" placeholder="' + (m.id === 'body_weight' ? '예: 77.4' : '선택') + '"></label>';
+  });
+  h += '</div>';
+  h += '<button class="btn-primary body-save" onclick="saveBody()">저장</button>';
+  h += '<div class="body-hint">아침 화장실 후·식전, 같은 조건으로. 허리는 배꼽 높이에서 숨을 편히 내쉰 상태로.</div>';
+
+  // 최근 기록 (최대 6일)
+  var dates = {};
+  ws.concat(ss).forEach(function(p) { dates[p.date] = true; });
+  var recent = Object.keys(dates).sort().reverse().slice(0, 6);
+  if (recent.length) {
+    h += '<div class="body-history">';
+    recent.forEach(function(d) {
+      h += '<div class="body-history-row"><span>' + d.substring(5).replace('-', '/') + '</span><span>' + bodyValuesOn(d) + '</span></div>';
+    });
+    h += '</div>';
+  }
+  h += '</div>';
+  return h;
+}
+
+async function saveBody() {
+  var dateEl = document.getElementById('body-date');
+  var date = (dateEl && dateEl.value) || state.today;
+  var entries = [];
+  for (var i = 0; i < BODY_METRICS.length; i++) {
+    var m = BODY_METRICS[i];
+    var el = document.getElementById(m.id + '-input');
+    var raw = el ? el.value.trim() : '';
+    if (!raw) continue;
+    var v = parseFloat(raw);
+    if (isNaN(v) || v < m.min || v > m.max) {
+      showToast(m.label + ' 값을 확인하세요 (' + m.min + '~' + m.max + m.unit + ')');
+      return;
+    }
+    entries.push({ date: date, exercise_id: m.id, set_number: 1, reps_done: v, note: '' });
+  }
+  if (!entries.length) {
+    showToast('체중이나 허리 값을 입력하세요');
+    return;
+  }
+  var btn = document.querySelector('.body-save');
+  if (btn) btn.disabled = true;
+  try {
+    for (var j = 0; j < entries.length; j++) {
+      var res = await api.postLog(entries[j]);
+      if (res && res.error) throw new Error(res.error);
+      state.bodyLogs.push(entries[j]);
+    }
+    vibrate(15);
+    showToast('몸 기록 저장됨');
+  } catch (err) {
+    console.error('Body save failed:', err);
+    showToast('저장 실패 — 네트워크를 확인하세요');
+  }
+  renderRecords();
 }
 
 // # 2026-04-04 (2026-07-10 23:10 — API 재호출 → 로컬 필터. 데이터는 boot 때 전부 보유)
@@ -3391,7 +3654,10 @@ async function initApp() {
 
     // 로그·월 데이터 — boot이 로그 전체 반환(소량), 월 필터는 로컬
     var month = state.today.substring(0, 7);
-    state.logsAll = boot.logs || [];
+    // 몸 기록(body_*) 행은 운동 로그와 분리 — 운동 집계·캘린더에 섞이지 않게 // 2026-10-12 19:08
+    var bootLogs = boot.logs || [];
+    state.bodyLogs = bootLogs.filter(isBodyLog);
+    state.logsAll = bootLogs.filter(function(l) { return !isBodyLog(l); });
     state.logs = filterByMonth(state.logsAll, month);
     state.logsHistory = state.logsAll.slice(); // "지난번" 기록용 — 전월 한정 → 전체 이력
     state.programs = filterByMonth(allPrograms, month);
